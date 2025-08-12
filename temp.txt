@@ -463,3 +463,4 @@ add predictor dashboard 117410646
 improve ui components 1197113058
 add soil sensor service 588550390
 cleanup codebase 797683838
+implement soil record ingestion 1559445823
