@@ -465,3 +465,4 @@ add soil sensor service 588550390
 cleanup codebase 797683838
 implement soil record ingestion 1559445823
 implement soil record ingestion 896191598
+implement soil record ingestion 1403303564
