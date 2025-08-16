@@ -471,3 +471,4 @@ implement validation middleware 787135338
 implement validation middleware 2075870471
 implement validation middleware 860702199
 implement validation middleware 331676502
+add telemetry handler 46268807
