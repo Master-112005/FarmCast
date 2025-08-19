@@ -474,3 +474,4 @@ implement validation middleware 331676502
 add telemetry handler 46268807
 add telemetry handler 1323160376
 improve api error handling 713659384
+improve api error handling 928869074
