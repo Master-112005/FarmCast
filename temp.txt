@@ -481,3 +481,4 @@ implement soil record ingestion 202320453
 implement soil record ingestion 905477263
 create device service 46398716
 create device service 2113502895
+create device service 259329662
