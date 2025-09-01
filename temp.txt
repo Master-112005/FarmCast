@@ -489,3 +489,4 @@ implement authentication system 256010584
 add jwt token support 500223165
 add jwt token support 1647778329
 add jwt token support 1287043127
+improve api error handling 1543028283
