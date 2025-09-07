@@ -491,3 +491,4 @@ add jwt token support 1647778329
 add jwt token support 1287043127
 improve api error handling 1543028283
 implement validation middleware 274925309
+improve api error handling 1961252891
