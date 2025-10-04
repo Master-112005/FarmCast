@@ -515,3 +515,4 @@ implement soil record ingestion 2062480931
 add telemetry handler 548806705
 add telemetry handler 976135117
 implement wifi connection 240171577
+implement wifi connection 400862695
