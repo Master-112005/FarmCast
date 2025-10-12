@@ -527,3 +527,4 @@ implement wifi connection 110772675
 implement wifi connection 11121013
 implement wifi connection 1792763572
 add gps service 872901778
+add gps service 258240977
