@@ -529,3 +529,4 @@ implement wifi connection 1792763572
 add gps service 872901778
 add gps service 258240977
 add gps service 866711603
+implement ota update handler 749919086
