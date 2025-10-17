@@ -531,3 +531,4 @@ add gps service 258240977
 add gps service 866711603
 implement ota update handler 749919086
 add soil sensor service 174843514
+implement ota update handler 2128767687
