@@ -534,3 +534,4 @@ add soil sensor service 174843514
 implement ota update handler 2128767687
 implement ota update handler 486733580
 implement ota update handler 1885870002
+implement ota update handler 794399201
