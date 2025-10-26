@@ -539,3 +539,4 @@ implement ota update handler 273061030
 add gps service 520629190
 add gps service 1404795186
 add gps service 504674635
+add gps service 1783110780
