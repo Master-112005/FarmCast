@@ -543,3 +543,4 @@ add gps service 1783110780
 implement wifi connection 2064239472
 implement wifi connection 1760976286
 implement wifi connection 1825159405
+add esp32 system boot 1851062402
