@@ -552,3 +552,4 @@ add soil sensor service 695465729
 add mqtt telemetry client 1893237371
 add mqtt telemetry client 73879622
 add mqtt telemetry client 685044522
+implement telemetry loop 50164125
