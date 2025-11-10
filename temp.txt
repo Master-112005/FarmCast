@@ -555,3 +555,4 @@ add mqtt telemetry client 685044522
 implement telemetry loop 50164125
 implement telemetry loop 372638208
 implement telemetry loop 1484696889
+add esp32 system boot 412300
