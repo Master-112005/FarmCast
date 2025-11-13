@@ -560,3 +560,4 @@ add esp32 system boot 1416603479
 implement telemetry loop 94417837
 implement telemetry loop 1155229709
 implement telemetry loop 1170992254
+implement telemetry loop 1362730379
