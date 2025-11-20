@@ -563,3 +563,4 @@ implement telemetry loop 1170992254
 implement telemetry loop 1362730379
 implement ota update handler 1698413883
 implement ota update handler 663865297
+implement ota update handler 1687659815
