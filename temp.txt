@@ -567,3 +567,4 @@ implement ota update handler 1687659815
 implement ota update handler 1319761315
 implement ota update handler 1005977162
 implement wifi connection 115826190
+implement wifi connection 431887582
