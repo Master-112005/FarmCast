@@ -570,3 +570,4 @@ implement wifi connection 115826190
 implement wifi connection 431887582
 implement wifi connection 1661255312
 add mqtt telemetry client 620353773
+add mqtt telemetry client 469052696
