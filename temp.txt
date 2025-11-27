@@ -572,3 +572,4 @@ implement wifi connection 1661255312
 add mqtt telemetry client 620353773
 add mqtt telemetry client 469052696
 implement telemetry loop 926464413
+implement ota update handler 1661546844
