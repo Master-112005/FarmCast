@@ -576,3 +576,4 @@ implement ota update handler 1661546844
 implement ota update handler 707863741
 implement ota update handler 852137730
 implement ota update handler 1879465918
+implement ota update handler 1427392343
