@@ -582,3 +582,4 @@ implement ota update handler 104663227
 implement ota update handler 1944569438
 add model registry 2047808791
 add model registry 1311156381
+add model registry 400129328
