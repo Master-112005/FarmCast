@@ -585,3 +585,4 @@ add model registry 1311156381
 add model registry 400129328
 add model registry 2002107213
 implement inference pipeline 1451250386
+implement yield prediction model 673530966
