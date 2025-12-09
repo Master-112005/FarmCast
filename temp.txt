@@ -590,3 +590,4 @@ implement yield prediction model 404484035
 implement yield prediction model 2143256870
 create crop encoder 211697582
 create crop encoder 1389550256
+create crop encoder 2046065
