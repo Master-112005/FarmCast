@@ -607,3 +607,4 @@ implement yield prediction model 990556916
 implement yield prediction model 2095902009
 implement yield prediction model 1249720615
 add disease classification pipeline 1897610408
+add disease classification pipeline 529623922
