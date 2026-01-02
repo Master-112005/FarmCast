@@ -612,3 +612,4 @@ add disease classification pipeline 36006218
 add disease classification pipeline 644443486
 implement yield prediction model 1874862648
 add model registry 1743060065
+add model registry 395097174
