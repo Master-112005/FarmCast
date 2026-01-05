@@ -619,3 +619,4 @@ implement inference pipeline 546312984
 add disease classification pipeline 875551731
 add disease classification pipeline 217009323
 add disease classification pipeline 1311886237
+add disease classification pipeline 292940476
