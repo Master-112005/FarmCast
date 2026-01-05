@@ -616,3 +616,4 @@ add model registry 395097174
 implement inference pipeline 2102048346
 implement inference pipeline 1500576375
 implement inference pipeline 546312984
+add disease classification pipeline 875551731
