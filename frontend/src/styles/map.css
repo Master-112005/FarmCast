@@ -1,0 +1,216 @@
+/* ============================================================
+   FarmCast Enterprise – Map Styling Layer
+   map.css (CRITICAL FILE)
+   Scope:
+   - Leaflet maps ONLY
+   - Zero layout overrides
+   - Zero global side effects
+============================================================ */
+
+/* ============================================================
+   MAP CONTAINER SAFETY
+============================================================ */
+
+/* Root map wrapper (used by DeviceMap.jsx) */
+.fc-map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  border-radius: var(--fc-r-lg);
+  overflow: hidden;
+  background-color: #e5e7eb; /* fallback if tiles fail */
+}
+
+/* Prevent parent layouts from collapsing */
+.fc-map,
+.fc-map * {
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   LEAFLET BASE FIXES (DO NOT REMOVE)
+============================================================ */
+
+/* Leaflet requires explicit height */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #e5e7eb;
+  font-family: var(--fc-font);
+}
+
+/* Prevent text selection / dragging glitches */
+.leaflet-container,
+.leaflet-container * {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ============================================================
+   TILE & CANVAS PERFORMANCE
+============================================================ */
+
+/* Hardware acceleration – SAFE */
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+  will-change: transform;
+}
+
+/* Prevent blurry tiles on zoom */
+.leaflet-tile {
+  image-rendering: auto;
+}
+
+/* ============================================================
+   MARKERS
+============================================================ */
+
+.leaflet-marker-icon {
+  transition: transform 0.15s ease;
+}
+
+.leaflet-marker-icon:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Disable hover scaling on touch devices */
+@media (hover: none) {
+  .leaflet-marker-icon:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   POPUPS (CRITICAL UX AREA)
+============================================================ */
+
+.leaflet-popup-content-wrapper {
+  border-radius: var(--fc-r-md);
+  box-shadow: var(--fc-shadow-md);
+  border: 1px solid var(--fc-border);
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--fc-text-main);
+}
+
+.leaflet-popup-tip {
+  background: var(--fc-bg-card);
+}
+
+/* Prevent popup overflow bugs */
+.leaflet-popup {
+  max-width: 260px;
+}
+
+/* ============================================================
+   TOOLTIP (OPTIONAL)
+============================================================ */
+
+.leaflet-tooltip {
+  background: var(--fc-bg-card);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-r-sm);
+  box-shadow: var(--fc-shadow-sm);
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  color: var(--fc-text-main);
+}
+
+/* ============================================================
+   CONTROLS (ZOOM, ATTRIBUTION)
+============================================================ */
+
+.leaflet-control-zoom a {
+  background: var(--fc-bg-card);
+  color: var(--fc-text-main);
+  border-radius: var(--fc-r-sm);
+  border: 1px solid var(--fc-border);
+}
+
+.leaflet-control-zoom a:hover {
+  background: #f3f4f6;
+}
+
+.leaflet-control-attribution {
+  font-size: 0.65rem;
+  color: var(--fc-text-muted);
+  background: rgba(255,255,255,0.8);
+  padding: 2px 6px;
+  border-radius: var(--fc-r-sm);
+}
+
+/* ============================================================
+   WEATHER / OVERLAY CIRCLES
+============================================================ */
+
+.fc-map .leaflet-interactive {
+  transition: opacity 0.2s ease;
+}
+
+.fc-map .leaflet-interactive:hover {
+  opacity: 0.85;
+}
+
+/* ============================================================
+   LOADING STATE (OPTIONAL OVERLAY)
+============================================================ */
+
+.fc-map--loading::after {
+  content: "Loading map…";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--fc-text-muted);
+  background: rgba(255,255,255,0.6);
+  z-index: 500;
+}
+
+/* ============================================================
+   ACCESSIBILITY
+============================================================ */
+
+/* Focus outlines for keyboard users */
+.leaflet-container a:focus-visible {
+  outline: 2px solid var(--fc-secondary);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   REDUCED MOTION COMPLIANCE
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .leaflet-marker-icon,
+  .leaflet-interactive {
+    transition: none !important;
+  }
+
+  .leaflet-marker-icon:hover {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   MOBILE SAFETY
+============================================================ */
+
+@media (max-width: 640px) {
+
+  .fc-map {
+    min-height: 300px;
+  }
+
+  .leaflet-popup-content {
+    font-size: 0.8rem;
+  }
+}

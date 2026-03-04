@@ -1,0 +1,42 @@
+/* ============================================================
+   Component Styles – FarmCast
+   Enterprise / Scalable Layer
+   v1.1 – VERIFIED & TOKEN-SAFE
+============================================================ */
+
+/* ============================================================
+   BUTTON EXTENSIONS
+============================================================ */
+
+.fc-btn {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--fc-r-md);
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+  box-shadow: var(--fc-shadow-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.fc-btn:focus-visible {
+  outline: 2px solid var(--fc-secondary);
+  outline-offset: 2px;
+}
+
+.fc-btn:active {
+  transform: scale(0.98);
+}
+
+.fc-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+

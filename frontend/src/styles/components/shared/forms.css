@@ -1,0 +1,27 @@
+/* ============================================================
+   LABELS
+============================================================ */
+
+.fc-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--fc-text-muted);
+  margin-bottom: 0.25rem;
+  display: inline-block;
+}
+
+.fc-form {
+  display: grid;
+  gap: var(--fc-s4);
+}
+
+.fc-form-section {
+  display: grid;
+  gap: var(--fc-s2);
+}
+
+.fc-form-row {
+  display: grid;
+  gap: var(--fc-s2);
+}
+

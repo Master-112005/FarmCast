@@ -1,0 +1,26 @@
+type: object
+required:
+  - model_name
+  - version
+  - timestamp_utc
+  - dataset_hash
+  - metrics
+  - config_snapshot
+  - latency_benchmark_ms
+properties:
+  model_name:
+    type: string
+  version:
+    type: string
+  timestamp_utc:
+    type: string
+  dataset_hash:
+    type: string
+  metrics:
+    type: object
+  config_snapshot:
+    type: object
+  latency_benchmark_ms:
+    type: number
+  artifact_path:
+    type: string

@@ -1,0 +1,102 @@
+/* ============================================================
+   METADATA / PROFILE
+============================================================ */
+
+.fc-metadata,
+.fc-profile-section {
+  display: grid;
+  gap: var(--fc-s3);
+}
+
+.fc-meta-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--fc-s3);
+}
+
+.fc-meta-value {
+  font-weight: 500;
+  text-align: right;
+}
+
+.fc-meta {
+  font-size: 0.8rem;
+  color: var(--fc-text-muted);
+}
+
+.fc-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+}
+
+.fc-profile-header {
+  display: flex;
+  align-items: center;
+  gap: var(--fc-s4);
+  margin-bottom: var(--fc-s4);
+}
+
+.fc-profile-identity {
+  display: grid;
+  gap: 2px;
+}
+
+.fc-profile-avatar,
+.fc-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--fc-border);
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.fc-profile-name {
+  font-weight: 600;
+}
+
+.fc-profile-meta {
+  color: var(--fc-text-muted);
+  font-size: 0.85rem;
+}
+
+.fc-section-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--fc-font-display);
+}
+
+.fc-device-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--fc-s2);
+}
+
+.fc-device-list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-r-md);
+}
+
+.fc-device-type {
+  color: var(--fc-text-muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .fc-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fc-meta-value {
+    text-align: left;
+  }
+}
+

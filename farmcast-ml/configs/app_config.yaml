@@ -1,0 +1,17 @@
+api:
+  title: FarmCast ML Service
+  version: 1.0.0
+  api_key_header: X-API-Key
+  api_key_env: FARMCAST_API_KEY
+  max_upload_bytes: 5242880
+
+inference:
+  disease_image_size: [224, 224]
+  disease_top_k: 3
+  production_models:
+    disease_model: models/disease/production/model.keras
+    disease_classes: models/disease/production/class_map.json
+    yield_model: models/yield/production/model.joblib
+    yield_preprocessor: models/yield/production/preprocessor.joblib
+    price_model: models/price/production/model.joblib
+    price_preprocessor: models/price/production/preprocessor.joblib

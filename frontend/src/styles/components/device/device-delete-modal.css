@@ -1,0 +1,130 @@
+/* ============================================================
+   DEVICE DELETE MODAL
+============================================================ */
+
+.fc-device-delete-modal {
+  padding: var(--fc-s4);
+  background: rgba(15, 23, 42, 0.46);
+}
+
+.fc-device-delete-modal__content {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  padding: var(--fc-s5);
+  border: 1px solid rgba(220, 38, 38, 0.24);
+  background: linear-gradient(
+      150deg,
+      rgba(254, 242, 242, 0.92),
+      rgba(255, 255, 255, 0.96)
+    ),
+    var(--fc-bg-card);
+  box-shadow:
+    0 26px 42px rgba(15, 23, 42, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.55) inset;
+  display: grid;
+  gap: var(--fc-s4);
+}
+
+.fc-device-delete-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--fc-s3);
+}
+
+.fc-device-delete-modal__title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--fc-s3);
+}
+
+.fc-device-delete-modal__icon {
+  color: #b91c1c;
+  font-size: 1.3rem;
+  margin-top: 0.1rem;
+}
+
+.fc-device-delete-modal__title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-family: var(--fc-font-display);
+  color: #7f1d1d;
+}
+
+.fc-device-delete-modal__subtitle {
+  margin: 0.2rem 0 0;
+  color: #7f1d1d;
+  font-size: 0.84rem;
+}
+
+.fc-device-delete-modal__details {
+  display: grid;
+  gap: var(--fc-s2);
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  border-radius: var(--fc-r-md);
+  background: rgba(255, 255, 255, 0.78);
+  padding: var(--fc-s3);
+}
+
+.fc-device-delete-modal__detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fc-s3);
+}
+
+.fc-device-delete-modal__detail strong {
+  color: #0f172a;
+}
+
+.fc-device-delete-modal__note {
+  margin: 0;
+  color: #475569;
+  font-size: 0.84rem;
+}
+
+.fc-device-delete-modal__progress {
+  list-style: none;
+  margin: 0;
+  padding: var(--fc-s2) var(--fc-s3);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: var(--fc-r-md);
+  background: rgba(255, 255, 255, 0.84);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.fc-device-delete-modal__progress li {
+  color: #475569;
+  font-size: 0.82rem;
+}
+
+.fc-device-delete-modal__progress li.is-current {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.fc-device-delete-modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--fc-s2);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 680px) {
+  .fc-device-delete-modal {
+    padding: var(--fc-s2);
+  }
+
+  .fc-device-delete-modal__content {
+    max-height: calc(100vh - 1rem);
+    padding: var(--fc-s4);
+  }
+
+  .fc-device-delete-modal__detail {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

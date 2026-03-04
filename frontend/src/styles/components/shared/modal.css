@@ -1,0 +1,23 @@
+/* ============================================================
+   MODAL (SAFE OVERLAY)
+============================================================ */
+
+.fc-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* SAFE DEFAULT */
+}
+
+.fc-modal__content {
+  background: var(--fc-bg-card);
+  border-radius: var(--fc-r-lg);
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: var(--fc-shadow-md);
+}
+

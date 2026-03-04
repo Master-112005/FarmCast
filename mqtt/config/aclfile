@@ -1,0 +1,10 @@
+# Internal backend collector account can subscribe across fleet telemetry.
+user backend-collector
+topic readwrite farmcast/#
+
+# Device ACL baseline keyed by MQTT username (%u == deviceId).
+# UserId isolation is enforced by backend /api/v1/mqtt/validate ACL callback.
+pattern write farmcast/+/%u/telemetry
+pattern write farmcast/+/%u/status
+pattern read farmcast/+/%u/ota
+

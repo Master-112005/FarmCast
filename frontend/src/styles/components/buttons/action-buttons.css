@@ -1,0 +1,21 @@
+/* ============================================================
+   ACTION GROUP
+============================================================ */
+
+.fc-action-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fc-s3);
+}
+
+.fc-action-group > button {
+  flex: 0 0 auto;
+  min-width: 170px;
+}
+
+@media (max-width: 640px) {
+  .fc-action-group > button {
+    width: 100%;
+  }
+}
+

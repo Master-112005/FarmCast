@@ -1,0 +1,33 @@
+/* ============================================================
+   LISTS / EMPTY STATES
+============================================================ */
+
+.fc-device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--fc-s5);
+}
+
+.fc-empty-state {
+  border: 1px dashed var(--fc-border);
+  border-radius: var(--fc-r-md);
+  padding: var(--fc-s6);
+  text-align: center;
+  color: var(--fc-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fc-s3);
+  align-items: center;
+}
+
+.fc-empty {
+  color: var(--fc-text-muted);
+  font-size: 0.9rem;
+}
+
+.fc-loading {
+  padding: var(--fc-s6);
+  color: var(--fc-text-muted);
+  text-align: center;
+}
+

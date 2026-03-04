@@ -1,0 +1,182 @@
+/* ============================================================
+   FarmCast Enterprise – Utility Classes
+   utilities.css (CRITICAL)
+   Purpose:
+   - Layout helpers
+   - Spacing helpers
+   - Text helpers
+   - Visibility & state helpers
+============================================================ */
+
+/* ============================================================
+   DISPLAY
+============================================================ */
+
+.u-block { display: block !important; }
+.u-inline { display: inline !important; }
+.u-inline-block { display: inline-block !important; }
+.u-flex { display: flex !important; }
+.u-inline-flex { display: inline-flex !important; }
+.u-grid { display: grid !important; }
+.u-hidden { display: none !important; }
+
+/* ============================================================
+   FLEX HELPERS
+============================================================ */
+
+.u-flex-row { flex-direction: row !important; }
+.u-flex-col { flex-direction: column !important; }
+
+.u-items-start { align-items: flex-start !important; }
+.u-items-center { align-items: center !important; }
+.u-items-end { align-items: flex-end !important; }
+
+.u-justify-start { justify-content: flex-start !important; }
+.u-justify-center { justify-content: center !important; }
+.u-justify-between { justify-content: space-between !important; }
+.u-justify-end { justify-content: flex-end !important; }
+
+.u-flex-wrap { flex-wrap: wrap !important; }
+.u-flex-nowrap { flex-wrap: nowrap !important; }
+
+.u-flex-1 { flex: 1 1 0% !important; }
+.u-flex-auto { flex: 1 1 auto !important; }
+
+/* ============================================================
+   GAP
+============================================================ */
+
+.u-gap-1 { gap: var(--fc-s1) !important; }
+.u-gap-2 { gap: var(--fc-s2) !important; }
+.u-gap-3 { gap: var(--fc-s3) !important; }
+.u-gap-4 { gap: var(--fc-s4) !important; }
+.u-gap-5 { gap: var(--fc-s5) !important; }
+.u-gap-6 { gap: var(--fc-s6) !important; }
+
+/* ============================================================
+   SPACING – MARGIN
+============================================================ */
+
+.u-m-0 { margin: 0 !important; }
+.u-mt-1 { margin-top: var(--fc-s1) !important; }
+.u-mt-2 { margin-top: var(--fc-s2) !important; }
+.u-mt-3 { margin-top: var(--fc-s3) !important; }
+.u-mt-4 { margin-top: var(--fc-s4) !important; }
+.u-mt-5 { margin-top: var(--fc-s5) !important; }
+.u-mt-6 { margin-top: var(--fc-s6) !important; }
+
+.u-mb-1 { margin-bottom: var(--fc-s1) !important; }
+.u-mb-2 { margin-bottom: var(--fc-s2) !important; }
+.u-mb-3 { margin-bottom: var(--fc-s3) !important; }
+.u-mb-4 { margin-bottom: var(--fc-s4) !important; }
+.u-mb-5 { margin-bottom: var(--fc-s5) !important; }
+.u-mb-6 { margin-bottom: var(--fc-s6) !important; }
+
+.u-ml-auto { margin-left: auto !important; }
+.u-mr-auto { margin-right: auto !important; }
+
+/* ============================================================
+   SPACING – PADDING
+============================================================ */
+
+.u-p-0 { padding: 0 !important; }
+.u-p-1 { padding: var(--fc-s1) !important; }
+.u-p-2 { padding: var(--fc-s2) !important; }
+.u-p-3 { padding: var(--fc-s3) !important; }
+.u-p-4 { padding: var(--fc-s4) !important; }
+.u-p-5 { padding: var(--fc-s5) !important; }
+.u-p-6 { padding: var(--fc-s6) !important; }
+
+/* ============================================================
+   TEXT HELPERS
+============================================================ */
+
+.u-text-left { text-align: left !important; }
+.u-text-center { text-align: center !important; }
+.u-text-right { text-align: right !important; }
+
+.u-text-muted { color: var(--fc-text-muted) !important; }
+.u-text-main { color: var(--fc-text-main) !important; }
+
+.u-text-xs { font-size: 0.75rem !important; }
+.u-text-sm { font-size: 0.875rem !important; }
+.u-text-md { font-size: 1rem !important; }
+.u-text-lg { font-size: 1.125rem !important; }
+.u-text-xl { font-size: 1.25rem !important; }
+
+.u-font-normal { font-weight: 400 !important; }
+.u-font-medium { font-weight: 500 !important; }
+.u-font-semibold { font-weight: 600 !important; }
+.u-font-bold { font-weight: 700 !important; }
+
+/* ============================================================
+   WIDTH / HEIGHT
+============================================================ */
+
+.u-w-full { width: 100% !important; }
+.u-h-full { height: 100% !important; }
+.u-min-h-screen { min-height: 100vh !important; }
+
+.u-max-w-sm { max-width: 420px !important; }
+.u-max-w-md { max-width: 640px !important; }
+.u-max-w-lg { max-width: 960px !important; }
+.u-max-w-xl { max-width: 1200px !important; }
+
+/* ============================================================
+   POSITION
+============================================================ */
+
+.u-relative { position: relative !important; }
+.u-absolute { position: absolute !important; }
+.u-fixed { position: fixed !important; }
+
+.u-inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* ============================================================
+   OVERFLOW
+============================================================ */
+
+.u-overflow-hidden { overflow: hidden !important; }
+.u-overflow-auto { overflow: auto !important; }
+.u-overflow-x-auto { overflow-x: auto !important; }
+
+/* ============================================================
+   CURSOR & INTERACTION
+============================================================ */
+
+.u-cursor-pointer { cursor: pointer !important; }
+.u-cursor-not-allowed { cursor: not-allowed !important; }
+
+.u-pointer-events-none { pointer-events: none !important; }
+
+/* ============================================================
+   ACCESSIBILITY HELPERS
+============================================================ */
+
+.u-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ============================================================
+   SAFE ANIMATION DISABLE
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .u-animate {
+    animation: none !important;
+    transition: none !important;
+  }
+}

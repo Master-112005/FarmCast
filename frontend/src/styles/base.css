@@ -1,0 +1,198 @@
+/* ============================================================
+   FarmCast Base Styles
+   Purpose:
+   - Global reset (safe)
+   - Typography and form normalization
+   - App shell and layout safety
+   - Accessibility and reduced motion
+============================================================ */
+
+/* ============================================================
+   RESET AND BASE
+============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--fc-font);
+  background: var(--fc-bg-app-gradient);
+  background-color: var(--fc-bg-app);
+  color: var(--fc-text-main);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.25;
+  font-family: var(--fc-font-display);
+  letter-spacing: 0.2px;
+}
+
+p {
+  margin: 0;
+}
+
+small {
+  font-size: 0.8rem;
+  color: var(--fc-text-muted);
+}
+
+/* ============================================================
+   MEDIA SAFETY
+============================================================ */
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================================
+   FORM NORMALIZATION
+============================================================ */
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ============================================================
+   ACCESSIBILITY BASELINE
+============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--fc-secondary);
+  outline-offset: 2px;
+}
+
+[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   APP SHELL (LEGACY SUPPORT)
+============================================================ */
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background-color: var(--fc-bg-app);
+}
+
+@media (max-width: 1100px) {
+  .app-shell {
+    grid-template-columns: 90px 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   LEAFLET SAFETY
+============================================================ */
+
+.leaflet-container {
+  font-family: var(--fc-font);
+}
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+  transform: translateZ(0);
+}
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   SCROLLBAR (DESKTOP ONLY)
+============================================================ */
+
+@media (hover: hover) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}

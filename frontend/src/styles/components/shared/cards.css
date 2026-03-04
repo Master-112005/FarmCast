@@ -1,0 +1,19 @@
+/* ============================================================
+   CARD ENHANCEMENTS (NON-DESTRUCTIVE)
+============================================================ */
+
+.fc-card {
+  transition: box-shadow 0.2s ease;
+}
+
+.fc-card:hover {
+  box-shadow: var(--fc-shadow-md);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fc-card:hover {
+    box-shadow: var(--fc-shadow-sm);
+  }
+}
+

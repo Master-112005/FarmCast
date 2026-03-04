@@ -1,0 +1,12 @@
+# Internal backend collector account can subscribe across fleet events.
+# This account is used only by backend infrastructure.
+user backend-collector
+topic read devices/+/telemetry
+topic read devices/+/heartbeat
+topic read devices/+/system/reset
+topic read devices/+/ota
+
+# Device ACL baseline keyed by MQTT username (%u == deviceId).
+# Callback validation further narrows accepted sub-topics and blocks wildcards.
+pattern write devices/%u/#
+pattern read devices/%u/#

@@ -1,0 +1,139 @@
+.fc-provision-wizard__content {
+  max-width: 760px;
+  width: min(92vw, 760px);
+  max-height: 92vh;
+  overflow: auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.fc-provision-wizard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fc-provision-wizard__header h2 {
+  margin: 0;
+}
+
+.fc-provision-wizard__header p {
+  margin: 0.25rem 0 0;
+  color: var(--fc-text-muted);
+}
+
+.fc-provision-wizard__steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+}
+
+.fc-provision-wizard__steps li {
+  border: 1px solid var(--fc-border, #d9dce3);
+  border-radius: 999px;
+  padding: 0.35rem 0.5rem;
+  text-align: center;
+  color: var(--fc-text-muted);
+}
+
+.fc-provision-wizard__steps li.is-active {
+  border-color: var(--fc-primary);
+  color: var(--fc-primary);
+  font-weight: 700;
+}
+
+.fc-provision-wizard__panel {
+  border: 1px solid var(--fc-border, #d9dce3);
+  border-radius: var(--fc-r-md);
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.fc-provision-wizard__connect {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.fc-provision-wizard__usb-icon {
+  font-size: 2rem;
+}
+
+.fc-provision-wizard__verification h3,
+.fc-provision-wizard__progress h3,
+.fc-provision-wizard__success h3 {
+  margin: 0;
+}
+
+.fc-provision-wizard__meta {
+  margin: 0.3rem 0 0.6rem;
+}
+
+.fc-provision-wizard__info {
+  margin: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.fc-provision-wizard__info div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.5rem;
+}
+
+.fc-provision-wizard__info dt {
+  color: var(--fc-text-muted);
+}
+
+.fc-provision-wizard__info dd {
+  margin: 0;
+  font-family: "Consolas", "Monaco", monospace;
+}
+
+.fc-provision-wizard__form {
+  border-top: 1px dashed var(--fc-border, #d9dce3);
+  padding-top: 1rem;
+}
+
+.fc-provision-wizard__progress ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.fc-provision-wizard__progress li {
+  color: var(--fc-text-muted);
+}
+
+.fc-provision-wizard__progress li.is-current {
+  color: var(--fc-primary);
+  font-weight: 700;
+}
+
+.fc-provision-wizard__hint {
+  margin: 0.6rem 0 0;
+  color: var(--fc-text-muted);
+}
+
+.fc-provision-wizard__success p {
+  margin: 0.4rem 0 0;
+}
+
+.fc-provision-wizard__footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .fc-provision-wizard__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

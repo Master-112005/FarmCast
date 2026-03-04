@@ -1,0 +1,45 @@
+/* ============================================================
+   PROFILE IMAGE
+============================================================ */
+
+.fc-profile-pic {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--fc-border);
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.fc-profile-avatar--lg {
+  width: 96px;
+  height: 96px;
+}
+
+.fc-profile-upload {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--fc-s4);
+  align-items: center;
+}
+
+.fc-profile-upload__meta {
+  display: grid;
+  gap: var(--fc-s2);
+}
+
+.fc-file-input {
+  padding: 0.45rem;
+  border-radius: var(--fc-r-md);
+  border: 1px dashed var(--fc-border);
+  background: rgba(248, 250, 252, 0.8);
+  cursor: pointer;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .fc-profile-upload {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,12 @@
+retraining:
+  skip_if_hash_unchanged: true
+  require_manual_override: false
+  min_interval_hours: 24
+  triggers:
+    on_dataset_hash_change: true
+    on_drift: true
+    on_manual_request: true
+  safeguards:
+    enforce_metric_improvement: true
+    enforce_schema_validation: true
+    enforce_threshold_checks: true

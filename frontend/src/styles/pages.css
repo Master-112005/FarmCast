@@ -1,0 +1,617 @@
+/* ============================================================
+   FarmCast Enterprise – Page Layout Styles
+   pages.css (CRITICAL)
+   Scope: Page-level layouts ONLY
+============================================================ */
+
+/* ============================================================
+   PAGE BASE
+============================================================ */
+
+.page {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  display: block;
+}
+
+/* Prevent layout collapse on async loading */
+.page--loading,
+.page--error {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   AUTH PAGES (Login / Register)
+============================================================ */
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--fc-bg-app-gradient);
+  padding: var(--fc-s7);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--fc-bg-card);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-r-lg);
+  padding: var(--fc-s6);
+  box-shadow: var(--fc-shadow-md);
+  backdrop-filter: blur(6px);
+}
+
+.auth-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--fc-text-main);
+  margin-bottom: var(--fc-s5);
+}
+
+.form-group {
+  margin-bottom: var(--fc-s4);
+}
+
+.form-error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--fc-r-md);
+  margin-bottom: var(--fc-s4);
+  font-size: 0.85rem;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border-radius: var(--fc-r-md);
+  background: var(--fc-primary);
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+
+.primary-btn:hover {
+  background: var(--fc-primary-dark);
+}
+
+.auth-footer {
+  margin-top: var(--fc-s5);
+  font-size: 0.85rem;
+  color: var(--fc-text-muted);
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.auth-footer a {
+  color: var(--fc-secondary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--fc-s2);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-r-md);
+  padding: 0.2rem 0.4rem;
+  background: #ffffff;
+}
+
+.password-wrapper input {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 0.6rem;
+}
+
+.password-toggle {
+  background: #f3f4f6;
+  border-radius: var(--fc-r-sm);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  color: var(--fc-text-main);
+}
+
+.form-hint {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--fc-text-muted);
+  font-size: 0.75rem;
+}
+
+/* Prevent dashboard styles leaking into auth */
+.auth-page .fc-card {
+  box-shadow: var(--fc-shadow-md);
+}
+
+/* ============================================================
+   MAIN WORKSPACE AREA
+============================================================ */
+
+.workspace-content {
+  padding: var(--fc-s7);
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   DEVICE PAGE
+============================================================ */
+
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--fc-s6);
+  align-items: start;
+}
+
+.device-grid > .fc-alert {
+  grid-column: 1 / -1;
+}
+
+.device-grid__main {
+  grid-column: span 7;
+  min-width: 0;
+}
+
+.device-grid__map {
+  grid-column: span 5;
+  min-width: 0;
+}
+
+.device-grid__insights {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--fc-s6);
+}
+
+.device-grid__insight-card {
+  min-width: 0;
+}
+
+.device-grid__insight-card .fc-card {
+  height: 100%;
+  border-top: 4px solid transparent;
+}
+
+.device-grid__insight-card--soil .fc-card {
+  border-top-color: #16a34a;
+}
+
+.device-grid__insight-card--fertilizer .fc-card {
+  border-top-color: #d97706;
+}
+
+.device-grid__insight-card--water .fc-card {
+  border-top-color: #0284c7;
+}
+
+/* ============================================================
+   PREDICTOR PAGE
+============================================================ */
+
+.predictor-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+  gap: var(--fc-s6);
+  align-items: start;
+}
+
+.predictor-left,
+.predictor-right {
+  display: grid;
+  gap: var(--fc-s5);
+  min-width: 0;
+}
+
+.predictor-switch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--fc-s3);
+  flex-wrap: wrap;
+}
+
+.predictor-left .fc-card {
+  border-top: 4px solid #0284c7;
+}
+
+.predictor-right .fc-card {
+  border-top: 4px solid #15803d;
+}
+
+.predictor-yield__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fc-s3);
+}
+
+.predictor-yield__head .fc-card__title {
+  margin: 0;
+}
+
+.predictor-yield__primary-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--fc-s3);
+}
+
+.predictor-yield__primary-row > * {
+  min-width: 0;
+}
+
+.predictor-yield__numeric-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--fc-s3);
+}
+
+.predictor-yield__numeric-row .fc-input {
+  min-width: 0;
+}
+
+.predictor-page {
+  position: relative;
+}
+
+.predictor-toast {
+  position: fixed;
+  top: 98px;
+  right: var(--fc-s7);
+  z-index: 1200;
+  min-width: 220px;
+  max-width: min(360px, calc(100vw - (var(--fc-s5) * 2)));
+  padding: 0.72rem 0.9rem;
+  border-radius: var(--fc-r-md);
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: var(--fc-shadow-md);
+}
+
+.predictor-disease__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fc-s3);
+}
+
+.predictor-disease__head .fc-card__title {
+  margin: 0;
+}
+
+.predictor-disease__preview {
+  position: relative;
+  border-radius: var(--fc-r-md);
+  border: 1px solid var(--fc-border);
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.predictor-disease__preview img {
+  display: block;
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+}
+
+.predictor-disease__cancel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  border-radius: var(--fc-r-sm);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--fc-text-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.38rem 0.55rem;
+  cursor: pointer;
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.predictor-disease__cancel:hover {
+  background: #f1f5f9;
+}
+
+/* Results section */
+.predictor-results {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--fc-s6);
+}
+
+.predictor-results--yield {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.predictor-results__primary-card,
+.predictor-results__profit-card {
+  min-width: 0;
+  display: flex;
+}
+
+.predictor-results__primary-card .fc-card,
+.predictor-results__profit-card .fc-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.predictor-results__primary-card .fc-card {
+  min-height: 340px;
+}
+
+.predictor-results__primary-card .fc-card .fc-card__body,
+.predictor-results__profit-card .fc-card .fc-card__body {
+  flex: 1;
+}
+
+.predictor-results__profit-card {
+  grid-column: 2;
+}
+
+.predictor-soil-status {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.predictor-soil-status .fc-result-panel {
+  flex: 1;
+}
+
+.predictor-soil-actions {
+  margin-top: var(--fc-s3);
+  padding-top: var(--fc-s2);
+  border-top: 1px dashed rgba(148, 163, 184, 0.4);
+}
+
+.predictor-soil-actions .fc-action-group {
+  gap: var(--fc-s2);
+}
+
+.predictor-soil-actions .fc-action-group > button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ============================================================
+   PROFILE PAGE
+============================================================ */
+
+.profile-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--fc-s6);
+  align-items: start;
+}
+
+.profile-page__main,
+.profile-page__side {
+  display: grid;
+  gap: var(--fc-s5);
+  min-width: 0;
+}
+
+.profile-page__main-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.profile-page__side .fc-card {
+  background: linear-gradient(
+      160deg,
+      rgba(239, 246, 255, 0.7),
+      rgba(255, 255, 255, 0.9)
+    ),
+    var(--fc-bg-card);
+}
+
+.profile-page > .fc-alert {
+  grid-column: 1 / -1;
+}
+
+/* ============================================================
+   ADMIN PAGE
+============================================================ */
+
+.admin-view {
+  display: grid;
+  gap: var(--fc-s6);
+}
+
+.admin-view__overview-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-view__search-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-view__header-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--fc-s3);
+  flex-wrap: wrap;
+}
+
+.admin-view__search {
+  width: min(620px, 100%);
+  display: flex;
+  align-items: center;
+  gap: var(--fc-s2);
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(14, 116, 144, 0.28);
+  border-radius: 999px;
+  background: linear-gradient(
+    145deg,
+    rgba(239, 246, 255, 0.92),
+    rgba(240, 253, 250, 0.88)
+  );
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.admin-view__search--header {
+  width: min(520px, 46vw);
+}
+
+.admin-view__search-icon {
+  color: #0c4a6e;
+  font-size: 1.1rem;
+}
+
+.admin-view__search-input {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0.45rem 0.5rem;
+}
+
+.admin-view__search-input:focus {
+  box-shadow: none;
+}
+
+/* ============================================================
+   EMPTY / NO DATA STATES
+============================================================ */
+
+.page-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--fc-s7);
+  color: var(--fc-text-muted);
+  text-align: center;
+}
+
+.page-empty .material-icons {
+  font-size: 3rem;
+  margin-bottom: var(--fc-s3);
+  opacity: 0.6;
+}
+
+/* ============================================================
+   ERROR STATES
+============================================================ */
+
+.page-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--fc-s7);
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+============================================================ */
+
+@media (max-width: 1200px) {
+  .predictor-grid {
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr);
+  }
+
+  .device-grid__main,
+  .device-grid__map {
+    grid-column: span 6;
+  }
+
+  .profile-page {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .device-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .device-grid__main,
+  .device-grid__map,
+  .device-grid__insights {
+    grid-column: 1 / -1;
+  }
+
+  .device-grid__insights {
+    grid-template-columns: 1fr;
+  }
+
+  .predictor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .predictor-results--yield {
+    grid-template-columns: 1fr;
+  }
+
+  .predictor-results__profit-card {
+    grid-column: 1;
+  }
+
+  .workspace-content {
+    padding: var(--fc-s5);
+  }
+
+  .predictor-yield__primary-row,
+  .predictor-yield__numeric-row {
+    grid-template-columns: 1fr;
+  }
+
+  .predictor-toast {
+    top: 84px;
+    right: var(--fc-s5);
+  }
+
+  .admin-view__header-tools {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .admin-view__search--header {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .workspace-content {
+    padding: var(--fc-s4);
+  }
+
+  .auth-page {
+    padding: var(--fc-s5);
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION SAFETY
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,11 @@
+disease_classes:
+  - rice__healthy
+  - rice__blast
+  - rice__brown_spot
+  - wheat__healthy
+  - wheat__rust
+  - wheat__septoria
+  - maize__healthy
+  - maize__blight
+  - cotton__healthy
+  - cotton__leaf_spot

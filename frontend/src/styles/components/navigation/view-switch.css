@@ -1,0 +1,43 @@
+/* ============================================================
+   VIEW SWITCH
+============================================================ */
+
+.fc-view-switch {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--fc-r-md);
+  border: 1px solid var(--fc-border);
+  background: var(--fc-bg-card);
+  box-shadow: var(--fc-shadow-sm);
+  overflow: hidden;
+}
+
+.fc-view-switch__btn {
+  padding: 0.5rem 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: var(--fc-text-muted);
+  border: none;
+  font-weight: 600;
+}
+
+.fc-view-switch__btn + .fc-view-switch__btn {
+  border-left: 1px solid var(--fc-border);
+}
+
+.fc-view-switch__btn.is-active {
+  background: var(--fc-primary);
+  color: var(--fc-text-inverse);
+}
+
+.fc-view-switch__btn--admin.is-active {
+  background: #0f766e;
+  color: var(--fc-text-inverse);
+}
+
+.fc-view-switch__btn:disabled {
+  opacity: 0.8;
+}
+

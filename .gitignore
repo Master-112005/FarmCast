@@ -1,0 +1,38 @@
+# -----------------------
+# Python
+# -----------------------
+.venv
+.venv-ml
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# -----------------------
+# Environment
+# -----------------------
+.env
+
+# -----------------------
+# Node
+# -----------------------
+node_modules/
+
+# -----------------------
+# ML Data (do NOT push)
+# -----------------------
+farmcast-ml/data/raw/
+farmcast-ml/data/processed/
+farmcast-ml/data/artifacts/
+farmcast-ml/data/snapshots/
+
+# -----------------------
+# Logs
+# -----------------------
+*.log
+farmcast-ml/logs/
+
+# -----------------------
+# OS
+# -----------------------
+.DS_Store
+Thumbs.db

@@ -1,0 +1,28 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "boundaryId": "farm001",
+        "farmName": "Rakesh Agro Plot",
+        "cropType": "Wheat",
+        "areaHectares": 2.5,
+        "source": "FarmCast ML",
+        "lastUpdated": "2026-02-01T15:30:00+05:30"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [78.9629, 20.5937],
+            [78.9650, 20.5945],
+            [78.9645, 20.5960],
+            [78.9615, 20.5952],
+            [78.9629, 20.5937]
+          ]
+        ]
+      }
+    }
+  ]
+}

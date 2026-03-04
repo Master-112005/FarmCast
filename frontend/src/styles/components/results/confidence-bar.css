@@ -1,0 +1,63 @@
+/* ============================================================
+   CONFIDENCE BAR (DISEASE RESULT)
+============================================================ */
+
+.fc-confidence {
+  display: grid;
+  gap: var(--fc-s2);
+}
+
+.fc-confidence__bar {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--fc-r-sm);
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.fc-confidence__fill {
+  height: 100%;
+  background: var(--fc-primary);
+}
+
+.fc-meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--fc-text-muted);
+  font-size: 0.8rem;
+}
+
+.fc-disclaimer {
+  margin-top: var(--fc-s3);
+  font-size: 0.8rem;
+  color: var(--fc-text-muted);
+}
+
+.fc-image-preview img {
+  width: 100%;
+  border-radius: var(--fc-r-md);
+  border: 1px solid var(--fc-border);
+}
+
+.fc-card--disease {
+  border-top: 4px solid #f59e0b;
+  background: linear-gradient(
+      165deg,
+      rgba(255, 251, 235, 0.82),
+      rgba(255, 255, 255, 0.9)
+    ),
+    var(--fc-bg-card);
+}
+
+.fc-card--disease .fc-image-preview {
+  display: flex;
+  justify-content: center;
+}
+
+.fc-card--disease .fc-image-preview img {
+  width: min(100%, 360px);
+  max-height: 230px;
+  object-fit: contain;
+}
+

@@ -1,0 +1,49 @@
+/* ============================================================
+   INPUT REFINEMENTS
+============================================================ */
+
+.fc-input,
+.fc-textarea,
+.fc-select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-r-md);
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fc-input:focus,
+.fc-textarea:focus,
+.fc-select:focus {
+  outline: none;
+  border-color: var(--fc-secondary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.fc-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.fc-input-group {
+  display: grid;
+  gap: var(--fc-s3);
+}
+
+.fc-input__hint {
+  color: var(--fc-text-muted);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.fc-input__loading {
+  display: flex;
+  align-items: center;
+  gap: var(--fc-s2);
+  font-size: 0.85rem;
+  color: var(--fc-text-muted);
+}
+

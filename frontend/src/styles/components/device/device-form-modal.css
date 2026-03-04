@@ -1,0 +1,131 @@
+/* ============================================================
+   DEVICE FORM MODAL
+============================================================ */
+
+.fc-device-modal {
+  padding: var(--fc-s4);
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.fc-device-modal.is-edit {
+  background: rgba(2, 132, 199, 0.2);
+}
+
+.fc-device-modal__content {
+  width: min(680px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  padding: var(--fc-s5);
+  border: 1px solid rgba(14, 116, 144, 0.24);
+  background: linear-gradient(
+      155deg,
+      rgba(236, 253, 245, 0.84),
+      rgba(239, 246, 255, 0.96)
+    ),
+    var(--fc-bg-card);
+  box-shadow:
+    0 28px 44px rgba(15, 23, 42, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.55) inset;
+  display: grid;
+  gap: var(--fc-s4);
+}
+
+.fc-device-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--fc-s3);
+}
+
+.fc-device-modal__title-wrap {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.fc-device-modal__icon {
+  color: #0f766e;
+  font-size: 1.2rem;
+  margin-bottom: 0.15rem;
+}
+
+.fc-device-modal__title {
+  margin: 0;
+  font-size: clamp(1.1rem, 1rem + 0.4vw, 1.35rem);
+  font-family: var(--fc-font-display);
+  letter-spacing: 0.01em;
+  color: #0f172a;
+}
+
+.fc-device-modal__subtitle {
+  margin: 0;
+  color: #475569;
+  font-size: 0.85rem;
+}
+
+.fc-device-modal__form {
+  gap: var(--fc-s4);
+}
+
+.fc-device-modal__context {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fc-s2);
+  border: 1px solid rgba(14, 116, 144, 0.2);
+  border-radius: var(--fc-r-md);
+  padding: 0.5rem 0.7rem;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.fc-device-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--fc-s3);
+}
+
+.fc-device-modal__readonly-value {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0.62rem 0.75rem;
+  border: 1px solid rgba(14, 116, 144, 0.24);
+  border-radius: var(--fc-r-md);
+  background: rgba(15, 23, 42, 0.04);
+  color: #0f172a;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+.fc-device-modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--fc-s2);
+}
+
+.fc-device-modal__wifi {
+  border: 1px solid rgba(14, 116, 144, 0.2);
+  border-radius: var(--fc-r-md);
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fc-device-modal__wifi-title {
+  margin-bottom: 0.1rem;
+}
+
+@media (max-width: 680px) {
+  .fc-device-modal {
+    padding: var(--fc-s2);
+  }
+
+  .fc-device-modal__content {
+    padding: var(--fc-s4);
+    max-height: calc(100vh - 1rem);
+  }
+
+  .fc-device-modal__grid {
+    grid-template-columns: 1fr;
+  }
+}

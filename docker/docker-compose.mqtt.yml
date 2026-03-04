@@ -1,0 +1,14 @@
+services:
+  mqtt-broker:
+    image: iegomez/mosquitto-go-auth:latest
+    container_name: farmcast-mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/etc/mosquitto/mosquitto.conf:ro
+      - ./aclfile:/etc/mosquitto/aclfile:ro
+      - ../mqtt/data:/var/lib/mosquitto
+      - ../mqtt/log:/var/log/mosquitto
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

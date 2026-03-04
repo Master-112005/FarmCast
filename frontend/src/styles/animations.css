@@ -1,0 +1,174 @@
+/* ============================================================
+   FarmCast Enterprise – Motion System
+   animations.css (CRITICAL)
+   Philosophy:
+   - Subtle
+   - Predictable
+   - Accessible
+   - Opt-in only
+============================================================ */
+
+/* ============================================================
+   GLOBAL SAFETY NET
+============================================================ */
+
+/* Nothing animates unless explicitly opted-in */
+* {
+  animation-duration: 0s;
+  transition-duration: 0s;
+}
+
+/* ============================================================
+   OPT-IN TRANSITION UTILITIES
+============================================================ */
+
+.u-transition {
+  transition-property: background-color, color, box-shadow, transform, opacity;
+  transition-duration: var(--fc-transition-normal);
+  transition-timing-function: ease;
+}
+
+.u-transition-fast {
+  transition-property: background-color, color, box-shadow, transform, opacity;
+  transition-duration: var(--fc-transition-fast);
+  transition-timing-function: ease;
+}
+
+.u-transition-slow {
+  transition-property: background-color, color, box-shadow, transform, opacity;
+  transition-duration: var(--fc-transition-slow);
+  transition-timing-function: ease;
+}
+
+/* ============================================================
+   HOVER & FOCUS MOTION (SAFE ONLY)
+============================================================ */
+
+.u-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.u-hover-scale:hover {
+  transform: scale(1.03);
+}
+
+.u-focus-ring:focus-visible {
+  outline: 2px solid var(--fc-color-secondary);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   FADE ANIMATIONS (NON-LAYOUT)
+============================================================ */
+
+@keyframes fc-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fc-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.u-fade-in {
+  animation: fc-fade-in var(--fc-transition-normal) ease forwards;
+}
+
+.u-fade-out {
+  animation: fc-fade-out var(--fc-transition-normal) ease forwards;
+}
+
+/* ============================================================
+   SLIDE ANIMATIONS (TRANSFORM ONLY)
+============================================================ */
+
+@keyframes fc-slide-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fc-slide-down {
+  from { transform: translateY(-8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.u-slide-up {
+  animation: fc-slide-up var(--fc-transition-normal) ease forwards;
+}
+
+.u-slide-down {
+  animation: fc-slide-down var(--fc-transition-normal) ease forwards;
+}
+
+/* ============================================================
+   SCALE ANIMATION (MODALS / POPOVERS)
+============================================================ */
+
+@keyframes fc-scale-in {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.u-scale-in {
+  animation: fc-scale-in var(--fc-transition-fast) ease forwards;
+}
+
+/* ============================================================
+   LOADING SPINNER (GPU SAFE)
+============================================================ */
+
+@keyframes fc-spin {
+  to { transform: rotate(360deg); }
+}
+
+.u-spin {
+  animation: fc-spin 1s linear infinite;
+}
+
+/* ============================================================
+   SKELETON LOADING (OPTIONAL)
+============================================================ */
+
+@keyframes fc-pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.u-pulse {
+  animation: fc-pulse 1.4s ease-in-out infinite;
+}
+
+/* ============================================================
+   VISIBILITY HELPERS
+============================================================ */
+
+.u-animate-enter {
+  opacity: 0;
+}
+
+.u-animate-enter-active {
+  opacity: 1;
+  transition: opacity var(--fc-transition-normal) ease;
+}
+
+/* ============================================================
+   REDUCED MOTION COMPLIANCE (MANDATORY)
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .u-hover-lift:hover,
+  .u-hover-scale:hover {
+    transform: none !important;
+  }
+}

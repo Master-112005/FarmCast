@@ -1,0 +1,457 @@
+{
+  "disease": [
+    {
+      "model_name": "disease",
+      "version": "disease_v1.0.0",
+      "timestamp_utc": "2026-02-15T20:57:52.558423+00:00",
+      "dataset_hash": "acdea427ff6b5c5aeedd9cadb64b7c86c618a8dfb8c3bc4f959acf7917174329",
+      "metrics": {
+        "accuracy": 0.9908675799086758,
+        "precision_macro": 0.9901953242745811,
+        "recall_macro": 0.9899510650082678,
+        "f1_macro": 0.9899959288628685
+      },
+      "config_snapshot": {
+        "runtime": {
+          "random_seed": 42,
+          "python_hash_seed": "42",
+          "enforce_determinism": true
+        },
+        "paths": {
+          "raw": {
+            "yield": "data/raw/yield/Yield_Data.csv",
+            "price": "data/raw/prices/Price_Data.csv",
+            "weather": "data/raw/weather/Weather_Data.csv",
+            "disease_images": "data/raw/disease_images"
+          },
+          "validated": {
+            "yield": "data/validated/yield_validated.csv",
+            "price": "data/validated/price_validated.csv"
+          },
+          "processed": {
+            "yield": "data/processed/yield_features.csv",
+            "price": "data/processed/price_features.csv"
+          },
+          "snapshots": {
+            "yield": "data/snapshots/yield",
+            "price": "data/snapshots/price",
+            "disease": "data/snapshots/disease"
+          },
+          "artifacts": {
+            "root": "data/artifacts",
+            "evaluation": "data/artifacts/evaluation"
+          },
+          "models": {
+            "disease_staging": "models/disease/staging",
+            "disease_production": "models/disease/production",
+            "yield_staging": "models/yield/staging",
+            "yield_production": "models/yield/production",
+            "price_staging": "models/price/staging",
+            "price_production": "models/price/production"
+          },
+          "registry": {
+            "metadata_json": "models/registry/model_registry.json"
+          },
+          "schemas": {
+            "yield": "configs/schemas/yield_schema.yaml",
+            "price": "configs/schemas/price_schema.yaml",
+            "feature": "configs/schemas/feature_schema.yaml",
+            "registry": "configs/schemas/registry_schema.yaml"
+          }
+        },
+        "disease": {
+          "min_images_per_class": 300,
+          "max_corrupted_images": 40,
+          "stratified_split": true,
+          "train_fraction": 0.8,
+          "image_size": [
+            224,
+            224
+          ],
+          "batch_size": 32,
+          "epochs": 10,
+          "backbone_trainable_fraction": 0.2,
+          "mixed_precision": true,
+          "optimizer": {
+            "learning_rate": 0.0005
+          },
+          "thresholds": {
+            "accuracy_min": 0.88,
+            "recall_min": 0.9
+          },
+          "inference": {
+            "top_k": 3
+          }
+        },
+        "yield": {
+          "min_rows": 300,
+          "target_column": "yield_per_hectare",
+          "time_column": "year",
+          "train_fraction": 0.8,
+          "leakage_forbidden": [
+            "fertilizer_recommendation",
+            "realized_market_price"
+          ],
+          "season_duration_days": {
+            "kharif": 120,
+            "rabi": 140,
+            "zaid": 90,
+            "whole_year": 365
+          },
+          "features": {
+            "categorical": [
+              "state",
+              "district",
+              "crop_type",
+              "soil_type",
+              "season"
+            ],
+            "numerical": [
+              "rainfall_mm_total",
+              "avg_temperature_c",
+              "avg_humidity",
+              "Area",
+              "year",
+              "crop_duration_days"
+            ]
+          },
+          "optuna": {
+            "enabled": true,
+            "n_trials": 8,
+            "timeout_seconds": 900
+          },
+          "lightgbm": {
+            "objective": "regression",
+            "metric": "l2",
+            "num_leaves": 64,
+            "learning_rate": 0.05,
+            "n_estimators": 600,
+            "subsample": 0.9,
+            "colsample_bytree": 0.9,
+            "reg_lambda": 1.0,
+            "min_child_samples": 20,
+            "random_state": 42
+          },
+          "early_stopping_rounds": 80,
+          "thresholds": {
+            "r2_min": 0.85,
+            "mae_max": 8.0
+          }
+        },
+        "price": {
+          "min_rows": 40,
+          "target_column": "price_per_quintal",
+          "time_column": "week_start",
+          "train_fraction": 0.8,
+          "calendar": {
+            "year_column": "year",
+            "week_column": "week_number",
+            "week_start_format": "%G-W%V-%u",
+            "week_start_day": 1
+          },
+          "features": {
+            "categorical": [
+              "state",
+              "district",
+              "crop_type",
+              "season",
+              "mandi_id"
+            ],
+            "numerical": [
+              "rainfall_mm",
+              "demand_index",
+              "seasonal_sin",
+              "seasonal_cos",
+              "rainfall_x_demand"
+            ]
+          },
+          "lag_features": [
+            1,
+            2,
+            4
+          ],
+          "rolling_window": 4,
+          "optuna": {
+            "enabled": true,
+            "n_trials": 5,
+            "timeout_seconds": 900
+          },
+          "lightgbm": {
+            "objective": "regression",
+            "metric": "l2",
+            "num_leaves": 63,
+            "learning_rate": 0.05,
+            "n_estimators": 700,
+            "subsample": 0.9,
+            "colsample_bytree": 0.9,
+            "reg_lambda": 1.0,
+            "min_child_samples": 20,
+            "random_state": 42
+          },
+          "early_stopping_rounds": 80,
+          "thresholds": {
+            "mape_max": 12.0,
+            "mae_max": 150.0
+          }
+        },
+        "registry": {
+          "version_prefix": {
+            "disease": "disease_v",
+            "yield": "yield_v",
+            "price": "price_v"
+          },
+          "promotion": {
+            "objectives": {
+              "disease": {
+                "accuracy": "max",
+                "recall_macro": "max"
+              },
+              "yield": {
+                "r2": "max",
+                "mae": "min"
+              },
+              "price": {
+                "mape": "min",
+                "mae": "min"
+              }
+            }
+          },
+          "latency_benchmark": {
+            "iterations": 25
+          }
+        }
+      },
+      "latency_benchmark_ms": 125.1875879999716,
+      "artifact_path": "models\\disease\\staging\\disease_v1.0.0",
+      "stage": "production"
+    }
+  ],
+  "yield": [
+    {
+      "model_name": "yield",
+      "version": "yield_v1.0.0",
+      "timestamp_utc": "2026-02-15T18:12:23.558608+00:00",
+      "dataset_hash": "0e83b58c1ca75eefdc632137d54275798abd6344a0ab9624def2287956758661",
+      "metrics": {
+        "r2": 0.9977275675412633,
+        "mae": 0.3215433520275229,
+        "rmse": 0.6922468549605585,
+        "mape": 16.583420635042614
+      },
+      "config_snapshot": {
+        "runtime": {
+          "random_seed": 42,
+          "python_hash_seed": "42",
+          "enforce_determinism": true
+        },
+        "paths": {
+          "raw": {
+            "yield": "data/raw/yield/Yield_Data.csv",
+            "price": "data/raw/prices/Price_Data.csv",
+            "weather": "data/raw/weather/Weather_Data.csv",
+            "disease_images": "data/raw/disease_images"
+          },
+          "validated": {
+            "yield": "data/validated/yield_validated.csv",
+            "price": "data/validated/price_validated.csv"
+          },
+          "processed": {
+            "yield": "data/processed/yield_features.csv",
+            "price": "data/processed/price_features.csv"
+          },
+          "snapshots": {
+            "yield": "data/snapshots/yield",
+            "price": "data/snapshots/price",
+            "disease": "data/snapshots/disease"
+          },
+          "artifacts": {
+            "root": "data/artifacts",
+            "evaluation": "data/artifacts/evaluation"
+          },
+          "models": {
+            "disease_staging": "models/disease/staging",
+            "disease_production": "models/disease/production",
+            "yield_staging": "models/yield/staging",
+            "yield_production": "models/yield/production",
+            "price_staging": "models/price/staging",
+            "price_production": "models/price/production"
+          },
+          "registry": {
+            "metadata_json": "models/registry/model_registry.json"
+          },
+          "schemas": {
+            "yield": "configs/schemas/yield_schema.yaml",
+            "price": "configs/schemas/price_schema.yaml",
+            "feature": "configs/schemas/feature_schema.yaml",
+            "registry": "configs/schemas/registry_schema.yaml"
+          }
+        },
+        "disease": {
+          "min_images_per_class": 300,
+          "max_corrupted_images": 40,
+          "stratified_split": true,
+          "train_fraction": 0.8,
+          "image_size": [
+            224,
+            224
+          ],
+          "batch_size": 32,
+          "epochs": 30,
+          "backbone_trainable_fraction": 0.3,
+          "mixed_precision": true,
+          "optimizer": {
+            "learning_rate": 0.0005
+          },
+          "thresholds": {
+            "accuracy_min": 0.88,
+            "recall_min": 0.9
+          },
+          "inference": {
+            "top_k": 3
+          }
+        },
+        "yield": {
+          "min_rows": 300,
+          "target_column": "yield_per_hectare",
+          "time_column": "year",
+          "train_fraction": 0.8,
+          "leakage_forbidden": [
+            "fertilizer_recommendation",
+            "realized_market_price"
+          ],
+          "season_duration_days": {
+            "kharif": 120,
+            "rabi": 140,
+            "zaid": 90,
+            "whole_year": 365
+          },
+          "features": {
+            "categorical": [
+              "state",
+              "district",
+              "crop_type",
+              "soil_type",
+              "season"
+            ],
+            "numerical": [
+              "rainfall_mm_total",
+              "avg_temperature_c",
+              "avg_humidity",
+              "Area",
+              "year",
+              "crop_duration_days"
+            ]
+          },
+          "optuna": {
+            "enabled": true,
+            "n_trials": 8,
+            "timeout_seconds": 900
+          },
+          "lightgbm": {
+            "objective": "regression",
+            "metric": "l2",
+            "num_leaves": 64,
+            "learning_rate": 0.05,
+            "n_estimators": 600,
+            "subsample": 0.9,
+            "colsample_bytree": 0.9,
+            "reg_lambda": 1.0,
+            "min_child_samples": 20,
+            "random_state": 42
+          },
+          "early_stopping_rounds": 80,
+          "thresholds": {
+            "r2_min": 0.85,
+            "mae_max": 8.0
+          }
+        },
+        "price": {
+          "min_rows": 40,
+          "target_column": "price_per_quintal",
+          "time_column": "week_start",
+          "train_fraction": 0.8,
+          "calendar": {
+            "year_column": "year",
+            "week_column": "week_number",
+            "week_start_format": "%G-W%V-%u",
+            "week_start_day": 1
+          },
+          "features": {
+            "categorical": [
+              "state",
+              "district",
+              "crop_type",
+              "season",
+              "mandi_id"
+            ],
+            "numerical": [
+              "rainfall_mm",
+              "demand_index",
+              "seasonal_sin",
+              "seasonal_cos",
+              "rainfall_x_demand"
+            ]
+          },
+          "lag_features": [
+            1,
+            2,
+            4
+          ],
+          "rolling_window": 4,
+          "optuna": {
+            "enabled": true,
+            "n_trials": 5,
+            "timeout_seconds": 900
+          },
+          "lightgbm": {
+            "objective": "regression",
+            "metric": "l2",
+            "num_leaves": 63,
+            "learning_rate": 0.05,
+            "n_estimators": 700,
+            "subsample": 0.9,
+            "colsample_bytree": 0.9,
+            "reg_lambda": 1.0,
+            "min_child_samples": 20,
+            "random_state": 42
+          },
+          "early_stopping_rounds": 80,
+          "thresholds": {
+            "mape_max": 12.0,
+            "mae_max": 150.0
+          }
+        },
+        "registry": {
+          "version_prefix": {
+            "disease": "disease_v",
+            "yield": "yield_v",
+            "price": "price_v"
+          },
+          "promotion": {
+            "objectives": {
+              "disease": {
+                "accuracy": "max",
+                "recall_macro": "max"
+              },
+              "yield": {
+                "r2": "max",
+                "mae": "min"
+              },
+              "price": {
+                "mape": "min",
+                "mae": "min"
+              }
+            }
+          },
+          "latency_benchmark": {
+            "iterations": 25
+          }
+        }
+      },
+      "latency_benchmark_ms": 5.068827999930363,
+      "artifact_path": "models\\yield\\staging\\yield_v1.0.0",
+      "stage": "production"
+    }
+  ],
+  "price": []
+}

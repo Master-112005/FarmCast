@@ -1,0 +1,37 @@
+/* ============================================================
+   RESPONSIVE HELPERS
+============================================================ */
+
+@media (max-width: 640px) {
+  .fc-hide-sm {
+    display: none;
+  }
+
+  .fc-topbar {
+    gap: var(--fc-s3);
+    width: calc(100% - (var(--fc-s5) * 2));
+    margin-top: var(--fc-s3);
+  }
+
+  .fc-topbar__brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .fc-topbar__search {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .fc-view-switch {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .fc-view-switch__btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+}
+

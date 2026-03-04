@@ -1,0 +1,46 @@
+﻿dataset: price
+strict_columns: true
+min_rows: 40
+max_null_fraction: 0.05
+required_columns:
+  - state
+  - district
+  - crop_type
+  - season
+  - week_number
+  - rainfall_mm
+  - demand_index
+  - price_per_quintal
+  - mandi_name
+  - year
+columns:
+  state:
+    dtype: string
+    nullable: false
+  district:
+    dtype: string
+    nullable: false
+  crop_type:
+    dtype: string
+    nullable: false
+  season:
+    dtype: string
+    nullable: false
+  week_number:
+    dtype: float
+    nullable: false
+  rainfall_mm:
+    dtype: float
+    nullable: false
+  demand_index:
+    dtype: float
+    nullable: false
+  price_per_quintal:
+    dtype: float
+    nullable: false
+  mandi_name:
+    dtype: string
+    nullable: false
+  year:
+    dtype: float
+    nullable: false

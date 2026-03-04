@@ -1,0 +1,57 @@
+﻿dataset: yield
+strict_columns: true
+min_rows: 300
+max_null_fraction: 0.05
+required_columns:
+  - state
+  - district
+  - crop_type
+  - soil_type
+  - season
+  - rainfall_mm_total
+  - avg_temperature_c
+  - avg_humidity
+  - year
+  - yield_per_hectare
+  - Area
+  - Yield
+columns:
+  state:
+    dtype: string
+    nullable: false
+  district:
+    dtype: string
+    nullable: false
+  crop_type:
+    dtype: string
+    nullable: false
+  soil_type:
+    dtype: string
+    nullable: true
+  season:
+    dtype: string
+    nullable: true
+  rainfall_mm_total:
+    dtype: float
+    nullable: true
+  avg_temperature_c:
+    dtype: float
+    nullable: true
+  avg_humidity:
+    dtype: float
+    nullable: true
+  year:
+    dtype: float
+    nullable: false
+  yield_per_hectare:
+    dtype: float
+    nullable: true
+  Area:
+    dtype: float
+    nullable: true
+  Yield:
+    dtype: float
+    nullable: true
+leakage_forbidden:
+  - fertilizer_recommendation
+  - realized_market_price

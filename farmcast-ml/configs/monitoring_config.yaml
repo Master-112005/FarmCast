@@ -1,0 +1,14 @@
+monitoring:
+  drift:
+    psi:
+      bins: 10
+      epsilon: 1.0e-6
+      warning_threshold: 0.10
+      alert_threshold: 0.20
+  performance:
+    rolling_window_size: 50
+    max_rolling_mae:
+      yield: 8.0
+      price: 150.0
+  alerts:
+    fail_fast_on_alert: false

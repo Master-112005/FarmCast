@@ -1,0 +1,28 @@
+﻿/* Component styles manifest (modularized) */
+/* Shared primitives */
+@import "./components/shared/alerts.css";
+@import "./components/shared/buttons.css";
+@import "./components/shared/cards.css";
+@import "./components/shared/empty-states.css";
+@import "./components/shared/forms.css";
+@import "./components/shared/inputs.css";
+@import "./components/shared/modal.css";
+@import "./components/shared/responsive-helpers.css";
+@import "./components/shared/status-badges.css";
+
+/* Feature/component groups */
+@import "./components/admin/admin-panel.css";
+@import "./components/buttons/action-buttons.css";
+@import "./components/chat/chat-panel.css";
+@import "./components/device/device-card.css";
+@import "./components/device/device-delete-modal.css";
+@import "./components/device/device-form-modal.css";
+@import "./components/device/device-provision-wizard.css";
+@import "./components/layout/card-structure.css";
+@import "./components/layout/layout-components.css";
+@import "./components/navigation/view-switch.css";
+@import "./components/notifications/notification-panel.css";
+@import "./components/profile/profile-image.css";
+@import "./components/profile/profile-metadata.css";
+@import "./components/results/confidence-bar.css";
+@import "./components/results/result-panels.css";

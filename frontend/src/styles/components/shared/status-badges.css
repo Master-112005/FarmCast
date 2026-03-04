@@ -1,0 +1,55 @@
+/* ============================================================
+   STATUS & BADGES
+============================================================ */
+
+.fc-badge,
+.fc-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--fc-r-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  background: #f3f4f6;
+  color: var(--fc-text-main);
+}
+
+.fc-badge--success,
+.fc-status--active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.fc-badge--warning,
+.fc-status--warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.fc-badge--danger,
+.fc-status--danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.fc-badge--info,
+.fc-status--info {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.fc-badge--error,
+.fc-status--error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.fc-badge--neutral,
+.fc-status--neutral,
+.fc-status--inactive {
+  background: #f3f4f6;
+  color: #374151;
+}
+
