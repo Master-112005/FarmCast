@@ -1,23 +1,3 @@
-/**
- * src/modules/soil/soil.service.js
- * ------------------------------------------------------
- * Soil Domain Service
- *
- * CRITICAL FILE (SOIL DATA & ANALYTICS CORE)
- *
- * Responsibilities:
- * - Persist soil telemetry records
- * - Enforce device ownership
- * - Provide clean soil history for dashboards & ML
- *
- * Rules:
- * - NO Express req/res usage
- * - NO response shaping
- * - MUST enforce device ownership
- *
- * If this file is wrong → analytics & predictions degrade
- */
-
 "use strict";
 
 const db = require("../../models");
@@ -26,9 +6,7 @@ const { ERROR_CODES } = require("../../utils/constants");
 
 const { Op } = db.Sequelize;
 
-/* ======================================================
-   DOMAIN ERRORS
-====================================================== */
+
 
 const SOIL_ERRORS = Object.freeze({
   DEVICE_NOT_FOUND: "DEVICE_NOT_FOUND",
@@ -51,9 +29,7 @@ const domainError = (
   return err;
 };
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 /**
  * Ensure device exists and is owned by user
@@ -83,9 +59,7 @@ const getOwnedDevice = async (
   return device;
 };
 
-/* ======================================================
-   CREATE SOIL RECORD
-====================================================== */
+
 
 /**
  * Create a new soil telemetry record
@@ -215,9 +189,7 @@ const createSoilRecord = async (
   return record;
 };
 
-/* ======================================================
-   SOIL HISTORY
-====================================================== */
+
 
 /**
  * Fetch soil history for a device
@@ -265,9 +237,7 @@ const getSoilHistory = async (
   return records;
 };
 
-/* ======================================================
-   LATEST SOIL SNAPSHOT
-====================================================== */
+
 
 /**
  * Fetch latest soil record for a device
@@ -299,9 +269,7 @@ const getLatestSoilRecord = async (
   return record;
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   createSoilRecord,

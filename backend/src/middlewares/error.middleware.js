@@ -1,11 +1,3 @@
-/**
- * src/middlewares/error.middleware.js
- * ------------------------------------------------------
- * Global Error Handler (Enterprise Hardened)
- *
- * CRITICAL FILE (FAILURE CONTAINMENT & API CONTRACT)
- */
-
 "use strict";
 
 const logger = require("../utils/logger");
@@ -14,9 +6,7 @@ const {
   HTTP_STATUS,
 } = require("../utils/constants");
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 const isValidHttpStatus = (status) =>
   Number.isInteger(status) &&
@@ -111,9 +101,7 @@ const normalizeError = (err = {}) => {
   return { status, code, message };
 };
 
-/* ======================================================
-   GLOBAL ERROR HANDLER
-====================================================== */
+
 
 const errorMiddleware = (
   err,
@@ -187,9 +175,7 @@ const errorMiddleware = (
   }
 };
 
-/* ======================================================
-   EXPORTS (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze(
   errorMiddleware

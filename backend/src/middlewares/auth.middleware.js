@@ -1,11 +1,3 @@
-/**
- * src/middlewares/auth.middleware.js
- * ------------------------------------------------------
- * Authentication & Authorization Middleware (Enterprise Hardened)
- *
- * CRITICAL FILE (SECURITY GATEKEEPER)
- */
-
 "use strict";
 
 const env = require("../config/env");
@@ -19,9 +11,7 @@ const {
   verifyAccessToken,
 } = require("../utils/token");
 
-/* ======================================================
-   SAFETY CHECKS (FAIL FAST)
-====================================================== */
+
 
 if (!env?.AUTH?.JWT_SECRET) {
   throw new Error("JWT secret not configured");
@@ -31,9 +21,7 @@ if (!db?.User) {
   throw new Error("User model not initialized");
 }
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 /**
  * Extract Bearer token from Authorization header
@@ -68,9 +56,7 @@ const authError = (code, message) => {
   return err;
 };
 
-/* ======================================================
-   AUTHENTICATION
-====================================================== */
+
 
 const authenticate = async (req, _res, next) => {
   try {
@@ -117,9 +103,7 @@ const authenticate = async (req, _res, next) => {
   }
 };
 
-/* ======================================================
-   ROLE-BASED ACCESS CONTROL
-====================================================== */
+
 
 const authorize =
   (...allowedRoles) =>
@@ -155,9 +139,7 @@ const authorize =
     }
   };
 
-/* ======================================================
-   EXPORTS (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze({
   authenticate,

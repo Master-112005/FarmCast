@@ -1,31 +1,14 @@
-/**
- * ProfileActions.jsx
- * FarmCast – Enterprise Profile Action Hub
- *
- * Responsibilities:
- * - Provide safe profile-level actions
- * - Enforce RBAC at UI boundary
- * - Protect destructive operations
- *
- * ❌ No backend logic
- * ❌ No routing
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const confirmAction = (message, action) => {
   const ok = window.confirm(message);
   if (ok) action();
 };
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const ProfileActions = ({
   currentUserRole = "user",
@@ -45,14 +28,14 @@ const ProfileActions = ({
       className="fc-card"
       aria-label="Profile actions"
     >
-      {/* ================= HEADER ================= */}
+      
       <header className="fc-card__header">
         <h2 className="fc-card__title">
           Profile Actions
         </h2>
       </header>
 
-      {/* ================= ACTIONS ================= */}
+      
       <div className="fc-card__actions fc-card__actions--stacked">
 
         {/* Edit Profile */}
@@ -137,7 +120,7 @@ const ProfileActions = ({
         )}
       </div>
 
-      {/* ================= LOADING ================= */}
+      
       {isLoading && (
         <div
           className="fc-loading"
@@ -152,9 +135,7 @@ const ProfileActions = ({
   );
 };
 
-/* ======================================================
-   PROP TYPES
-====================================================== */
+
 
 ProfileActions.propTypes = {
   currentUserRole: PropTypes.oneOf([

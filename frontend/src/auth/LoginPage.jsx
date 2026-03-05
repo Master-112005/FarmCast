@@ -1,21 +1,3 @@
-/**
- * LoginPage.jsx
- * ------------------------------------------------------
- * FarmCast – Enterprise Login Screen
- *
- * Tier: 0 (Security Entry Point)
- *
- * Responsibilities:
- * - Collect credentials
- * - Trigger AuthContext login
- * - Handle UX states
- *
- * Rules:
- * - No backend calls
- * - No routing logic
- * - No token handling
- */
-
 "use strict";
 
 import React, {
@@ -26,15 +8,11 @@ import React, {
 
 import { Link } from "react-router-dom";
 
-/* ======================================================
-   CONTEXT
-====================================================== */
+
 
 import { useAuth } from "../context/AuthContext";
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const LoginPage = () => {
   const { login, loading } = useAuth();
@@ -78,9 +56,7 @@ const LoginPage = () => {
     }
   };
 
-  /* ======================================================
-     RENDER
-  ====================================================== */
+  
 
   return (
     <main

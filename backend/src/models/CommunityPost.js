@@ -1,9 +1,3 @@
-/**
- * src/models/CommunityPost.js
- * ------------------------------------------------------
- * Community Post Model
- */
-
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {

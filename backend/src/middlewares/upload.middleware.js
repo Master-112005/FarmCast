@@ -1,14 +1,3 @@
-/**
- * src/middlewares/upload.middleware.js
- * ------------------------------------------------------
- * File Upload Middleware (Images)
- *
- * Responsibilities:
- * - Enforce file type and size limits
- * - Store uploads in a safe, namespaced directory
- * - Normalize upload errors for global error handler
- */
-
 "use strict";
 
 const path = require("path");
@@ -18,9 +7,7 @@ const multer = require("multer");
 
 const env = require("../config/env");
 
-/* ======================================================
-   CONSTANTS
-====================================================== */
+
 
 const ALLOWED_MIME = env.UPLOADS.ALLOWED_MIME;
 const MAX_SIZE_BYTES =
@@ -32,9 +19,7 @@ const EXT_BY_MIME = Object.freeze({
   "image/webp": ".webp",
 });
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const ensureDir = (dir) => {
   fs.mkdirSync(dir, { recursive: true });
@@ -110,9 +95,7 @@ const createUploader = (
   return { middleware, resolveDir };
 };
 
-/* ======================================================
-   PUBLIC MIDDLEWARE
-====================================================== */
+
 
 const uploadProfileImage =
   createUploader("profiles");

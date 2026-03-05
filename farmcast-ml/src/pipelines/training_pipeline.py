@@ -36,9 +36,6 @@ train_yield_model = _yield_trainer.train_yield_model
 build_yield_feature_columns = _yield_utils.build_feature_columns
 
 
-# =====================================================
-# HELPERS
-# =====================================================
 def _snapshot_config(config: dict[str, Any]) -> dict[str, Any]:
     return ConfigLoader().snapshot(config)
 
@@ -67,9 +64,6 @@ def _register_and_promote(
     return {"version": candidate["version"], "promoted": promoted}
 
 
-# =====================================================
-# YIELD TRAINING
-# =====================================================
 def _train_yield(config: dict[str, Any], registry: ModelRegistry, logger) -> dict[str, Any]:
     _stage_banner(logger, "DATASET BUILD")
 
@@ -128,9 +122,6 @@ def _train_yield(config: dict[str, Any], registry: ModelRegistry, logger) -> dic
     return {"task": "yield", "metrics": result.metrics, **registry_result}
 
 
-# =====================================================
-# PRICE TRAINING
-# =====================================================
 def _train_price(config: dict[str, Any], registry: ModelRegistry, logger) -> dict[str, Any]:
     _stage_banner(logger, "DATASET BUILD")
 
@@ -189,9 +180,6 @@ def _train_price(config: dict[str, Any], registry: ModelRegistry, logger) -> dic
     return {"task": "price", "metrics": result.metrics, **registry_result}
 
 
-# =====================================================
-# DISEASE TRAINING
-# =====================================================
 def _train_disease(config: dict[str, Any], registry: ModelRegistry, logger) -> dict[str, Any]:
     _stage_banner(logger, "DATASET BUILD")
 
@@ -268,9 +256,6 @@ def _train_disease(config: dict[str, Any], registry: ModelRegistry, logger) -> d
     return {"task": "disease", "metrics": result.metrics, **registry_result}
 
 
-# =====================================================
-# ENTRYPOINT
-# =====================================================
 def run_training(task: str, config_path: str) -> list[dict[str, Any]]:
     loader = ConfigLoader()
     config = loader.load_training_config(config_path)

@@ -1,28 +1,10 @@
-/**
- * src/config/cors.js
- * ------------------------------------------------------
- * CORS Configuration
- *
- * CRITICAL FILE (FRONTEND ↔ BACKEND GATEWAY)
- *
- * Responsibilities:
- * - Securely allow frontend access
- * - Support JWT header-based authentication
- * - Handle browser preflight requests safely
- * - Prevent accidental data exposure
- *
- * If this file is misconfigured → frontend will break
- */
-
 "use strict";
 
 const cors = require("cors");
 const env = require("./env");
 const logger = require("../utils/logger");
 
-/* ======================================================
-   ALLOWED ORIGINS
-====================================================== */
+
 
 /**
  * Normalize allowed origins.
@@ -32,9 +14,7 @@ const allowedOrigins = env.CORS.ORIGIN.split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
 
-/* ======================================================
-   CORS OPTIONS
-====================================================== */
+
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -77,8 +57,6 @@ const corsOptions = {
   maxAge: 86400, // Cache preflight response for 24 hours
 };
 
-/* ======================================================
-   EXPORT MIDDLEWARE
-====================================================== */
+
 
 module.exports = cors(corsOptions);

@@ -1,8 +1,3 @@
-/**
- * DiseaseResultCard.jsx
- * FarmCast - Crop disease detection result card
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 

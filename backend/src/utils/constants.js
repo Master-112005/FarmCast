@@ -1,36 +1,13 @@
-/**
- * src/utils/constants.js
- * ------------------------------------------------------
- * Global Application Constants
- *
- * CRITICAL FILE (DOMAIN & SECURITY INVARIANTS)
- *
- * Responsibilities:
- * - Define immutable system-wide constants
- * - Centralize roles, permissions, limits, statuses
- * - Prevent magic strings & duplicated values
- *
- * Rules:
- * - NO runtime logic
- * - NO environment variables
- * - NO imports from business layers
- * - SAFE to import anywhere
- */
-
 "use strict";
 
-/* ======================================================
-   APPLICATION METADATA
-====================================================== */
+
 
 const APP = Object.freeze({
   NAME: "FarmCast",
   VERSION: "1.0.0",
 });
 
-/* ======================================================
-   USER ROLES & ACCESS CONTROL
-====================================================== */
+
 
 /**
  * Role model (LOCKED)
@@ -47,9 +24,7 @@ const ROLES = Object.freeze({
   ADMIN: "admin",
 });
 
-/* ======================================================
-   AUTHENTICATION & SECURITY
-====================================================== */
+
 
 const AUTH = Object.freeze({
   TOKEN_TYPE: "Bearer",
@@ -59,9 +34,7 @@ const AUTH = Object.freeze({
   PASSWORD_MIN_LENGTH: 8,
 });
 
-/* ======================================================
-   API RESPONSE CODES & TYPES
-====================================================== */
+
 
 /**
  * Standardized error codes returned by API
@@ -79,10 +52,7 @@ const ERROR_CODES = Object.freeze({
   INTERNAL_ERROR: "INTERNAL_ERROR",
 });
 
-/* ======================================================
-   HTTP STATUS REFERENCES
-   (Semantic use only, Express sets actual status)
-====================================================== */
+
 
 const HTTP_STATUS = Object.freeze({
   OK: 200,
@@ -100,9 +70,7 @@ const HTTP_STATUS = Object.freeze({
   NOT_IMPLEMENTED: 501,
 });
 
-/* ======================================================
-   FILE UPLOAD CONSTRAINTS
-====================================================== */
+
 
 /**
  * Must match frontend validation exactly
@@ -118,9 +86,7 @@ const UPLOADS = Object.freeze({
   },
 });
 
-/* ======================================================
-   DEVICE & SOIL DOMAIN CONSTANTS
-====================================================== */
+
 
 const DEVICE = Object.freeze({
   TYPES: Object.freeze({
@@ -157,9 +123,7 @@ const ALERT = Object.freeze({
   }),
 });
 
-/* ======================================================
-   PREDICTION & ANALYTICS
-====================================================== */
+
 
 const PREDICTION = Object.freeze({
   TYPE: Object.freeze({
@@ -175,18 +139,14 @@ const PREDICTION = Object.freeze({
   }),
 });
 
-/* ======================================================
-   PAGINATION & QUERY LIMITS
-====================================================== */
+
 
 const LIMITS = Object.freeze({
   DEFAULT_PAGE_SIZE: 20,
   MAX_PAGE_SIZE: 100,
 });
 
-/* ======================================================
-   SYSTEM SAFETY
-====================================================== */
+
 
 const SYSTEM = Object.freeze({
   HEALTH_STATUS: Object.freeze({
@@ -213,9 +173,7 @@ const AUDIT = Object.freeze({
   }),
 });
 
-/* ======================================================
-   FINAL EXPORT (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze({
   APP,

@@ -15,9 +15,6 @@ from src.core.hashing import hash_directory
 from src.core.logging import get_logger
 
 
-# =====================================================
-# LOGGER
-# =====================================================
 logger = get_logger(__name__)
 
 SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
@@ -100,9 +97,6 @@ def _collect_class_dirs(dataset_root: Path) -> list[tuple[str, Path]]:
     return flat
 
 
-# =====================================================
-# MAIN DATASET BUILDER
-# =====================================================
 def build_disease_dataset(
     root_dir: str | Path,
     min_images_per_class: int,

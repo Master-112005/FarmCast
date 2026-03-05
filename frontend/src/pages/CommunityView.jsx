@@ -1,14 +1,3 @@
-/**
- * CommunityView.jsx
- * ------------------------------------------------------
- * FarmCast - Community Feed (Instagram-style)
- *
- * Responsibilities:
- * - Display a modern photo feed
- * - Open post composer from "+" action
- * - Allow owners to delete their posts
- */
-
 "use strict";
 
 import React, {

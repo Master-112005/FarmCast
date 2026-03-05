@@ -1,16 +1,6 @@
-/* ============================================================
-   FarmCast Enterprise – Motion System
-   animations.css (CRITICAL)
-   Philosophy:
-   - Subtle
-   - Predictable
-   - Accessible
-   - Opt-in only
-============================================================ */
 
-/* ============================================================
-   GLOBAL SAFETY NET
-============================================================ */
+
+
 
 /* Nothing animates unless explicitly opted-in */
 * {
@@ -18,9 +8,7 @@
   transition-duration: 0s;
 }
 
-/* ============================================================
-   OPT-IN TRANSITION UTILITIES
-============================================================ */
+
 
 .u-transition {
   transition-property: background-color, color, box-shadow, transform, opacity;
@@ -40,9 +28,7 @@
   transition-timing-function: ease;
 }
 
-/* ============================================================
-   HOVER & FOCUS MOTION (SAFE ONLY)
-============================================================ */
+
 
 .u-hover-lift:hover {
   transform: translateY(-2px);
@@ -57,9 +43,7 @@
   outline-offset: 2px;
 }
 
-/* ============================================================
-   FADE ANIMATIONS (NON-LAYOUT)
-============================================================ */
+
 
 @keyframes fc-fade-in {
   from { opacity: 0; }
@@ -79,9 +63,7 @@
   animation: fc-fade-out var(--fc-transition-normal) ease forwards;
 }
 
-/* ============================================================
-   SLIDE ANIMATIONS (TRANSFORM ONLY)
-============================================================ */
+
 
 @keyframes fc-slide-up {
   from { transform: translateY(8px); opacity: 0; }
@@ -101,9 +83,7 @@
   animation: fc-slide-down var(--fc-transition-normal) ease forwards;
 }
 
-/* ============================================================
-   SCALE ANIMATION (MODALS / POPOVERS)
-============================================================ */
+
 
 @keyframes fc-scale-in {
   from { transform: scale(0.96); opacity: 0; }
@@ -114,9 +94,7 @@
   animation: fc-scale-in var(--fc-transition-fast) ease forwards;
 }
 
-/* ============================================================
-   LOADING SPINNER (GPU SAFE)
-============================================================ */
+
 
 @keyframes fc-spin {
   to { transform: rotate(360deg); }
@@ -126,9 +104,7 @@
   animation: fc-spin 1s linear infinite;
 }
 
-/* ============================================================
-   SKELETON LOADING (OPTIONAL)
-============================================================ */
+
 
 @keyframes fc-pulse {
   0% { opacity: 1; }
@@ -140,9 +116,7 @@
   animation: fc-pulse 1.4s ease-in-out infinite;
 }
 
-/* ============================================================
-   VISIBILITY HELPERS
-============================================================ */
+
 
 .u-animate-enter {
   opacity: 0;
@@ -153,9 +127,7 @@
   transition: opacity var(--fc-transition-normal) ease;
 }
 
-/* ============================================================
-   REDUCED MOTION COMPLIANCE (MANDATORY)
-============================================================ */
+
 
 @media (prefers-reduced-motion: reduce) {
 

@@ -1,24 +1,3 @@
-/**
- * src/modules/devices/device.routes.js
- * ------------------------------------------------------
- * Device Routes
- *
- * CRITICAL FILE (DEVICE DOMAIN ACCESS CONTROL)
- *
- * Responsibilities:
- * - Define device-related API endpoints
- * - Enforce authentication and RBAC
- * - Apply request validation
- * - Delegate handling to controllers
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO response shaping
- *
- * If this file is wrong → device security breaks
- */
-
 "use strict";
 
 const express = require("express");
@@ -64,9 +43,7 @@ const {
   USER_ROLES,
 } = require("../users/user.constants");
 
-/* ======================================================
-   ROUTER INITIALIZATION
-====================================================== */
+
 
 const router = express.Router();
 
@@ -112,9 +89,7 @@ const deviceAuthLimiter = rateLimit({
   },
 });
 
-/* ======================================================
-   DEVICE AUTH ROUTE
-====================================================== */
+
 
 /**
  * POST /api/v1/devices/auth
@@ -127,9 +102,7 @@ router.post(
   deviceAuthController.authenticateDevice
 );
 
-/* ======================================================
-   USER: DEVICE ROUTES
-====================================================== */
+
 
 /**
  * GET /api/v1/devices
@@ -272,9 +245,7 @@ router.delete(
   deviceController.deleteDevice
 );
 
-/* ======================================================
-   IOT / LIVE DATA ROUTES
-====================================================== */
+
 
 /**
  * GET /api/v1/devices/:id/live
@@ -309,8 +280,6 @@ router.patch(
   deviceController.syncDeviceData
 );
 
-/* ======================================================
-   EXPORT ROUTER
-====================================================== */
+
 
 module.exports = router;

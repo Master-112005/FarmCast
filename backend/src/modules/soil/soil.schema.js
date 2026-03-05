@@ -1,30 +1,8 @@
-/**
- * src/modules/soil/soil.schema.js
- * ------------------------------------------------------
- * Soil Domain Validation Schemas
- *
- * CRITICAL FILE (SOIL DATA INTEGRITY CONTRACT)
- *
- * Responsibilities:
- * - Validate soil telemetry & history queries
- * - Protect analytics from malformed sensor data
- * - Enforce strict, predictable payloads
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO environment variables
- *
- * If this file is wrong → data quality degrades
- */
-
 "use strict";
 
 const Joi = require("joi");
 
-/* ======================================================
-   COMMON PARAM SCHEMAS
-====================================================== */
+
 
 /**
  * Device ID parameter
@@ -39,9 +17,7 @@ const deviceIdParamSchema = Joi.object({
     }),
 }).required();
 
-/* ======================================================
-   SOIL METRICS
-====================================================== */
+
 
 /**
  * Core soil telemetry metrics
@@ -120,9 +96,7 @@ const soilMetrics = {
     }),
 };
 
-/* ======================================================
-   CREATE SOIL RECORD
-====================================================== */
+
 
 /**
  * POST /api/v1/soil
@@ -231,9 +205,7 @@ const createSoilRecordSchema = Joi.object({
   })
   .required();
 
-/* ======================================================
-   SOIL HISTORY QUERY
-====================================================== */
+
 
 /**
  * GET /api/v1/soil/history
@@ -275,9 +247,7 @@ const soilHistoryQuerySchema = Joi.object({
     }),
 }).required();
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   deviceIdParamSchema,

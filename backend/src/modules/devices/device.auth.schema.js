@@ -1,18 +1,3 @@
-/**
- * src/modules/devices/device.auth.schema.js
- * ------------------------------------------------------
- * Device Authentication Validation Schema
- *
- * Responsibilities:
- * - Validate incoming device credentials payload
- * - Reject malformed or abusive input early
- *
- * Rules:
- * - NO database access
- * - NO token generation
- * - NO business logic
- */
-
 "use strict";
 
 const Joi = require("joi");

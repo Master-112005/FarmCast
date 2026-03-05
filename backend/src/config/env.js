@@ -1,27 +1,15 @@
-/**
- * src/config/env.js
- * ------------------------------------------------------
- * Environment Loader & Validator (Enterprise Hardened)
- *
- * CRITICAL FILE (APPLICATION GATEKEEPER)
- */
-
 "use strict";
 
 const path = require("path");
 const dotenv = require("dotenv");
 
-/* ======================================================
-   LOAD ENV FILE
-====================================================== */
+
 
 dotenv.config({
   path: path.resolve(process.cwd(), ".env"),
 });
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 const crash = (msg) => {
   console.error(`ENV ERROR: ${msg}`);
@@ -73,9 +61,7 @@ const assertNotPlaceholder = (value, key) => {
   }
 };
 
-/* ======================================================
-   ENVIRONMENT
-====================================================== */
+
 
 const NODE_ENV = optional(
   "NODE_ENV",
@@ -90,9 +76,7 @@ if (
   crash(`Invalid NODE_ENV "${NODE_ENV}"`);
 }
 
-/* ======================================================
-   BUILD CONFIG
-====================================================== */
+
 
 const env = {
   NODE_ENV,
@@ -402,9 +386,7 @@ const env = {
   },
 };
 
-/* ======================================================
-   SECURITY ASSERTIONS
-====================================================== */
+
 
 assertMinLength(env.AUTH.JWT_SECRET, 32, "JWT_SECRET");
 assertMinLength(
@@ -609,9 +591,7 @@ if (
   );
 }
 
-/* ======================================================
-   DEEP FREEZE
-====================================================== */
+
 
 const deepFreeze = (obj) => {
   Object.freeze(obj);

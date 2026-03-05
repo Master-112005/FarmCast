@@ -1,16 +1,6 @@
-/* ============================================================
-   FarmCast Enterprise – Utility Classes
-   utilities.css (CRITICAL)
-   Purpose:
-   - Layout helpers
-   - Spacing helpers
-   - Text helpers
-   - Visibility & state helpers
-============================================================ */
 
-/* ============================================================
-   DISPLAY
-============================================================ */
+
+
 
 .u-block { display: block !important; }
 .u-inline { display: inline !important; }
@@ -20,9 +10,7 @@
 .u-grid { display: grid !important; }
 .u-hidden { display: none !important; }
 
-/* ============================================================
-   FLEX HELPERS
-============================================================ */
+
 
 .u-flex-row { flex-direction: row !important; }
 .u-flex-col { flex-direction: column !important; }
@@ -42,9 +30,7 @@
 .u-flex-1 { flex: 1 1 0% !important; }
 .u-flex-auto { flex: 1 1 auto !important; }
 
-/* ============================================================
-   GAP
-============================================================ */
+
 
 .u-gap-1 { gap: var(--fc-s1) !important; }
 .u-gap-2 { gap: var(--fc-s2) !important; }
@@ -53,9 +39,7 @@
 .u-gap-5 { gap: var(--fc-s5) !important; }
 .u-gap-6 { gap: var(--fc-s6) !important; }
 
-/* ============================================================
-   SPACING – MARGIN
-============================================================ */
+
 
 .u-m-0 { margin: 0 !important; }
 .u-mt-1 { margin-top: var(--fc-s1) !important; }
@@ -75,9 +59,7 @@
 .u-ml-auto { margin-left: auto !important; }
 .u-mr-auto { margin-right: auto !important; }
 
-/* ============================================================
-   SPACING – PADDING
-============================================================ */
+
 
 .u-p-0 { padding: 0 !important; }
 .u-p-1 { padding: var(--fc-s1) !important; }
@@ -87,9 +69,7 @@
 .u-p-5 { padding: var(--fc-s5) !important; }
 .u-p-6 { padding: var(--fc-s6) !important; }
 
-/* ============================================================
-   TEXT HELPERS
-============================================================ */
+
 
 .u-text-left { text-align: left !important; }
 .u-text-center { text-align: center !important; }
@@ -109,9 +89,7 @@
 .u-font-semibold { font-weight: 600 !important; }
 .u-font-bold { font-weight: 700 !important; }
 
-/* ============================================================
-   WIDTH / HEIGHT
-============================================================ */
+
 
 .u-w-full { width: 100% !important; }
 .u-h-full { height: 100% !important; }
@@ -122,9 +100,7 @@
 .u-max-w-lg { max-width: 960px !important; }
 .u-max-w-xl { max-width: 1200px !important; }
 
-/* ============================================================
-   POSITION
-============================================================ */
+
 
 .u-relative { position: relative !important; }
 .u-absolute { position: absolute !important; }
@@ -137,26 +113,20 @@
   left: 0;
 }
 
-/* ============================================================
-   OVERFLOW
-============================================================ */
+
 
 .u-overflow-hidden { overflow: hidden !important; }
 .u-overflow-auto { overflow: auto !important; }
 .u-overflow-x-auto { overflow-x: auto !important; }
 
-/* ============================================================
-   CURSOR & INTERACTION
-============================================================ */
+
 
 .u-cursor-pointer { cursor: pointer !important; }
 .u-cursor-not-allowed { cursor: not-allowed !important; }
 
 .u-pointer-events-none { pointer-events: none !important; }
 
-/* ============================================================
-   ACCESSIBILITY HELPERS
-============================================================ */
+
 
 .u-visually-hidden {
   position: absolute !important;
@@ -170,9 +140,7 @@
   border: 0 !important;
 }
 
-/* ============================================================
-   SAFE ANIMATION DISABLE
-============================================================ */
+
 
 @media (prefers-reduced-motion: reduce) {
   .u-animate {

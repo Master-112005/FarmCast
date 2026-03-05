@@ -1,20 +1,10 @@
-/**
- * migrations/004-create-refresh-tokens.js
- * ------------------------------------------------------
- * Create Refresh Tokens Table
- *
- * CRITICAL FILE (AUTH SESSION SECURITY)
- */
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("refresh_tokens", {
-      /* ======================================================
-         PRIMARY KEY
-      ====================================================== */
+      
 
       id: {
         type: Sequelize.UUID,
@@ -23,9 +13,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
 
-      /* ======================================================
-         OWNERSHIP
-      ====================================================== */
+      
 
       user_id: {
         type: Sequelize.UUID,
@@ -38,9 +26,7 @@ module.exports = {
         onDelete: "CASCADE",
       },
 
-      /* ======================================================
-         TOKEN DATA
-      ====================================================== */
+      
 
       token: {
         type: Sequelize.STRING(255), // HMAC-safe
@@ -55,9 +41,7 @@ module.exports = {
         defaultValue: false,
       },
 
-      /* ======================================================
-         SECURITY METADATA
-      ====================================================== */
+      
 
       ip_address: {
         type: Sequelize.STRING(45),
@@ -74,9 +58,7 @@ module.exports = {
         allowNull: false,
       },
 
-      /* ======================================================
-         TIMESTAMPS
-      ====================================================== */
+      
 
       created_at: {
         type: Sequelize.DATE,
@@ -91,9 +73,7 @@ module.exports = {
       },
     });
 
-    /* ======================================================
-       INDEXES
-    ====================================================== */
+    
 
     await queryInterface.addIndex("refresh_tokens", [
       "user_id",

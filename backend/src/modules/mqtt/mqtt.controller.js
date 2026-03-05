@@ -1,14 +1,3 @@
-/**
- * src/modules/mqtt/mqtt.controller.js
- * ------------------------------------------------------
- * MQTT Broker Auth Controller
- *
- * Responsibilities:
- * - Accept broker auth callbacks
- * - Delegate decisioning to service
- * - Return allow/deny via HTTP status
- */
-
 "use strict";
 
 const response = require("../../utils/response");

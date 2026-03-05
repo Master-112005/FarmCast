@@ -1,22 +1,4 @@
-﻿/**
- * DeviceView.jsx
- * ------------------------------------------------------
- * FarmCast - Device & Field Monitoring Workspace
- *
- * Tier: 1 (Mission Critical UI Container)
- *
- * Responsibilities:
- * - Display & manage farm devices
- * - Visualize device location & field data
- * - Present soil, fertilizer & water insights
- *
- * Rules:
- * - No routing logic
- * - No auth mutation
- * - No backend business logic
- */
-
-"use strict";
+﻿"use strict";
 
 import React, {
   useEffect,
@@ -25,9 +7,7 @@ import React, {
   useCallback,
 } from "react";
 
-/* ======================================================
-   COMPONENTS
-====================================================== */
+
 
 import Card from "../components/layout/Card";
 import DeviceManager from "../components/device/DeviceManager";
@@ -38,9 +18,7 @@ import SoilDataCard from "../components/results/SoilDataCard";
 import FertilizerRecommendation from "../components/results/FertilizerRecommendation";
 import WaterRecommendation from "../components/results/WaterRecommendation";
 
-/* ======================================================
-   SERVICES
-====================================================== */
+
 
 import {
   getDevices,
@@ -53,16 +31,12 @@ import {
   runSecureDeleteFlow,
 } from "../services/deviceProvisioning";
 
-/* ======================================================
-   CONTEXT
-====================================================== */
+
 
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 
-/* ======================================================
-   CONSTANTS
-====================================================== */
+
 
 const EMPTY_MESSAGE =
   "No devices found. Add your first FarmCast device to begin.";
@@ -79,9 +53,7 @@ const toFiniteNumber = (value) => {
   return Number.isFinite(number) ? number : null;
 };
 
-/* ======================================================
-   DEVICE VIEW
-====================================================== */
+
 
 const DeviceView = () => {
   /* ---------------- AUTH ---------------- */
@@ -146,9 +118,7 @@ const DeviceView = () => {
       selectedDevice?.id || null;
   }, [selectedDevice?.id]);
 
-  /* ======================================================
-     LOAD DEVICES
-  ====================================================== */
+  
 
   const loadDevices = useCallback(async () => {
     if (!isAuthenticated) return;
@@ -193,9 +163,7 @@ const DeviceView = () => {
     loadDevices();
   }, [loadDevices]);
 
-  /* ======================================================
-     DEVICE CRUD
-  ====================================================== */
+  
 
   const openAddDeviceModal = () => {
     if (role !== "admin" && role !== "user") {
@@ -413,9 +381,7 @@ const DeviceView = () => {
       }
     };
 
-  /* ======================================================
-     TELEMETRY (LIVE)
-  ====================================================== */
+  
 
   useEffect(() => {
     if (!socket) {
@@ -695,9 +661,7 @@ const DeviceView = () => {
     loadTelemetry();
   }, [selectedDevice]);
 
-  /* ======================================================
-     UI STATES
-  ====================================================== */
+  
 
   if (loading) {
     return (
@@ -710,9 +674,7 @@ const DeviceView = () => {
     );
   }
 
-  /* ======================================================
-     UI RENDER
-  ====================================================== */
+  
 
   return (
     <div className="device-grid">

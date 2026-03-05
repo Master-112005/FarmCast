@@ -1,9 +1,3 @@
-/**
- * src/modules/admin/admin.service.js
- * ------------------------------------------------------
- * Admin Domain Service
- */
-
 "use strict";
 
 const db = require("../../models");

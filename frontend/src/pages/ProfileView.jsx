@@ -1,26 +1,10 @@
-﻿/**
- * ProfileView.jsx
- * ------------------------------------------------------
- * FarmCast - Profile & Account Management (SaaS-grade)
- *
- * Responsibilities:
- * - Display user profile
- * - Edit profile safely
- * - Manage user devices
- * - Trigger account-level actions
- *
- * - No routing logic
- * - No auth mutation
- * - No backend business logic
- */
-
-import React, {
+﻿import React, {
   useEffect,
   useState,
   useCallback,
 } from "react";
 
-/* ===================== COMPONENTS ===================== */
+
 import UserProfile from "../components/profile/UserProfile";
 import EditProfileForm from "../components/profile/EditProfileForm";
 import DeviceManager from "../components/device/DeviceManager";
@@ -29,7 +13,7 @@ import DeviceDeleteModal from "../components/device/DeviceDeleteModal";
 import DeviceProvisionWizard from "../components/device/DeviceProvisionWizard";
 import Card from "../components/layout/Card";
 
-/* ===================== SERVICES ===================== */
+
 import {
   getMyProfile,
   updateMyProfile,
@@ -45,12 +29,10 @@ import {
   runSecureDeleteFlow,
 } from "../services/deviceProvisioning";
 
-/* ===================== CONTEXT ===================== */
+
 import { useAuth } from "../context/AuthContext";
 
-/* =====================================================
-   COMPONENT
-===================================================== */
+
 
 const ProfileView = () => {
   /* ---------------- AUTH ---------------- */
@@ -110,9 +92,7 @@ const ProfileView = () => {
   const [wizardOpen, setWizardOpen] =
     useState(false);
 
-  /* =====================================================
-     LOAD PROFILE & DEVICES (JWT-DERIVED)
-  ===================================================== */
+  
 
   const loadData = useCallback(async () => {
     if (!isAuthenticated) return;
@@ -160,9 +140,7 @@ const ProfileView = () => {
     loadData();
   }, [loadData]);
 
-  /* =====================================================
-     SAVE PROFILE (SAFE)
-  ===================================================== */
+  
 
   const handleSaveProfile = async (
     updatedData
@@ -197,9 +175,7 @@ const ProfileView = () => {
     setSaving(false);
   };
 
-  /* =====================================================
-     PROFILE IMAGE UPLOAD
-  ===================================================== */
+  
 
   const handleUploadProfileImage = async (
     file
@@ -230,9 +206,7 @@ const ProfileView = () => {
     setUploadingImage(false);
   };
 
-  /* =====================================================
-     DEVICE CREATE / EDIT (PROFILE PAGE)
-  ===================================================== */
+  
 
   const openAddDeviceModal = () => {
     if (role !== "admin" && role !== "user") {
@@ -320,9 +294,7 @@ const ProfileView = () => {
     }
   };
 
-  /* =====================================================
-     DELETE DEVICE (SAFE)
-  ===================================================== */
+  
 
   const openDeleteDeviceModal = (
     id,
@@ -451,9 +423,7 @@ const ProfileView = () => {
     await loadData();
   };
 
-  /* =====================================================
-     ACCOUNT ACTIONS (DELEGATED)
-  ===================================================== */
+  
 
   const handleAccountAction = (
     actionId
@@ -481,9 +451,7 @@ const ProfileView = () => {
     }
   };
 
-  /* =====================================================
-     UI STATES
-  ===================================================== */
+  
 
   if (loading) {
     return (
@@ -501,9 +469,7 @@ const ProfileView = () => {
     );
   }
 
-  /* =====================================================
-     UI RENDER
-  ===================================================== */
+  
 
   return (
     <div className="profile-page">

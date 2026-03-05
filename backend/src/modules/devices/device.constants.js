@@ -1,26 +1,6 @@
-/**
- * src/modules/devices/device.constants.js
- * ------------------------------------------------------
- * Device Domain Constants
- *
- * CRITICAL FILE (DEVICE DOMAIN INVARIANTS)
- *
- * Responsibilities:
- * - Centralize device-related constants
- * - Define device lifecycle & ownership semantics
- * - Prevent magic strings across device modules
- *
- * Rules:
- * - NO runtime logic
- * - NO environment variables
- * - IMMUTABLE exports only
- */
-
 "use strict";
 
-/* ======================================================
-   DEVICE TYPES
-====================================================== */
+
 
 /**
  * Supported device categories
@@ -32,9 +12,7 @@ const DEVICE_TYPES = Object.freeze({
   MULTI_SENSOR: "multi_sensor",
 });
 
-/* ======================================================
-   DEVICE STATUS
-====================================================== */
+
 
 /**
  * Device operational status
@@ -47,9 +25,7 @@ const DEVICE_STATUS = Object.freeze({
   MAINTENANCE: "maintenance",
 });
 
-/* ======================================================
-   DEVICE OWNERSHIP
-====================================================== */
+
 
 /**
  * Ownership rules
@@ -59,9 +35,7 @@ const DEVICE_OWNERSHIP = Object.freeze({
   OWNER: "owner",
 });
 
-/* ======================================================
-   DEVICE LIMITS & POLICIES
-====================================================== */
+
 
 /**
  * Domain-level limits
@@ -73,9 +47,7 @@ const DEVICE_LIMITS = Object.freeze({
   MAX_DEVICES_PER_USER: 50,
 });
 
-/* ======================================================
-   DEVICE DOMAIN ERROR CODES
-====================================================== */
+
 
 /**
  * Device-specific error codes
@@ -91,9 +63,7 @@ const DEVICE_ERRORS = Object.freeze({
   DEVICE_UPDATE_INVALID: "DEVICE_UPDATE_INVALID",
 });
 
-/* ======================================================
-   EXPORTS (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze({
   DEVICE_TYPES,

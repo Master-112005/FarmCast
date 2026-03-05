@@ -1,25 +1,3 @@
-/**
- * ViewContext.jsx
- * ------------------------------------------------------
- * FarmCast Enterprise – Workspace View Controller
- *
- * CRITICAL SYSTEM FILE
- *
- * Controls visible workspace:
- *  - device
- *  - predictor
- *  - community
- *  - profile
- *  - admin
- *
- * Guarantees:
- * - Deterministic initialization
- * - Safe persistence
- * - No invalid state
- * - Zero coupling to router
- * - SSR / non-browser safe
- */
-
 "use strict";
 
 import React, {
@@ -30,9 +8,7 @@ import React, {
   useMemo,
 } from "react";
 
-/* ======================================================
-   VIEW REGISTRY (IMMUTABLE)
-====================================================== */
+
 
 export const VIEWS = Object.freeze({
   DEVICE: "device",
@@ -42,21 +18,15 @@ export const VIEWS = Object.freeze({
   ADMIN: "admin",
 });
 
-/* ======================================================
-   STORAGE
-====================================================== */
+
 
 const STORAGE_KEY = "farmcast.ui.activeView";
 
-/* ======================================================
-   CONTEXT
-====================================================== */
+
 
 const ViewContext = createContext(null);
 
-/* ======================================================
-   INTERNAL UTIL
-====================================================== */
+
 
 const isValidView = (value) =>
   Object.values(VIEWS).includes(value);
@@ -77,9 +47,7 @@ const getStoredView = () => {
   }
 };
 
-/* ======================================================
-   PROVIDER
-====================================================== */
+
 
 export const ViewProvider = ({ children }) => {
   const [view, setViewState] = useState(() => {
@@ -183,9 +151,7 @@ export const ViewProvider = ({ children }) => {
   );
 };
 
-/* ======================================================
-   HOOK
-====================================================== */
+
 
 export const useView = () => {
   const ctx = useContext(ViewContext);

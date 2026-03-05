@@ -1,23 +1,7 @@
-/**
- * DateInputs.jsx
- * FarmCast – Crop Lifecycle Date Controls (Enterprise / ML-safe)
- *
- * Responsibilities:
- * - Collect sowing, harvesting, and selling dates
- * - Enforce chronological validity
- * - Emit ISO date strings (YYYY-MM-DD)
- *
- * ❌ No backend logic
- * ❌ No ML logic
- * ❌ No routing
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const DateInputs = ({
   sowingDate,
@@ -59,9 +43,7 @@ const DateInputs = ({
     onChange(field, e.target.value);
   };
 
-  /* ======================================================
-     UI
-  ====================================================== */
+  
 
   return (
     <fieldset
@@ -161,9 +143,7 @@ const DateInputs = ({
   );
 };
 
-/* ======================================================
-   PROPTYPES
-====================================================== */
+
 
 DateInputs.propTypes = {
   sowingDate: PropTypes.string.isRequired,     // YYYY-MM-DD

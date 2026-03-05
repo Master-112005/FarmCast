@@ -1,23 +1,3 @@
-/**
- * src/models/Device.js
- * ------------------------------------------------------
- * Device Model
- *
- * CRITICAL FILE (IOT OWNERSHIP & MAP CONTEXT)
- *
- * Responsibilities:
- * - Define device identity & ownership
- * - Store device metadata & location
- * - Support map rendering & telemetry
- *
- * Rules:
- * - NO business logic
- * - NO request handling
- * - NO IoT ingestion logic
- *
- * If this file is wrong → device security & maps break
- */
-
 "use strict";
 
 const { DataTypes } = require("sequelize");

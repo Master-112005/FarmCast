@@ -29,9 +29,7 @@ const {
   getClient: getMqttClient,
 } = require("../../infrastructure/mqtt/mqttClient");
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 /**
  * Build domain error (handled by global error middleware)
@@ -479,9 +477,7 @@ const assertOwnership = (device, userId) => {
   }
 };
 
-/* ======================================================
-   USER: DEVICE OPERATIONS
-====================================================== */
+
 
 /**
  * Get all devices for current user
@@ -944,9 +940,7 @@ const finalizeDeleteDevice = async (
   };
 };
 
-/* ======================================================
-   IOT / LIVE DATA (PLACEHOLDER)
-====================================================== */
+
 
 /**
  * Fetch live telemetry
@@ -1128,9 +1122,7 @@ const syncDeviceData = async (
   return record;
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   // User-scoped

@@ -1,18 +1,3 @@
-/**
- * src/modules/auth/auth.service.js
- * ------------------------------------------------------
- * Authentication Service (Enterprise Hardened)
- *
- * Responsibilities:
- * - Register users
- * - Authenticate credentials
- * - Issue & rotate tokens
- * - Enforce session limits
- *
- * ZERO routing
- * ZERO HTTP logic
- */
-
 "use strict";
 
 const db = require("../../models");
@@ -30,17 +15,13 @@ const {
 const { ERROR_CODES } = require("../../utils/constants");
 const { AUTH_ERRORS, AUTH_LIMITS } = require("./auth.constants");
 
-/* ======================================================
-   GUARDS
-====================================================== */
+
 
 if (!db?.User || !db?.RefreshToken) {
   throw new Error("AuthService: Models not initialized");
 }
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const domainError = (code, message, status = 401) => {
   const err = new Error(message);
@@ -88,9 +69,7 @@ const storeRefreshToken = async ({
   );
 };
 
-/* ======================================================
-   REGISTER
-====================================================== */
+
 
 const register = async ({ name, email, password }) => {
   const tx = await db.sequelize.transaction();
@@ -130,9 +109,7 @@ const register = async ({ name, email, password }) => {
   }
 };
 
-/* ======================================================
-   LOGIN
-====================================================== */
+
 
 const login = async ({
   email,
@@ -206,9 +183,7 @@ const login = async ({
   }
 };
 
-/* ======================================================
-   REFRESH TOKEN ROTATION
-====================================================== */
+
 
 const refresh = async ({
   refreshToken,
@@ -281,9 +256,7 @@ const refresh = async ({
   }
 };
 
-/* ======================================================
-   LOGOUT
-====================================================== */
+
 
 const logout = async ({ refreshToken }) => {
   const tokenHash = hashRefreshToken(refreshToken);
@@ -299,9 +272,7 @@ const logout = async ({ refreshToken }) => {
   return true;
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = Object.freeze({
   register,

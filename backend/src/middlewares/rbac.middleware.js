@@ -1,23 +1,3 @@
-/**
- * src/middlewares/rbac.middleware.js
- * ------------------------------------------------------
- * Role-Based & Ownership-Based Access Control Middleware
- *
- * CRITICAL FILE (DATA PROTECTION & AUTHORIZATION)
- *
- * Responsibilities:
- * - Enforce role-based access (USER / ADMIN)
- * - Enforce ownership-based access (own resources only)
- * - Prevent horizontal privilege escalation
- *
- * Rules:
- * - MUST be used after authenticate middleware
- * - MUST never trust client-supplied ownership info
- * - MUST never throw uncaught errors
- *
- * If this file is wrong → data leaks happen
- */
-
 "use strict";
 
 const logger = require("../utils/logger");
@@ -26,9 +6,7 @@ const {
   HTTP_STATUS,
 } = require("../utils/constants");
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 /**
  * Build standardized authorization error
@@ -40,9 +18,7 @@ const accessError = (code, message) => {
   return err;
 };
 
-/* ======================================================
-   ROLE CHECK
-====================================================== */
+
 
 /**
  * Require specific roles
@@ -87,9 +63,7 @@ const requireRole =
     }
   };
 
-/* ======================================================
-   OWNERSHIP CHECK
-====================================================== */
+
 
 /**
  * Enforce ownership-based access
@@ -154,9 +128,7 @@ const requireOwnership =
     }
   };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   requireRole,

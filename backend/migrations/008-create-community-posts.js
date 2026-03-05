@@ -1,9 +1,3 @@
-/**
- * migrations/008-create-community-posts.js
- * ------------------------------------------------------
- * Create Community Posts Table
- */
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */

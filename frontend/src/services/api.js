@@ -1,19 +1,3 @@
-/**
- * api.js
- * ------------------------------------------------------
- * FarmCast – Enterprise Transport Layer
- *
- * Tier: 0 (Platform Backbone)
- *
- * Guarantees:
- * - Stable request / response contract
- * - JWT auto injection
- * - Retry-once for transient faults
- * - Centralized error normalization
- * - Correlation IDs for tracing
- * - Zero UI crashes
- */
-
 "use strict";
 
 import axios from "axios";
@@ -25,9 +9,7 @@ import {
   STORAGE_KEYS,
 } from "../utils/constants";
 
-/* ======================================================
-   RUNTIME DEFAULTS
-====================================================== */
+
 
 const API_BASE_URL = API_BASE || "http://localhost:5000/api/v1";
 
@@ -47,9 +29,7 @@ const USER_STORAGE_KEY =
 let refreshPromise = null;
 const ACCESS_TOKEN_REFRESH_LEEWAY_MS = 30 * 1000;
 
-/* ======================================================
-   AXIOS INSTANCE
-====================================================== */
+
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -236,9 +216,7 @@ const refreshAccessToken = async () => {
   return refreshPromise;
 };
 
-/* ======================================================
-   REQUEST INTERCEPTOR
-====================================================== */
+
 
 api.interceptors.request.use(
   async (config) => {
@@ -286,9 +264,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-/* ======================================================
-   RESPONSE INTERCEPTOR
-====================================================== */
+
 
 api.interceptors.response.use(
   (response) => {
@@ -389,9 +365,7 @@ api.interceptors.response.use(
   }
 );
 
-/* ======================================================
-   AUTH TOKEN HELPERS
-====================================================== */
+
 
 export const setAuthToken = (token) => {
   try {
@@ -433,9 +407,7 @@ export const clearAuthToken = () => {
   }
 };
 
-/* ======================================================
-   HEALTH CHECK
-====================================================== */
+
 
 export const pingApi = async () => {
   try {
@@ -447,8 +419,6 @@ export const pingApi = async () => {
   }
 };
 
-/* ======================================================
-   EXPORT
-====================================================== */
+
 
 export default api;

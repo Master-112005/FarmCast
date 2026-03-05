@@ -41,9 +41,7 @@ const clearRetainedTopic = (topic) =>
     );
   });
 
-/* ======================================================
-   CONNECT MQTT
-====================================================== */
+
 
 async function connectMQTT() {
   return new Promise((resolve, reject) => {
@@ -186,9 +184,7 @@ async function connectMQTT() {
   });
 }
 
-/* ======================================================
-   DISCONNECT MQTT
-====================================================== */
+
 
 async function disconnectMQTT() {
   return new Promise((resolve) => {
@@ -204,9 +200,7 @@ async function disconnectMQTT() {
   });
 }
 
-/* ======================================================
-   GET CLIENT
-====================================================== */
+
 
 function getClient() {
   return client;

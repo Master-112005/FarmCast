@@ -1,14 +1,3 @@
-/**
- * src/modules/predictors/predictor.service.js
- * ------------------------------------------------------
- * Predictor Domain Service
- *
- * Responsibilities:
- * - Normalize prediction inputs
- * - Call ML inference service
- * - Produce deterministic recommendations
- */
-
 "use strict";
 
 const fs = require("fs");
@@ -26,9 +15,7 @@ const {
 const mlClient = require("../../integrations/mlClient");
 const mailer = require("../../integrations/mailer");
 
-/* ======================================================
-   CANONICAL MAPPINGS
-====================================================== */
+
 
 const CROP_MAP = Object.freeze({
   wheat: "Wheat",
@@ -72,9 +59,7 @@ const SEASON_LABELS = Object.freeze({
   UNKNOWN: "Unknown",
 });
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const domainError = (code, message, status = 400) => {
   const err = new Error(message);
@@ -365,9 +350,7 @@ const buildPredictionSummary = (
   return "Prediction completed";
 };
 
-/* ======================================================
-   CORE PREDICTION
-====================================================== */
+
 
 const runPrediction = async (payload, context = {}) => {
   try {
@@ -613,9 +596,7 @@ const recordPredictionHistory = async ({
   }
 };
 
-/* ======================================================
-   PREDICTION EMAILS
-====================================================== */
+
 
 const escapeHtml = (value) =>
   String(value || "")

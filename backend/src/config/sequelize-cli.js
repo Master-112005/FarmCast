@@ -1,16 +1,3 @@
-/**
- * src/config/sequelize-cli.js
- * ------------------------------------------------------
- * Sequelize CLI Configuration
- *
- * PURPOSE:
- * - Used ONLY by sequelize-cli
- * - Exports plain config object (NOT Sequelize instance)
- *
- * IMPORTANT:
- * - Do NOT import this in runtime code
- */
-
 require("dotenv").config();
 
 module.exports = {

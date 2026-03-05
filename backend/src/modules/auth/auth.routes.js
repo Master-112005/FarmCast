@@ -1,21 +1,3 @@
-/**
- * src/modules/auth/auth.routes.js
- * ------------------------------------------------------
- * Authentication Routes (Enterprise Hardened)
- *
- * CRITICAL FILE (PUBLIC AUTH ENTRY POINT)
- *
- * Responsibilities:
- * - Define authentication endpoints
- * - Apply request validation
- * - Delegate handling to controllers
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO token handling here
- */
-
 "use strict";
 
 const express = require("express");
@@ -32,15 +14,11 @@ const {
   refreshSchema,
 } = require("./auth.schema");
 
-/* ======================================================
-   ROUTER INITIALIZATION
-====================================================== */
+
 
 const router = express.Router();
 
-/* ======================================================
-   SAFETY CHECKS
-====================================================== */
+
 
 if (!authController) {
   throw new Error(
@@ -48,9 +26,7 @@ if (!authController) {
   );
 }
 
-/* ======================================================
-   AUTH ROUTES (PUBLIC)
-====================================================== */
+
 
 /**
  * POST /api/v1/auth/register
@@ -90,8 +66,6 @@ router.post(
   authController.logout
 );
 
-/* ======================================================
-   EXPORT ROUTER (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze(router);

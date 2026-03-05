@@ -1,14 +1,3 @@
-/**
- * src/modules/mqtt/mqtt.routes.js
- * ------------------------------------------------------
- * MQTT Integration Routes
- *
- * Responsibilities:
- * - Expose broker callback endpoints
- * - Enforce strict payload validation
- * - Apply dedicated abuse protection
- */
-
 "use strict";
 
 const express = require("express");

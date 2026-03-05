@@ -1,14 +1,3 @@
-/**
- * LoginSplash.jsx
- * ------------------------------------------------------
- * FarmCast - Post-Login Intro Animation
- *
- * Responsibilities:
- * - Show brief branded transition after login
- * - Animate FC-GS -> FarmCast-GrowSmart
- * - Never block the app permanently
- */
-
 "use strict";
 
 import React, { useEffect, useState } from "react";

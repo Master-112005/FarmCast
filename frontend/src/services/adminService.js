@@ -1,9 +1,3 @@
-/**
- * adminService.js
- * ------------------------------------------------------
- * Admin API service
- */
-
 "use strict";
 
 import api from "./api";

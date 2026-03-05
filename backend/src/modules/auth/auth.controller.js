@@ -1,29 +1,9 @@
-/**
- * src/modules/auth/auth.controller.js
- * ------------------------------------------------------
- * Authentication Controller (Enterprise Hardened)
- *
- * CRITICAL FILE (HTTP ↔ AUTH DOMAIN ADAPTER)
- *
- * Responsibilities:
- * - Handle HTTP requests for auth flows
- * - Delegate all logic to auth.service
- * - Return standardized API responses
- *
- * Rules:
- * - NO business logic
- * - NO direct DB access
- * - NO token generation here
- */
-
 "use strict";
 
 const authService = require("./auth.service");
 const response = require("../../utils/response");
 
-/* ======================================================
-   SAFETY CHECKS
-====================================================== */
+
 
 if (!authService) {
   throw new Error(
@@ -31,9 +11,7 @@ if (!authService) {
   );
 }
 
-/* ======================================================
-   REGISTER
-====================================================== */
+
 
 const register = async (req, res, next) => {
   try {
@@ -52,9 +30,7 @@ const register = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   LOGIN
-====================================================== */
+
 
 const login = async (req, res, next) => {
   try {
@@ -75,9 +51,7 @@ const login = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   REFRESH TOKEN
-====================================================== */
+
 
 const refresh = async (req, res, next) => {
   try {
@@ -97,9 +71,7 @@ const refresh = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   LOGOUT
-====================================================== */
+
 
 const logout = async (req, res, next) => {
   try {
@@ -117,9 +89,7 @@ const logout = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   EXPORTS (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze({
   register,

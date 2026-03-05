@@ -1,20 +1,3 @@
-/**
- * src/models/User.js
- * ------------------------------------------------------
- * User Model (Enterprise Hardened)
- *
- * CRITICAL FILE (IDENTITY & ACCESS CONTROL)
- *
- * Responsibilities:
- * - Define user schema
- * - Enforce integrity
- * - Support RBAC
- *
- * NON-Responsibilities:
- * - NO hashing
- * - NO auth logic
- */
-
 "use strict";
 
 const { ROLES } = require("../utils/constants");
@@ -23,18 +6,14 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
     {
-      /* ==================================================
-         PRIMARY KEY
-      ================================================== */
+      
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
 
-      /* ==================================================
-         CORE IDENTITY
-      ================================================== */
+      
       name: {
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -52,9 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
 
-      /* ==================================================
-         ROLE & STATUS
-      ================================================== */
+      
       role: {
         type: DataTypes.ENUM(
           ROLES.USER,
@@ -69,9 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: true,
       },
 
-      /* ==================================================
-         PROFILE
-      ================================================== */
+      
       phone: {
         type: DataTypes.STRING(20),
         allowNull: true,

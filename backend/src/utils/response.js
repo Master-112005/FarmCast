@@ -1,11 +1,3 @@
-/**
- * src/utils/response.js
- * ------------------------------------------------------
- * Standard API Response Helpers (Enterprise Hardened)
- *
- * CRITICAL FILE (API CONTRACT ENFORCER)
- */
-
 "use strict";
 
 const {
@@ -13,9 +5,7 @@ const {
   ERROR_CODES,
 } = require("./constants");
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 const isValidStatus = (status) =>
   Number.isInteger(status) &&
@@ -30,9 +20,7 @@ const getCorrelationId = (req) =>
 const buildPayload = (payload) =>
   Object.freeze(payload);
 
-/* ======================================================
-   SUCCESS RESPONSES
-====================================================== */
+
 
 const success = (
   res,
@@ -82,9 +70,7 @@ const noContent = (res) =>
       })
     );
 
-/* ======================================================
-   ERROR RESPONSES
-====================================================== */
+
 
 const error = (res, options = {}) => {
   const status = isValidStatus(options.status)
@@ -113,9 +99,7 @@ const error = (res, options = {}) => {
   );
 };
 
-/* ======================================================
-   COMMON SHORTCUTS
-====================================================== */
+
 
 const badRequest = (res, message) =>
   error(res, {
@@ -145,9 +129,7 @@ const notFound = (res, message) =>
     message,
   });
 
-/* ======================================================
-   EXPORTS (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze({
   success,

@@ -1,9 +1,3 @@
-/**
- * src/models/ChatMessage.js
- * ------------------------------------------------------
- * Chat Message Model
- */
-
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {

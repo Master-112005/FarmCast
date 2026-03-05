@@ -1,9 +1,3 @@
-/**
- * src/modules/community/community.controller.js
- * ------------------------------------------------------
- * Community Controller
- */
-
 "use strict";
 
 const communityService = require("./community.service");

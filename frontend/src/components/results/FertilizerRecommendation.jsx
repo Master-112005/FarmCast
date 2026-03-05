@@ -1,8 +1,3 @@
-/**
- * FertilizerRecommendation.jsx
- * FarmCast - Fertilizer guidance output
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 

@@ -1,23 +1,3 @@
-/**
- * src/modules/soil/soil.controller.js
- * ------------------------------------------------------
- * Soil Controller
- *
- * CRITICAL FILE (HTTP ↔ SOIL DOMAIN ADAPTER)
- *
- * Responsibilities:
- * - Handle HTTP requests for soil telemetry & analytics
- * - Delegate all logic to soil.service
- * - Return standardized API responses
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO RBAC decisions here
- *
- * If this file is wrong → soil analytics break
- */
-
 "use strict";
 
 const soilService = require("./soil.service");
@@ -77,9 +57,7 @@ const validateTelemetryCoordinates = (payload = {}) => {
   };
 };
 
-/* ======================================================
-   CREATE SOIL RECORD
-====================================================== */
+
 
 /**
  * POST /api/v1/soil
@@ -102,9 +80,7 @@ const createSoilRecord = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   SOIL HISTORY
-====================================================== */
+
 
 /**
  * GET /api/v1/soil/history
@@ -127,9 +103,7 @@ const getSoilHistory = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   LATEST SOIL SNAPSHOT
-====================================================== */
+
 
 /**
  * GET /api/v1/soil/latest/:deviceId
@@ -156,9 +130,7 @@ const getLatestSoilRecord = async (
   }
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   createSoilRecord,

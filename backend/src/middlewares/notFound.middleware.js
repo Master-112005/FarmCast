@@ -1,21 +1,3 @@
-/**
- * src/middlewares/notFound.middleware.js
- * ------------------------------------------------------
- * 404 Not Found Handler
- *
- * CRITICAL FILE (API SAFETY & UX CONSISTENCY)
- *
- * Responsibilities:
- * - Catch all unmatched routes
- * - Return a predictable JSON response
- * - Log useful diagnostics without leaking internals
- *
- * Rules:
- * - MUST run after all route mounts
- * - MUST NOT throw
- * - MUST return JSON (never HTML)
- */
-
 "use strict";
 
 const logger = require("../utils/logger");

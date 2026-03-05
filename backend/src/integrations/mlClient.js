@@ -9,9 +9,7 @@ const BASE_URL = String(env.ML.BASE_URL || "").replace(/\/$/, "");
 let cachedToken = null;
 let cachedTokenExp = 0;
 
-/* ======================================================
-   JWT TOKEN BUILDER
-====================================================== */
+
 
 const buildJwtToken = () => {
   const now = Math.floor(Date.now() / 1000);
@@ -39,9 +37,7 @@ const buildJwtToken = () => {
   return token;
 };
 
-/* ======================================================
-   AUTH HEADER BUILDER  ⭐ FINAL VERSION
-====================================================== */
+
 
 const buildAuthHeaders = () => {
   if (env.ML.AUTH_MODE === "api_key") {
@@ -65,9 +61,7 @@ const buildAuthHeaders = () => {
   throw new Error("Unsupported ML auth mode");
 };
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const createError = (message, status, details) => {
   const err = new Error(message);
@@ -104,9 +98,7 @@ const fetchWithTimeout = async (url, options = {}) => {
   }
 };
 
-/* ======================================================
-   CORE REQUEST
-====================================================== */
+
 
 const request = async (path, options = {}) => {
   if (!BASE_URL) {
@@ -169,9 +161,7 @@ const request = async (path, options = {}) => {
   return payload;
 };
 
-/* ======================================================
-   PUBLIC METHODS
-====================================================== */
+
 
 const postJson = (path, body) =>
   request(path, {

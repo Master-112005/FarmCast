@@ -1,21 +1,7 @@
-/**
- * ProfileButton.jsx
- * FarmCast - Profile Navigation Control
- *
- * Responsibilities:
- * - Navigate user to Profile view
- * - Optionally expose logout intent
- *
- * No auth logic
- * No backend logic
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const ProfileButton = ({
   userName = "User",

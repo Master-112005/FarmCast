@@ -1,18 +1,3 @@
-/**
- * AuthContext.jsx
- * -----------------------------------------------------
- * FarmCast – Enterprise Authentication Context
- *
- * Tier: 0 (Mission Critical)
- *
- * Responsibilities:
- * - Single source of truth for identity & session
- * - Secure token persistence
- * - Role-safe access helpers
- * - Centralized login / register / logout
- * - Crash-safe restoration
- */
-
 "use strict";
 
 import React, {
@@ -31,9 +16,7 @@ import {
 } from "../services/userService";
 import { STORAGE_KEYS } from "../utils/constants";
 
-/* ======================================================
-   STORAGE KEYS (NAMESPACED)
-====================================================== */
+
 
 const STORAGE = Object.freeze({
   USER: STORAGE_KEYS?.USER || "farmcast.auth.user",
@@ -43,15 +26,11 @@ const STORAGE = Object.freeze({
     "farmcast.auth.refreshToken",
 });
 
-/* ======================================================
-   CONTEXT
-====================================================== */
+
 
 const AuthContext = createContext(null);
 
-/* ======================================================
-   SAFE JSON PARSER
-====================================================== */
+
 
 const safeParse = (value) => {
   try {
@@ -61,9 +40,7 @@ const safeParse = (value) => {
   }
 };
 
-/* ======================================================
-   PROVIDER
-====================================================== */
+
 
 export const AuthProvider = ({ children }) => {
   /* -------------------------------
@@ -303,9 +280,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-/* ======================================================
-   HOOK
-====================================================== */
+
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);

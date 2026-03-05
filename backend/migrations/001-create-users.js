@@ -1,20 +1,10 @@
-/**
- * migrations/001-create-users.js
- * ------------------------------------------------------
- * Create Users Table
- *
- * CRITICAL FILE (IDENTITY & RBAC FOUNDATION)
- */
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("users", {
-      /* ======================================================
-         PRIMARY KEY
-      ====================================================== */
+      
 
       id: {
         type: Sequelize.UUID,
@@ -23,9 +13,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
 
-      /* ======================================================
-         IDENTITY
-      ====================================================== */
+      
 
       name: {
         type: Sequelize.STRING(100),
@@ -43,9 +31,7 @@ module.exports = {
         allowNull: false,
       },
 
-      /* ======================================================
-         ROLE & STATUS
-      ====================================================== */
+      
 
       role: {
         type: Sequelize.ENUM("user", "admin"),
@@ -59,9 +45,7 @@ module.exports = {
         defaultValue: true,
       },
 
-      /* ======================================================
-         PROFILE
-      ====================================================== */
+      
 
       phone: {
         type: Sequelize.STRING(20),
@@ -83,9 +67,7 @@ module.exports = {
         allowNull: true,
       },
 
-      /* ======================================================
-         TIMESTAMPS (underscored + paranoid)
-      ====================================================== */
+      
 
       created_at: {
         type: Sequelize.DATE,
@@ -105,9 +87,7 @@ module.exports = {
       },
     });
 
-    /* ======================================================
-       INDEXES
-    ====================================================== */
+    
 
     await queryInterface.addIndex("users", ["email"], {
       unique: true,

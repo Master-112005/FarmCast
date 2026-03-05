@@ -1,23 +1,3 @@
-/**
- * src/app.js
- * ------------------------------------------------------
- * FarmCast – Enterprise Express Application Core
- *
- * Tier: 0 (Application Kernel)
- *
- * Responsibilities:
- * - Create Express app
- * - Register security, parsing, logging
- * - Mount versioned routes
- * - Expose health endpoint
- * - Attach global error boundaries
- *
- * Rules:
- * - No server.listen()
- * - No DB connections
- * - No business logic
- */
-
 "use strict";
 
 const express = require("express");
@@ -39,9 +19,7 @@ const notFoundMiddleware =
 const errorMiddleware =
   require("./middlewares/error.middleware");
 
-/* ======================================================
-   APP FACTORY
-====================================================== */
+
 
 const app = express();
 
@@ -51,9 +29,7 @@ app.disable("x-powered-by");
 // Trust proxy (load balancers)
 app.set("trust proxy", 1);
 
-/* ======================================================
-   CORRELATION ID
-====================================================== */
+
 
 app.use((req, res, next) => {
   const id =
@@ -66,9 +42,7 @@ app.use((req, res, next) => {
   next();
 });
 
-/* ======================================================
-   SECURITY
-====================================================== */
+
 
 app.use(
   helmet({
@@ -78,9 +52,7 @@ app.use(
 
 app.use(corsMiddleware);
 
-/* ======================================================
-   BODY PARSERS
-====================================================== */
+
 
 app.use(
   express.json({
@@ -96,9 +68,7 @@ app.use(
   })
 );
 
-/* ======================================================
-   STATIC UPLOADS
-====================================================== */
+
 
 app.use(
   "/uploads",
@@ -107,9 +77,7 @@ app.use(
   )
 );
 
-/* ======================================================
-   REQUEST LOGGING
-====================================================== */
+
 
 if (env.LOGGING?.HTTP_LOGGING_ENABLED) {
   app.use((req, _res, next) => {
@@ -123,9 +91,7 @@ if (env.LOGGING?.HTTP_LOGGING_ENABLED) {
   });
 }
 
-/* ======================================================
-   HEALTH CHECK
-====================================================== */
+
 
 app.get(env.HEALTH_ROUTE || "/health", (_req, res) => {
   res.status(200).json({
@@ -136,9 +102,7 @@ app.get(env.HEALTH_ROUTE || "/health", (_req, res) => {
   });
 });
 
-/* ======================================================
-   ROUTES
-====================================================== */
+
 
 app.use(
   "/api",
@@ -146,20 +110,14 @@ app.use(
   apiRoutes
 );
 
-/* ======================================================
-   404
-====================================================== */
+
 
 app.use(notFoundMiddleware);
 
-/* ======================================================
-   GLOBAL ERROR HANDLER
-====================================================== */
+
 
 app.use(errorMiddleware);
 
-/* ======================================================
-   EXPORT
-====================================================== */
+
 
 module.exports = Object.freeze(app);

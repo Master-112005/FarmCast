@@ -1,9 +1,3 @@
-/**
- * ChatPanel.jsx
- * ------------------------------------------------------
- * FarmCast - Chat Surface (API-backed)
- */
-
 import React, {
   useCallback,
   useEffect,

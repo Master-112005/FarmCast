@@ -1,8 +1,3 @@
-/**
- * DeviceMap.jsx
- * FarmCast geospatial map
- */
-
 import React, {
   useEffect,
   useMemo,

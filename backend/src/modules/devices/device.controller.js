@@ -1,23 +1,3 @@
-/**
- * src/modules/devices/device.controller.js
- * ------------------------------------------------------
- * Device Controller
- *
- * CRITICAL FILE (HTTP ↔ DEVICE DOMAIN ADAPTER)
- *
- * Responsibilities:
- * - Handle HTTP requests for device operations
- * - Delegate all logic to device.service
- * - Return standardized API responses
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO RBAC decisions here
- *
- * If this file is wrong → device flows break
- */
-
 "use strict";
 
 const deviceService = require("./device.service");
@@ -25,9 +5,7 @@ const response = require("../../utils/response");
 const { ROLES } = require("../../utils/constants");
 const asyncHandler = require("../../middlewares/asyncHandler.middleware");
 
-/* ======================================================
-   USER: DEVICE OPERATIONS
-====================================================== */
+
 
 /**
  * GET /api/v1/devices
@@ -232,9 +210,7 @@ const finalizeDeleteDevice = async (
   }
 };
 
-/* ======================================================
-   IOT / LIVE DATA
-====================================================== */
+
 
 /**
  * GET /api/v1/devices/:id/live
@@ -283,9 +259,7 @@ const syncDeviceData = async (
   }
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   // User

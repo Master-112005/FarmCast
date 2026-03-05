@@ -1,23 +1,3 @@
-/**
- * src/modules/devices/device.schema.js
- * ------------------------------------------------------
- * Device Domain Validation Schemas
- *
- * CRITICAL FILE (DEVICE INPUT CONTRACT)
- *
- * Responsibilities:
- * - Validate device-related request payloads
- * - Protect device lifecycle endpoints from invalid input
- * - Prevent ownership & configuration abuse
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO environment variables
- *
- * If this file is wrong → device integrity breaks
- */
-
 "use strict";
 
 const Joi = require("joi");
@@ -27,9 +7,7 @@ const {
   DEVICE_LIMITS,
 } = require("./device.constants");
 
-/* ======================================================
-   COMMON FIELD SCHEMAS
-====================================================== */
+
 
 const deviceName = Joi.string()
   .min(DEVICE_LIMITS.MIN_NAME_LENGTH)
@@ -98,9 +76,7 @@ const soilTelemetrySchema = Joi.object({
   recordedAt: Joi.date().iso().optional(),
 }).required();
 
-/* ======================================================
-   REGISTER DEVICE (USER)
-====================================================== */
+
 
 /**
  * POST /api/v1/devices
@@ -141,17 +117,13 @@ const createDeviceSchema = Joi.object({
       "moistureMinThreshold cannot be greater than moistureMaxThreshold",
 }).required();
 
-/* ======================================================
-   PROVISION DEVICE (CLAIM FLOW)
-====================================================== */
+
 
 const provisionDeviceSchema = Joi.object({
   deviceName: deviceName.required(),
 }).required();
 
-/* ======================================================
-   UPDATE DEVICE (OWNER / ADMIN)
-====================================================== */
+
 
 /**
  * PUT /api/v1/devices/:id
@@ -212,9 +184,7 @@ const updateDeviceSchema = Joi.object({
       "WiFi password must be at least 8 characters",
   });
 
-/* ======================================================
-   DEVICE PARAMS
-====================================================== */
+
 
 /**
  * Common device ID param validation
@@ -247,9 +217,7 @@ const deviceStatusIdentifierParamSchema = Joi.object({
     }),
 }).required();
 
-/* ======================================================
-   IOT SYNC PAYLOAD (FUTURE-READY)
-====================================================== */
+
 
 /**
  * PATCH /api/v1/devices/sync/:id
@@ -264,9 +232,7 @@ const deviceSyncSchema = Joi.object({
   }),
 }).required();
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   createDeviceSchema,

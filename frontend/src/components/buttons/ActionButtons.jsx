@@ -1,23 +1,7 @@
-/**
- * ActionButtons.jsx
- * FarmCast – Grouped Action Controls (Enterprise / SaaS)
- *
- * Responsibilities:
- * - Render grouped action buttons
- * - Emit action intent safely
- * - Protect destructive actions with confirmation
- *
- * ❌ No backend logic
- * ❌ No routing
- * ❌ No auth logic
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   DEFAULT ACTIONS (SAFE PRESET)
-====================================================== */
+
 
 const DEFAULT_ACTIONS = [
   { id: "sendMail", label: "Send to Mail", icon: "mail", variant: "primary" },
@@ -26,9 +10,7 @@ const DEFAULT_ACTIONS = [
   { id: "delete", label: "Delete", icon: "delete", variant: "danger", confirm: true },
 ];
 
-/* ======================================================
-   VARIANT → CLASS MAP (DESIGN SYSTEM)
-====================================================== */
+
 
 const VARIANT_CLASS_MAP = {
   primary: "fc-btn fc-btn--primary",
@@ -38,9 +20,7 @@ const VARIANT_CLASS_MAP = {
   neutral: "fc-btn fc-btn--neutral",
 };
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const ActionButtons = ({
   actions = DEFAULT_ACTIONS,
@@ -116,9 +96,7 @@ const ActionButtons = ({
   );
 };
 
-/* ======================================================
-   PROPTYPES
-====================================================== */
+
 
 ActionButtons.propTypes = {
   actions: PropTypes.arrayOf(

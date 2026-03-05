@@ -1,9 +1,3 @@
-/**
- * src/modules/community/community.routes.js
- * ------------------------------------------------------
- * Community Routes
- */
-
 "use strict";
 
 const express = require("express");

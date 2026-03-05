@@ -1,9 +1,3 @@
-/**
- * src/modules/community/community.schema.js
- * ------------------------------------------------------
- * Community Validation Schemas
- */
-
 "use strict";
 
 const Joi = require("joi");

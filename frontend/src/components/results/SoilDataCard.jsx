@@ -1,8 +1,3 @@
-/**
- * SoilDataCard.jsx
- * FarmCast - Soil Sensor Readings
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 

@@ -1,15 +1,4 @@
-/**
- * constants.js
- * Enterprise-grade Frontend Configuration
- * Single source of truth for API contracts & UI constants
- *
- * CRITICAL FILE
- * If this file is wrong → frontend cannot talk to backend
- */
 
-/* ======================================================
-   ENVIRONMENT
-====================================================== */
 
 export const ENV = Object.freeze({
   NODE_ENV: ["development", "production", "test"].includes(
@@ -30,21 +19,15 @@ export const ENV = Object.freeze({
     ),
 });
 
-/* ======================================================
-   API VERSIONING
-====================================================== */
+
 
 export const API_VERSION = "v1";
 
-/* ======================================================
-   API BASE
-====================================================== */
+
 
 export const API_BASE = `${ENV.API_BASE_URL}/${API_VERSION}`;
 
-/* ======================================================
-   ENDPOINTS (CANONICAL CONTRACT)
-====================================================== */
+
 
 export const ENDPOINTS = Object.freeze({
   /* ---------- AUTH ---------- */
@@ -74,9 +57,7 @@ export const ENDPOINTS = Object.freeze({
   PREDICTORS: `${API_BASE}/predictors`,
 });
 
-/* ======================================================
-   UPLOAD & REQUEST LIMITS
-====================================================== */
+
 
 export const LIMITS = Object.freeze({
   IMAGE_MAX_SIZE_MB: 5,
@@ -90,9 +71,7 @@ export const LIMITS = Object.freeze({
   ML_IMAGE_TIMEOUT_MS: 30_000,
 });
 
-/* ======================================================
-   FEATURE FLAGS
-====================================================== */
+
 
 export const FEATURES = Object.freeze({
   ENABLE_DEVICE_MAP: true,
@@ -100,9 +79,7 @@ export const FEATURES = Object.freeze({
   ENABLE_MOCK_DATA: false,
 });
 
-/* ======================================================
-   UI CONSTANTS
-====================================================== */
+
 
 export const UI = Object.freeze({
   DEFAULT_PAGE_SIZE: 10,
@@ -122,9 +99,7 @@ export const UI = Object.freeze({
   },
 });
 
-/* ======================================================
-   GEOGRAPHY (ML SAFE CATEGORIES)
-====================================================== */
+
 
 export const STATES = [
   "Andhra Pradesh",
@@ -165,9 +140,7 @@ export const DISTRICTS = {
   ],
 };
 
-/* ======================================================
-   STORAGE KEYS (AUTH CRITICAL)
-====================================================== */
+
 
 export const STORAGE_KEYS = Object.freeze({
   AUTH_TOKEN: "farmcast.auth.token",

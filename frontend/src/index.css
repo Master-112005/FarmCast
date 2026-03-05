@@ -1,7 +1,4 @@
-/* ============================================================
-   FarmCast Entry Stylesheet
-   Keep @import statements at the top to satisfy CSS rules.
-============================================================ */
+
 
 @import "./styles/variables.css";
 @import "./styles/base.css";

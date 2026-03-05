@@ -1,9 +1,3 @@
-/**
- * chatService.js
- * ------------------------------------------------------
- * Chat API service
- */
-
 "use strict";
 
 import api from "./api";

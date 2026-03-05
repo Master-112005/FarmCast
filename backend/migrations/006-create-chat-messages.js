@@ -1,9 +1,3 @@
-/**
- * migrations/006-create-chat-messages.js
- * ------------------------------------------------------
- * Create Chat Messages Table
- */
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */

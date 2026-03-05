@@ -1,31 +1,9 @@
-/**
- * src/modules/users/user.schema.js
- * ------------------------------------------------------
- * User Domain Validation Schemas
- *
- * CRITICAL FILE (USER INPUT CONTRACT)
- *
- * Responsibilities:
- * - Validate user-related request payloads
- * - Protect profile endpoints from invalid input
- * - Prevent privilege escalation via request payloads
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO environment variables
- *
- * If this file is wrong → user data integrity breaks
- */
-
 "use strict";
 
 const Joi = require("joi");
 const { USER_LIMITS } = require("./user.constants");
 
-/* ======================================================
-   COMMON FIELD SCHEMAS
-====================================================== */
+
 
 const name = Joi.string()
   .min(USER_LIMITS.MIN_NAME_LENGTH)
@@ -74,9 +52,7 @@ const profileImage = Joi.string()
       "Profile image must be a valid URL",
   });
 
-/* ======================================================
-   USER SELF-PROFILE UPDATE
-====================================================== */
+
 
 /**
  * PUT /api/v1/users/me
@@ -105,9 +81,7 @@ const updateMyProfileSchema = Joi.object({
       "At least one profile field must be provided",
   });
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   updateMyProfileSchema,

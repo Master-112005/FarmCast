@@ -1,9 +1,3 @@
-/**
- * src/modules/community/community.service.js
- * ------------------------------------------------------
- * Community Domain Service
- */
-
 "use strict";
 
 const fs = require("fs");

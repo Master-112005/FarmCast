@@ -1,27 +1,6 @@
-/**
- * src/modules/auth/auth.constants.js
- * ------------------------------------------------------
- * Authentication Domain Constants
- *
- * CRITICAL FILE (AUTH INVARIANTS)
- *
- * Responsibilities:
- * - Centralize auth-related constants
- * - Prevent magic strings across auth controllers/services
- * - Lock down limits & flow semantics
- *
- * Rules:
- * - NO runtime logic
- * - NO environment variables
- * - NO imports from controllers/services
- * - IMMUTABLE exports only
- */
-
 "use strict";
 
-/* ======================================================
-   AUTH FLOWS
-====================================================== */
+
 
 /**
  * Supported authentication actions
@@ -34,9 +13,7 @@ const AUTH_ACTIONS = Object.freeze({
   REFRESH: "refresh",
 });
 
-/* ======================================================
-   CREDENTIAL POLICIES
-====================================================== */
+
 
 /**
  * Password policy (enforced at schema/service layer)
@@ -47,9 +24,7 @@ const PASSWORD_POLICY = Object.freeze({
   MAX_LENGTH: 128,
 });
 
-/* ======================================================
-   TOKEN CONTEXT
-====================================================== */
+
 
 /**
  * Token types handled by the auth domain
@@ -60,9 +35,7 @@ const TOKEN_TYPES = Object.freeze({
   REFRESH: "refresh",
 });
 
-/* ======================================================
-   SESSION & SECURITY LIMITS
-====================================================== */
+
 
 /**
  * Limits to protect auth endpoints from abuse
@@ -73,9 +46,7 @@ const AUTH_LIMITS = Object.freeze({
   MAX_ACTIVE_SESSIONS_PER_USER: 10, // multi-device support
 });
 
-/* ======================================================
-   AUTH-SPECIFIC ERROR CODES
-====================================================== */
+
 
 /**
  * Auth-domain error codes.
@@ -88,9 +59,7 @@ const AUTH_ERRORS = Object.freeze({
   TOKEN_EXPIRED: "TOKEN_EXPIRED",
 });
 
-/* ======================================================
-   EXPORTS (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze({
   AUTH_ACTIONS,

@@ -1,23 +1,7 @@
-/**
- * AuthLayout.jsx
- * FarmCast – Authentication Layout Shell (Enterprise Hardened)
- *
- * Responsibilities:
- * - Provide a consistent, isolated layout for auth pages
- * - Visually separate auth flow from main application
- * - Act as a safe wrapper (no business logic)
- *
- * ❌ No routing logic
- * ❌ No backend logic
- * ❌ No state management
- */
-
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   AUTH LAYOUT
-====================================================== */
+
 
 const AuthLayout = ({ children }) => {
   // Defensive guard: prevent silent blank screens

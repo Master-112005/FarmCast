@@ -1,26 +1,8 @@
-/**
- * src/utils/hash.js
- * ------------------------------------------------------
- * Cryptographic Hash Utilities (Enterprise Baseline)
- *
- * Responsibilities:
- * - Securely hash sensitive secrets (passwords, tokens)
- * - Safely compare raw values against hashes
- * - Provide a single audited crypto interface
- *
- * Design Principles:
- * - bcrypt only (battle-tested)
- * - Fail-fast on invalid inputs
- * - Zero leakage of secrets
- */
-
 "use strict";
 
 const bcrypt = require("bcrypt");
 
-/* ======================================================
-   CONFIGURATION
-====================================================== */
+
 
 /**
  * bcrypt cost factor
@@ -28,9 +10,7 @@ const bcrypt = require("bcrypt");
  */
 const SALT_ROUNDS = 12;
 
-/* ======================================================
-   INTERNAL VALIDATION
-====================================================== */
+
 
 const assertNonEmptyString = (value, label) => {
   if (typeof value !== "string" || value.trim().length === 0) {
@@ -38,9 +18,7 @@ const assertNonEmptyString = (value, label) => {
   }
 };
 
-/* ======================================================
-   PUBLIC API
-====================================================== */
+
 
 /**
  * Hash a sensitive value
@@ -65,9 +43,7 @@ const comparePassword = async (plainValue, hashedValue) => {
   return bcrypt.compare(plainValue, hashedValue);
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   hashPassword,

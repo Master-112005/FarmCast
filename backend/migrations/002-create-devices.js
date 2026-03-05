@@ -1,20 +1,10 @@
-/**
- * migrations/002-create-devices.js
- * ------------------------------------------------------
- * Create Devices Table
- *
- * CRITICAL FILE (DEVICE OWNERSHIP & IOT FOUNDATION)
- */
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("devices", {
-      /* ======================================================
-         PRIMARY KEY
-      ====================================================== */
+      
 
       id: {
         type: Sequelize.UUID,
@@ -23,9 +13,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
 
-      /* ======================================================
-         OWNERSHIP
-      ====================================================== */
+      
 
       user_id: {
         type: Sequelize.UUID,
@@ -38,9 +26,7 @@ module.exports = {
         onDelete: "CASCADE",
       },
 
-      /* ======================================================
-         DEVICE IDENTITY
-      ====================================================== */
+      
 
       name: {
         type: Sequelize.STRING(100),
@@ -74,9 +60,7 @@ module.exports = {
         defaultValue: "active",
       },
 
-      /* ======================================================
-         LOCATION
-      ====================================================== */
+      
 
       latitude: {
         type: Sequelize.DECIMAL(10, 7),
@@ -98,9 +82,7 @@ module.exports = {
         allowNull: true,
       },
 
-      /* ======================================================
-         TIMESTAMPS
-      ====================================================== */
+      
 
       created_at: {
         type: Sequelize.DATE,
@@ -118,9 +100,7 @@ module.exports = {
       },
     });
 
-    /* ======================================================
-       INDEXES
-    ====================================================== */
+    
 
     await queryInterface.addIndex("devices", [
       "user_id",

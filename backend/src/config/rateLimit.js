@@ -1,19 +1,3 @@
-/**
- * src/config/rateLimit.js
- * ------------------------------------------------------
- * API Rate Limiting Configuration
- *
- * CRITICAL FILE (ABUSE & DOS PROTECTION)
- *
- * Responsibilities:
- * - Protect APIs from brute-force & abuse
- * - Ensure fair usage under load
- * - Never block healthy frontend usage
- * - Fail safely without crashing the server
- *
- * If misconfigured → users get locked out OR app is abused
- */
-
 "use strict";
 
 const rateLimit = require("express-rate-limit");
@@ -22,9 +6,7 @@ const env = require("./env");
 const logger = require("../utils/logger");
 const { ERROR_CODES } = require("../utils/constants");
 
-/* ======================================================
-   DISABLED MODE (SAFE BYPASS)
-====================================================== */
+
 
 /**
  * Allows turning off rate limiting safely
@@ -37,9 +19,7 @@ if (!env.SECURITY.RATE_LIMIT_ENABLED) {
   return;
 }
 
-/* ======================================================
-   RATE LIMIT CONFIGURATION
-====================================================== */
+
 
 const POLLING_ROUTES = Object.freeze([
   /^\/api\/v1\/chat\/contacts$/,
@@ -141,8 +121,6 @@ const limiter = (req, res, next) => {
   });
 };
 
-/* ======================================================
-   EXPORT
-====================================================== */
+
 
 module.exports = limiter;

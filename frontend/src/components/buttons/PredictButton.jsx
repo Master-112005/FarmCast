@@ -1,22 +1,7 @@
-/**
- * PredictButton.jsx
- * FarmCast - ML Prediction Trigger Button (Enterprise / SaaS)
- *
- * Responsibilities:
- * - Trigger prediction action
- * - Provide clear loading & disabled feedback
- *
- * No business logic
- * No backend logic
- * No routing
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   STYLE MAP (DESIGN SYSTEM ONLY)
-====================================================== */
+
 
 const VARIANT_CLASS_MAP = {
   primary: "fc-btn fc-btn--primary",
@@ -24,9 +9,7 @@ const VARIANT_CLASS_MAP = {
   danger: "fc-btn fc-btn--danger",
 };
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const PredictButton = ({
   label = "Run Prediction",
@@ -87,9 +70,7 @@ const PredictButton = ({
   );
 };
 
-/* ======================================================
-   PROPTYPES
-====================================================== */
+
 
 PredictButton.propTypes = {
   label: PropTypes.string,

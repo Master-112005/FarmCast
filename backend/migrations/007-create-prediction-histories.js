@@ -1,9 +1,3 @@
-/**
- * migrations/007-create-prediction-histories.js
- * ------------------------------------------------------
- * Create Prediction Histories Table
- */
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */

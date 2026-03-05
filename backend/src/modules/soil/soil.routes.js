@@ -1,24 +1,3 @@
-/**
- * src/modules/soil/soil.routes.js
- * ------------------------------------------------------
- * Soil Routes
- *
- * CRITICAL FILE (SOIL DOMAIN ACCESS CONTROL)
- *
- * Responsibilities:
- * - Define soil telemetry & analytics endpoints
- * - Enforce authentication and RBAC
- * - Apply request validation
- * - Delegate handling to controllers
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO response shaping
- *
- * If this file is wrong → soil data integrity breaks
- */
-
 "use strict";
 
 const express = require("express");
@@ -47,15 +26,11 @@ const {
   USER_ROLES,
 } = require("../users/user.constants");
 
-/* ======================================================
-   ROUTER INITIALIZATION
-====================================================== */
+
 
 const router = express.Router();
 
-/* ======================================================
-   SOIL TELEMETRY ROUTES
-====================================================== */
+
 
 /**
  * POST /api/v1/soil
@@ -74,9 +49,7 @@ router.post(
   soilController.createSoilRecord
 );
 
-/* ======================================================
-   SOIL ANALYTICS ROUTES
-====================================================== */
+
 
 /**
  * GET /api/v1/soil/history
@@ -112,8 +85,6 @@ router.get(
   soilController.getLatestSoilRecord
 );
 
-/* ======================================================
-   EXPORT ROUTER
-====================================================== */
+
 
 module.exports = router;

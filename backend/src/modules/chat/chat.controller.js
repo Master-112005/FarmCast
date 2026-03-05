@@ -1,9 +1,3 @@
-/**
- * src/modules/chat/chat.controller.js
- * ------------------------------------------------------
- * Chat Controller
- */
-
 "use strict";
 
 const chatService = require("./chat.service");

@@ -1,23 +1,7 @@
-/**
- * UploadButton.jsx
- * FarmCast – ML-Safe File Upload Trigger (Enterprise / SaaS)
- *
- * Responsibilities:
- * - Trigger file selection
- * - Validate image type & size
- * - Emit validated file to parent
- *
- * ❌ No backend logic
- * ❌ No ML logic
- * ❌ No routing
- */
-
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   VALIDATION RULES (LOCKED)
-====================================================== */
+
 
 const MAX_FILE_SIZE_MB = 5;
 const ALLOWED_TYPES = [
@@ -25,9 +9,7 @@ const ALLOWED_TYPES = [
   "image/png",
 ];
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const UploadButton = ({
   label = "Upload Image",
@@ -88,9 +70,7 @@ const UploadButton = ({
     }
   };
 
-  /* ======================================================
-     UI
-  ====================================================== */
+  
 
   return (
     <div className="fc-upload">
@@ -150,9 +130,7 @@ const UploadButton = ({
   );
 };
 
-/* ======================================================
-   PROPTYPES
-====================================================== */
+
 
 UploadButton.propTypes = {
   label: PropTypes.string,

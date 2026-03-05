@@ -1,9 +1,3 @@
-/**
- * src/modules/admin/admin.routes.js
- * ------------------------------------------------------
- * Admin Routes
- */
-
 "use strict";
 
 const express = require("express");

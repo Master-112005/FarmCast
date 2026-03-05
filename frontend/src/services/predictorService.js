@@ -1,21 +1,7 @@
-/**
- * predictorService.js
- * ------------------------------------------------------
- * Enterprise ML Prediction Service
- * Frontend ↔ Backend ↔ ML Engine
- *
- * CRITICAL FILE:
- * - ML inference gateway
- * - High latency & high cost operations
- * - Must NEVER crash UI
- */
-
 import api from "./api";
 import { ENDPOINTS, LIMITS } from "../utils/constants";
 
-/* ======================================================
-   SAFE DEFAULTS
-====================================================== */
+
 
 const REQUEST_TIMEOUT =
   LIMITS?.REQUEST_TIMEOUT_MS ?? 15000;
@@ -33,9 +19,7 @@ const ALLOWED_IMAGE_TYPES =
 const IMAGE_MAX_MB =
   LIMITS?.IMAGE_MAX_SIZE_MB ?? 5;
 
-/* ======================================================
-   INTERNAL: STANDARD RESPONSE SHAPE
-====================================================== */
+
 
 const ok = (data, status) => ({
   success: true,
@@ -50,9 +34,7 @@ const fail = (error) => ({
   code: error?.code,
 });
 
-/* ======================================================
-   INTERNAL: SAFE EXECUTOR
-====================================================== */
+
 
 const execute = async (requestFn) => {
   try {
@@ -63,9 +45,7 @@ const execute = async (requestFn) => {
   }
 };
 
-/* ======================================================
-   CORE PREDICTION
-====================================================== */
+
 
 /**
  * Run full ML prediction pipeline
@@ -86,9 +66,7 @@ export const runPrediction = (payload) => {
   );
 };
 
-/* ======================================================
-   RECOMMENDATIONS
-====================================================== */
+
 
 /**
  * Fertilizer recommendation
@@ -130,9 +108,7 @@ export const getWaterRecommendation = (
   );
 };
 
-/* ======================================================
-   YIELD & PROFIT
-====================================================== */
+
 
 /**
  * Calculate yield & profit
@@ -154,9 +130,7 @@ export const calculateYieldAndProfit = (
   );
 };
 
-/* ======================================================
-   IMAGE UPLOAD (ML DISEASE PREDICTION)
-====================================================== */
+
 
 /**
  * Upload crop image for disease detection
@@ -196,9 +170,7 @@ export const uploadCropImage = (file) => {
   );
 };
 
-/* ======================================================
-   EMAIL DELIVERY
-====================================================== */
+
 
 /**
  * Send prediction report to user email (from admin)

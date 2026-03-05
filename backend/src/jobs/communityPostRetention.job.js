@@ -1,13 +1,3 @@
-/**
- * src/jobs/communityPostRetention.job.js
- * ------------------------------------------------------
- * Community Post Retention Scheduler
- *
- * Responsibilities:
- * - Automatically delete community posts older than retention TTL
- * - Remove corresponding uploaded community images
- */
-
 "use strict";
 
 const fs = require("fs");

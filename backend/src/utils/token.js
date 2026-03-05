@@ -1,11 +1,3 @@
-/**
- * src/utils/token.js
- * ------------------------------------------------------
- * Token Utilities (JWT Access + Refresh Tokens)
- *
- * CRITICAL FILE (AUTHENTICATION PRIMITIVES)
- */
-
 "use strict";
 
 const crypto = require("crypto");
@@ -18,9 +10,7 @@ const {
   HTTP_STATUS,
 } = require("./constants");
 
-/* ======================================================
-   SAFETY CHECKS (FAIL FAST)
-====================================================== */
+
 
 if (!env?.AUTH?.JWT_SECRET) {
   throw new Error(
@@ -46,9 +36,7 @@ if (!env?.AUTH?.REFRESH_TOKEN_SECRET) {
   );
 }
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 const buildPayload = (user) => ({
   sub: user.id,
@@ -61,9 +49,7 @@ const jwtOptions = Object.freeze({
   algorithm: env.AUTH.JWT_ALGORITHM,
 });
 
-/* ======================================================
-   ACCESS TOKEN (JWT)
-====================================================== */
+
 
 const generateAccessToken = (user) => {
   if (!user?.id || !user?.role) {
@@ -107,9 +93,7 @@ const verifyAccessToken = (token) => {
   }
 };
 
-/* ======================================================
-   REFRESH TOKEN (OPAQUE)
-====================================================== */
+
 
 const generateRefreshToken = () => {
   return crypto
@@ -128,9 +112,7 @@ const hashRefreshToken = (token) => {
     .digest("hex");
 };
 
-/* ======================================================
-   TOKEN EXPIRY
-====================================================== */
+
 
 const getRefreshTokenExpiry = () => {
   const now = new Date();
@@ -151,9 +133,7 @@ const getRefreshTokenExpiry = () => {
   return now;
 };
 
-/* ======================================================
-   EXPORTS (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze({
   generateAccessToken,

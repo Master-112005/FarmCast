@@ -1,17 +1,4 @@
-﻿/**
- * UserProfile.jsx
- * FarmCast - Enterprise Read-Only User Profile
- *
- * Responsibilities:
- * - Display user identity & farm info
- * - Provide optional account actions
- *
- * No editing
- * No backend calls
- * No routing
- */
-
-import React, {
+﻿import React, {
   useEffect,
   useMemo,
   useState,
@@ -21,16 +8,12 @@ import { ENV } from "../../utils/constants";
 import ActionButtons from "../buttons/ActionButtons";
 import DeviceManager from "../device/DeviceManager";
 
-/* ======================================================
-   CONSTANTS
-====================================================== */
+
 
 const DEFAULT_PROFILE_IMAGE =
   "/profile-placeholder.svg";
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const isAbsoluteUrl = (value) =>
   /^(https?:|data:|blob:)/i.test(value);
@@ -57,9 +40,7 @@ const resolveProfileImage = (value) => {
 
 const noop = () => {};
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const UserProfile = ({
   name,
@@ -134,7 +115,7 @@ const UserProfile = ({
       className="fc-card"
       aria-label="User profile"
     >
-      {/* ================= HEADER ================= */}
+      
       <header
         className={`fc-card__header ${
           hasHeaderActions
@@ -168,7 +149,7 @@ const UserProfile = ({
         )}
       </header>
 
-      {/* ================= IDENTITY ================= */}
+      
       <div className="fc-profile-header">
         <img
           src={resolveProfileImage(profileImage)}
@@ -191,7 +172,7 @@ const UserProfile = ({
         </div>
       </div>
 
-      {/* ================= FARM INFO ================= */}
+      
       <div className="fc-profile-section">
         <div className="fc-meta-row">
           <span className="fc-label">Address</span>
@@ -283,9 +264,7 @@ const UserProfile = ({
   );
 };
 
-/* ======================================================
-   PROP TYPES
-====================================================== */
+
 
 UserProfile.propTypes = {
   name: PropTypes.string,

@@ -1,9 +1,3 @@
-/**
- * DeviceDeleteModal.jsx
- * ------------------------------------------------------
- * FarmCast - Dedicated delete confirmation modal for devices
- */
-
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 

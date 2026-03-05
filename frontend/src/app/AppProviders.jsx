@@ -1,31 +1,9 @@
-/**
- * AppProviders.jsx
- * ------------------------------------------------------
- * FarmCast – Global Providers Composition (MISSION CRITICAL)
- *
- * Tier: 0.5 (Application Dependency Root)
- *
- * Responsibilities:
- * - Compose application-wide context providers
- * - Guarantee correct provider order
- * - Provide crash containment
- * - Act as a single, stable dependency root
- *
- * Constraints:
- * - No UI rendering
- * - No routing
- * - No backend logic
- * - No side effects
- */
-
 "use strict";
 
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   CONTEXT PROVIDERS
-====================================================== */
+
 
 import { AuthProvider } from "../context/AuthContext";
 import { SocketProvider } from "../context/SocketContext";
@@ -33,9 +11,7 @@ import { ViewProvider } from "../context/ViewContext";
 
 const isProd = import.meta.env.MODE === "production";
 
-/* ======================================================
-   LOCAL ERROR BOUNDARY (INLINE)
-====================================================== */
+
 
 class ProviderErrorBoundary extends React.Component {
   constructor(props) {
@@ -72,9 +48,7 @@ class ProviderErrorBoundary extends React.Component {
   }
 }
 
-/* ======================================================
-   APP PROVIDERS
-====================================================== */
+
 
 /**
  * Provider order is STRICT and intentional:

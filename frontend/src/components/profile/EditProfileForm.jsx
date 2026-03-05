@@ -1,23 +1,8 @@
-/**
- * EditProfileForm.jsx
- * FarmCast - Enterprise Profile Editor (SaaS Safe)
- *
- * Responsibilities:
- * - Edit user identity & farm metadata
- * - Validate and normalize inputs
- * - Provide a safe profile image upload entry point
- *
- * No backend calls
- * No routing
- */
-
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { ENV } from "../../utils/constants";
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const DEFAULT_PROFILE_IMAGE =
   "/profile-placeholder.svg";
@@ -60,9 +45,7 @@ const buildInputId = (label) => {
   return slug ? `fc-${slug}` : undefined;
 };
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const EditProfileForm = ({
   initialData,
@@ -166,7 +149,7 @@ const EditProfileForm = ({
       aria-label="Edit profile"
       onSubmit={handleSubmit}
     >
-      {/* ================= ERROR ================= */}
+      
       {error && (
         <div
           className="fc-alert fc-alert--error"
@@ -176,7 +159,7 @@ const EditProfileForm = ({
         </div>
       )}
 
-      {/* ================= IMAGE UPLOAD ================= */}
+      
       <div className="fc-form-section">
         <label
           className="fc-label"
@@ -224,7 +207,7 @@ const EditProfileForm = ({
         </div>
       </div>
 
-      {/* ================= FIELDS ================= */}
+      
       <Input
         label="Name"
         value={formData.name || ""}
@@ -257,7 +240,7 @@ const EditProfileForm = ({
         onChange={(v) => update("address", v)}
       />
 
-      {/* ================= FIELD SIZE ================= */}
+      
       <div className="fc-form-row">
         <Input
           label="Field Size (ha)"
@@ -269,7 +252,7 @@ const EditProfileForm = ({
         />
       </div>
 
-      {/* ================= ACTIONS ================= */}
+      
       <footer className="fc-card__actions">
         <button
           type="submit"
@@ -289,7 +272,7 @@ const EditProfileForm = ({
         </button>
       </footer>
 
-      {/* ================= LOADING ================= */}
+      
       {isLoading && (
         <div className="fc-loading" aria-live="polite">
           <span className="fc-loader" aria-hidden />
@@ -300,9 +283,7 @@ const EditProfileForm = ({
   );
 };
 
-/* ======================================================
-   SMALL INPUT HELPERS
-====================================================== */
+
 
 const Input = ({ label, value, onChange, ...props }) => (
   <div className="fc-form-section">
@@ -341,9 +322,7 @@ const Textarea = ({ label, value, onChange, ...props }) => (
   </div>
 );
 
-/* ======================================================
-   PROP TYPES
-====================================================== */
+
 
 EditProfileForm.propTypes = {
   initialData: PropTypes.shape({

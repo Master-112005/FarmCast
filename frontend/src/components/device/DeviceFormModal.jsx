@@ -1,9 +1,3 @@
-/**
- * DeviceFormModal.jsx
- * ------------------------------------------------------
- * FarmCast - Dedicated device add/edit modal form
- */
-
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 

@@ -4,17 +4,13 @@ const { Sequelize } = require("sequelize");
 const env = require("./env");
 const logger = require("../utils/logger");
 
-/* ======================================================
-   SAFETY CHECKS
-====================================================== */
+
 
 if (!env?.DB?.HOST || !env?.DB?.NAME) {
   throw new Error("Database configuration incomplete");
 }
 
-/* ======================================================
-   SEQUELIZE INSTANCE
-====================================================== */
+
 
 const sequelize = new Sequelize(
   env.DB.NAME,
@@ -55,15 +51,11 @@ const sequelize = new Sequelize(
   }
 );
 
-/* ======================================================
-   INTERNAL STATE
-====================================================== */
+
 
 let isConnected = false;
 
-/* ======================================================
-   CONNECTION LIFECYCLE
-====================================================== */
+
 
 const connectDB = async () => {
   if (isConnected) return;

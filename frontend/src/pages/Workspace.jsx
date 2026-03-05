@@ -1,14 +1,3 @@
-/**
- * Workspace.jsx
- * ------------------------------------------------------
- * FarmCast - Workspace Orchestrator
- *
- * Responsibilities:
- * - Select active workspace view
- * - Orchestrate layout state
- * - Bind auth and view context
- */
-
 "use strict";
 
 import React, {

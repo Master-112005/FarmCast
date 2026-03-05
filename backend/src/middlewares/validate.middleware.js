@@ -1,27 +1,3 @@
-/**
- * src/middlewares/validate.middleware.js
- * ------------------------------------------------------
- * Request Validation Middleware
- *
- * CRITICAL FILE (API CONTRACT ENFORCER)
- *
- * Responsibilities:
- * - Validate incoming request data against schemas
- * - Reject invalid input early (fail fast)
- * - Normalize validation errors for frontend
- * - Prevent malformed data from reaching services
- *
- * Rules:
- * - MUST never throw
- * - MUST never mutate request unexpectedly
- * - MUST return predictable JSON on failure
- *
- * Supported schema styles:
- * - Joi
- * - Zod
- * - Yup (with validateSync)
- */
-
 "use strict";
 
 const logger = require("../utils/logger");
@@ -30,9 +6,7 @@ const {
   HTTP_STATUS,
 } = require("../utils/constants");
 
-/* ======================================================
-   INTERNAL: SCHEMA EXECUTION
-====================================================== */
+
 
 /**
  * Executes schema validation safely.
@@ -75,9 +49,7 @@ const runValidation = (schema, data) => {
   throw new Error("Unsupported validation schema");
 };
 
-/* ======================================================
-   MIDDLEWARE FACTORY
-====================================================== */
+
 
 /**
  * Validation middleware factory

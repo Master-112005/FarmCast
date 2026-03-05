@@ -1,12 +1,3 @@
-/**
- * AdminView.jsx
- * ------------------------------------------------------
- * FarmCast - Dedicated Admin Workspace
- *
- * Responsibilities:
- * - Host admin-only tools
- */
-
 import React, {
   useEffect,
   useMemo,

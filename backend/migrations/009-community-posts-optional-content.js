@@ -1,9 +1,3 @@
-/**
- * migrations/009-community-posts-optional-content.js
- * ------------------------------------------------------
- * Allow caption-only or image-only community posts
- */
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */

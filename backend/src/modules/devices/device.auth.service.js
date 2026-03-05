@@ -1,19 +1,3 @@
-/**
- * src/modules/devices/device.auth.service.js
- * ------------------------------------------------------
- * Device Authentication Service
- *
- * Responsibilities:
- * - Verify device credentials safely
- * - Enforce device lifecycle auth policy
- * - Issue short-lived device JWTs
- *
- * Rules:
- * - NO Express req/res
- * - NO plaintext secret storage
- * - NO user JWT secret reuse
- */
-
 "use strict";
 
 const crypto = require("crypto");

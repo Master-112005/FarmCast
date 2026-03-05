@@ -1,9 +1,3 @@
-/**
- * communityService.js
- * ------------------------------------------------------
- * Community API service
- */
-
 "use strict";
 
 import api from "./api";

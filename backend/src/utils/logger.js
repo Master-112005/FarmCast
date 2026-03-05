@@ -1,27 +1,9 @@
-/**
- * src/utils/logger.js
- * ------------------------------------------------------
- * Centralized Application Logger
- *
- * CRITICAL FILE (OBSERVABILITY BACKBONE)
- *
- * Responsibilities:
- * - Structured, consistent logging
- * - Environment-aware verbosity
- * - Safe for production (no secret leaks)
- * - Developer-friendly in development
- *
- * If logging breaks → debugging & audits break
- */
-
 "use strict";
 
 const winston = require("winston");
 const env = require("../config/env");
 
-/* ======================================================
-   INTERNAL CONSTANTS
-====================================================== */
+
 
 const {
   combine,
@@ -32,10 +14,7 @@ const {
   colorize,
 } = winston.format;
 
-/* ======================================================
-   SAFE SERIALIZER
-   Prevents circular JSON crashes
-====================================================== */
+
 
 const safeStringify = (obj) => {
   try {
@@ -45,9 +24,7 @@ const safeStringify = (obj) => {
   }
 };
 
-/* ======================================================
-   LOG FORMATTERS
-====================================================== */
+
 
 /**
  * Production format:
@@ -80,9 +57,7 @@ const developmentFormat = combine(
   })
 );
 
-/* ======================================================
-   TRANSPORTS
-====================================================== */
+
 
 const transports = [
   new winston.transports.Console({
@@ -91,9 +66,7 @@ const transports = [
   }),
 ];
 
-/* ======================================================
-   LOGGER INSTANCE
-====================================================== */
+
 
 const logger = winston.createLogger({
   level: env.LOGGING.LEVEL,
@@ -105,10 +78,7 @@ const logger = winston.createLogger({
   exitOnError: false, // Never crash app due to logging
 });
 
-/* ======================================================
-   STREAM SUPPORT (HTTP LOGGING)
-   Used by morgan / custom middleware
-====================================================== */
+
 
 logger.stream = {
   write: (message) => {
@@ -117,10 +87,7 @@ logger.stream = {
   },
 };
 
-/* ======================================================
-   SAFETY WRAPPERS
-   Prevent accidental crashes due to bad inputs
-====================================================== */
+
 
 const wrap =
   (level) =>
@@ -137,9 +104,7 @@ const wrap =
     }
   };
 
-/* ======================================================
-   PUBLIC API (APP-WIDE)
-====================================================== */
+
 
 module.exports = {
   info: wrap("info"),

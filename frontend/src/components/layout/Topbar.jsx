@@ -1,23 +1,8 @@
-/**
- * Topbar.jsx
- * FarmCast – Global Application Header (Enterprise / SaaS)
- *
- * Responsibilities:
- * - Display application identity
- * - Show user actions (profile, logout)
- *
- * ❌ No routing logic
- * ❌ No view-state logic
- * ❌ No backend logic
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 import ProfileButton from "../navigation/ProfileButton";
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const Topbar = ({
   userName = "User",
@@ -29,9 +14,7 @@ const Topbar = ({
 }) => {
   const brand = "FarmCast";
 
-  /* ======================================================
-     UI
-  ====================================================== */
+  
 
   return (
     <header
@@ -39,7 +22,7 @@ const Topbar = ({
       role="banner"
       aria-label="Application Header"
     >
-      {/* ================= LEFT ================= */}
+      
       <div className="fc-topbar__brand" aria-label={brand}>
         <img
           className="fc-topbar__brand-logo"
@@ -56,12 +39,12 @@ const Topbar = ({
         </span>
       </div>
 
-      {/* ================= CENTER ================= */}
+      
       <div className="fc-topbar__center">
         {centerContent}
       </div>
 
-      {/* ================= RIGHT ================= */}
+      
       <div className="fc-topbar__actions">
         <div className="fc-topbar__icon-actions">
           <button

@@ -1,9 +1,3 @@
-/**
- * src/modules/admin/admin.controller.js
- * ------------------------------------------------------
- * Admin Controller
- */
-
 "use strict";
 
 const adminService = require("./admin.service");

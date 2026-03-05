@@ -1,22 +1,3 @@
-/**
- * Router.jsx
- * ------------------------------------------------------
- * FarmCast – Enterprise Routing Kernel
- *
- * Tier: 0 (Application Navigation Core)
- *
- * Responsibilities:
- * - Auth-gated routing
- * - Public-only auth routes
- * - Default route enforcement
- * - Centralized navigation safety
- *
- * Constraints:
- * - No UI styling
- * - No business logic
- * - No backend logic
- */
-
 "use strict";
 
 import React, { memo } from "react";
@@ -27,29 +8,21 @@ import {
   Navigate,
 } from "react-router-dom";
 
-/* ======================================================
-   CONTEXT
-====================================================== */
+
 
 import { useAuth } from "../context/AuthContext";
 
-/* ======================================================
-   AUTH PAGES
-====================================================== */
+
 
 import AuthLayout from "../auth/AuthLayout";
 import LoginPage from "../auth/LoginPage";
 import RegisterPage from "../auth/RegisterPage";
 
-/* ======================================================
-   APP PAGES
-====================================================== */
+
 
 import DashboardShell from "./DashboardShell";
 
-/* ======================================================
-   LOADING UI (FAIL-SAFE)
-====================================================== */
+
 
 const AppLoadingScreen = () => (
   <div
@@ -62,9 +35,7 @@ const AppLoadingScreen = () => (
   </div>
 );
 
-/* ======================================================
-   ROUTE GUARDS
-====================================================== */
+
 
 /**
  * Blocks access when user is not authenticated
@@ -104,9 +75,7 @@ const PublicOnlyRoute = memo(({ children }) => {
 
 PublicOnlyRoute.displayName = "PublicOnlyRoute";
 
-/* ======================================================
-   ROUTER
-====================================================== */
+
 
 const Router = () => {
   return (
@@ -118,7 +87,7 @@ const Router = () => {
     >
       <Routes>
 
-        {/* ================= PUBLIC ================= */}
+        
 
         <Route
           path="/login"
@@ -142,7 +111,7 @@ const Router = () => {
           }
         />
 
-        {/* ================= APPLICATION ================= */}
+        
 
         <Route
           path="/"
@@ -153,7 +122,7 @@ const Router = () => {
           }
         />
 
-        {/* ================= FALLBACK ================= */}
+        
 
         <Route
           path="*"

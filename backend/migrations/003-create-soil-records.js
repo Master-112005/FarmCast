@@ -4,9 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("soil_records", {
-      /* ======================================================
-         PRIMARY KEY
-      ====================================================== */
+      
 
       id: {
         type: Sequelize.UUID,
@@ -15,9 +13,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
 
-      /* ======================================================
-         DEVICE OWNERSHIP
-      ====================================================== */
+      
 
       device_id: {
         type: Sequelize.UUID,
@@ -41,9 +37,7 @@ module.exports = {
         onDelete: "CASCADE",
       },
 
-      /* ======================================================
-         TELEMETRY METRICS
-      ====================================================== */
+      
 
       moisture: {
         type: Sequelize.DECIMAL(5, 2),
@@ -65,9 +59,7 @@ module.exports = {
         allowNull: true,
       },
 
-      /* ======================================================
-         TIMESTAMPS
-      ====================================================== */
+      
 
       created_at: {
         type: Sequelize.DATE,
@@ -85,9 +77,7 @@ module.exports = {
       },
     });
 
-    /* ======================================================
-       INDEXES
-    ====================================================== */
+    
 
     await queryInterface.addIndex("soil_records", ["device_id"]);
     await queryInterface.addIndex("soil_records", ["user_id"]);

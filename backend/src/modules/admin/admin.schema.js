@@ -1,9 +1,3 @@
-/**
- * src/modules/admin/admin.schema.js
- * ------------------------------------------------------
- * Admin Validation Schemas
- */
-
 "use strict";
 
 const Joi = require("joi");

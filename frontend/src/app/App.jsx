@@ -1,27 +1,10 @@
-/**
- * App.jsx
- * FarmCast – Root Application Shell (CRITICAL)
- *
- * Responsibilities:
- * - Global error isolation (last line of defense)
- * - Provider orchestration
- * - Routing delegation
- *
- * GUARANTEES:
- * ❌ No UI business logic
- * ❌ No API calls
- * ❌ No CSS imports
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
 import AppProviders from "./AppProviders";
 import Router from "./Router";
 
-/* ======================================================
-   ERROR FALLBACK UI (SAFE, MINIMAL, ACCESSIBLE)
-====================================================== */
+
 
 const ErrorFallback = ({ onReload }) => (
   <div
@@ -53,9 +36,7 @@ ErrorFallback.propTypes = {
   onReload: PropTypes.func.isRequired,
 };
 
-/* ======================================================
-   GLOBAL ERROR BOUNDARY
-====================================================== */
+
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -100,9 +81,7 @@ ErrorBoundary.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-/* ======================================================
-   ROOT APPLICATION
-====================================================== */
+
 
 const App = () => {
   return (

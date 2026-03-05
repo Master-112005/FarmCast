@@ -1,9 +1,3 @@
-/**
- * src/modules/predictors/predictor.schema.js
- * ------------------------------------------------------
- * Predictor Input Validation Schemas
- */
-
 "use strict";
 
 const Joi = require("joi");

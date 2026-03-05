@@ -1,9 +1,3 @@
-/**
- * src/modules/predictors/predictor.routes.js
- * ------------------------------------------------------
- * Predictor Routes
- */
-
 "use strict";
 
 const express = require("express");
@@ -27,9 +21,7 @@ const { USER_ROLES } = require("../users/user.constants");
 
 const router = express.Router();
 
-/* ======================================================
-   CORE PIPELINE
-====================================================== */
+
 
 router.post(
   "/run",
@@ -39,9 +31,7 @@ router.post(
   predictorController.runPrediction
 );
 
-/* ======================================================
-   RECOMMENDATIONS
-====================================================== */
+
 
 router.post(
   "/fertilizer",
@@ -67,9 +57,7 @@ router.post(
   predictorController.yieldEstimation
 );
 
-/* ======================================================
-   DISEASE IMAGE UPLOAD
-====================================================== */
+
 
 router.post(
   "/upload",
@@ -79,9 +67,7 @@ router.post(
   predictorController.uploadDiseaseImage
 );
 
-/* ======================================================
-   EMAIL DELIVERY
-====================================================== */
+
 
 router.post(
   "/mail",

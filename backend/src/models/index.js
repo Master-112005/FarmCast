@@ -1,19 +1,3 @@
-/**
- * src/models/index.js
- * ------------------------------------------------------
- * Enterprise Sequelize Model Registry (Enterprise Hardened)
- *
- * Responsibilities:
- * - Initialize all Sequelize models
- * - Register model associations
- * - Expose a single, consistent DB object
- *
- * Rules:
- * - ZERO business logic
- * - ZERO queries
- * - Associations ONLY
- */
-
 "use strict";
 
 const { sequelize, Sequelize } = require("../config/db");

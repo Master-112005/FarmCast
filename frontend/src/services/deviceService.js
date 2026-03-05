@@ -1,28 +1,12 @@
-/**
- * deviceService.js
- * ------------------------------------------------------
- * Enterprise Device Service
- * Frontend ↔ Backend ↔ IoT Gateway
- *
- * CRITICAL FILE:
- * - Device lifecycle management
- * - Live telemetry access
- * - Must NEVER crash UI
- */
-
 import api from "./api";
 import { ENDPOINTS, LIMITS } from "../utils/constants";
 
-/* ======================================================
-   SAFE DEFAULTS
-====================================================== */
+
 
 const REQUEST_TIMEOUT =
   LIMITS?.REQUEST_TIMEOUT_MS ?? 15000;
 
-/* ======================================================
-   INTERNAL: STANDARD RESPONSE SHAPE
-====================================================== */
+
 
 const ok = (data, status) => ({
   success: true,
@@ -37,9 +21,7 @@ const fail = (error) => ({
   code: error?.code,
 });
 
-/* ======================================================
-   INTERNAL: SAFE EXECUTOR
-====================================================== */
+
 
 const execute = async (requestFn) => {
   try {
@@ -50,9 +32,7 @@ const execute = async (requestFn) => {
   }
 };
 
-/* ======================================================
-   PAYLOAD NORMALIZATION
-====================================================== */
+
 
 const normalizeType = (value) => {
   const raw = String(value || "").toLowerCase();
@@ -95,9 +75,7 @@ const normalizeUpdatePayload = (payload) => {
   return normalized;
 };
 
-/* ======================================================
-   DEVICE QUERIES
-====================================================== */
+
 
 /**
  * Fetch all devices for current user
@@ -119,9 +97,7 @@ export const getDeviceById = (deviceId) => {
   );
 };
 
-/* ======================================================
-   DEVICE MUTATIONS
-====================================================== */
+
 
 /**
  * Register a new device
@@ -209,9 +185,7 @@ export const finalizeDeleteDevice = (deviceId) => {
   );
 };
 
-/* ======================================================
-   IOT / LIVE DATA
-====================================================== */
+
 
 /**
  * Fetch live telemetry from device

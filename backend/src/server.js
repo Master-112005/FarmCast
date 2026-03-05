@@ -1,9 +1,3 @@
-/**
- * src/server.js
- * ------------------------------------------------------
- * Server Bootstrap and Lifecycle Manager
- */
-
 "use strict";
 
 const http = require("http");
@@ -13,14 +7,14 @@ const env = require("./config/env");
 const logger = require("./utils/logger");
 const app = require("./app");
 
-/* ================= DATABASE ================= */
+
 
 const {
   connectDB,
   disconnectDB,
 } = require("./config/db");
 
-/* ================= BACKGROUND JOBS ================= */
+
 
 const {
   startPredictionHistoryRetentionJob,
@@ -34,23 +28,21 @@ const {
   startOfflineMonitorJob,
 } = require("./jobs/offlineMonitor.job");
 
-/* ================= MQTT ================= */
+
 
 const {
   connectMQTT,
   disconnectMQTT,
 } = require("./infrastructure/mqtt/mqttClient");
 
-/* ================= SOCKET ================= */
+
 
 const {
   initSocket,
   closeSocket,
 } = require("./realtime/socket");
 
-/* ======================================================
-   INTERNAL STATE
-====================================================== */
+
 
 let server;
 let shuttingDown = false;
@@ -59,9 +51,7 @@ let stopCommunityPostRetention = null;
 let stopOfflineMonitor = null;
 let forceShutdownTimer = null;
 
-/* ======================================================
-   STARTUP SEQUENCE
-====================================================== */
+
 
 const waitForServerListening = () =>
   new Promise((resolve, reject) => {
@@ -125,9 +115,7 @@ const startServer = async () => {
 
 startServer();
 
-/* ======================================================
-   GRACEFUL SHUTDOWN
-====================================================== */
+
 
 const shutdown = async (signal) => {
   if (shuttingDown) return;
@@ -205,16 +193,12 @@ const shutdown = async (signal) => {
   }
 };
 
-/* ======================================================
-   SIGNAL HANDLING
-====================================================== */
+
 
 process.on("SIGTERM", shutdown);
 process.on("SIGINT", shutdown);
 
-/* ======================================================
-   FATAL ERROR HANDLING
-====================================================== */
+
 
 process.on("unhandledRejection", (reason) => {
   logger.error("Unhandled Promise Rejection", {

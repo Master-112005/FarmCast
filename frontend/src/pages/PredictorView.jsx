@@ -1,18 +1,3 @@
-/**
- * PredictorView.jsx
- * ------------------------------------------------------
- * FarmCast - Dual Prediction Workspace (Yield + Disease)
- *
- * Responsibilities:
- * - Run crop yield predictions
- * - Run crop disease predictions
- * - Provide mail + screenshot actions per predictor
- *
- * No routing logic
- * No auth mutation
- * No backend business logic
- */
-
 import React, {
   useState,
   useCallback,
@@ -20,19 +5,19 @@ import React, {
   useEffect,
 } from "react";
 
-/* ===================== INPUTS ===================== */
+
 import CropTypeInput from "../components/inputs/CropTypeInput";
 import SoilTypeInput from "../components/inputs/SoilTypeInput";
 import DateInputs from "../components/inputs/DateInputs";
 import StateInput from "../components/inputs/StateInput";
 import DistrictInput from "../components/inputs/DistrictInput";
 
-/* ===================== BUTTONS ===================== */
+
 import UploadButton from "../components/buttons/UploadButton";
 import PredictButton from "../components/buttons/PredictButton";
 import ActionButtons from "../components/buttons/ActionButtons";
 
-/* ===================== RESULTS ===================== */
+
 import SoilDataCard from "../components/results/SoilDataCard";
 import FertilizerRecommendation from "../components/results/FertilizerRecommendation";
 import WaterRecommendation from "../components/results/WaterRecommendation";
@@ -40,10 +25,10 @@ import YieldPrediction from "../components/results/YieldPrediction";
 import ProfitMetrics from "../components/results/ProfitMetrics";
 import DiseaseResultCard from "../components/results/DiseaseResultCard";
 
-/* ===================== LAYOUT ===================== */
+
 import Card from "../components/layout/Card";
 
-/* ===================== SERVICES ===================== */
+
 import {
   runPrediction,
   uploadCropImage,
@@ -51,9 +36,7 @@ import {
 } from "../services/predictorService";
 import { useAuth } from "../context/AuthContext";
 
-/* ====================================================
-   INITIAL STATE
-==================================================== */
+
 
 const INITIAL_FORM = {
   state: "",
@@ -96,9 +79,7 @@ const DISEASE_ACTIONS = [
   },
 ];
 
-/* ====================================================
-   DISEASE RESULT NORMALIZATION
-==================================================== */
+
 
 const formatLabel = (value) =>
   String(value || "")
@@ -414,9 +395,7 @@ const normalizeYieldResult = (
   };
 };
 
-/* ====================================================
-   COMPONENT
-==================================================== */
+
 
 const PredictorView = () => {
   /* ---------------- AUTH ---------------- */
@@ -814,9 +793,7 @@ const PredictorView = () => {
     }
   };
 
-  /* ====================================================
-     RENDER
-  ==================================================== */
+  
 
   return (
     <div className="predictor-page">

@@ -1,22 +1,7 @@
-/**
- * SoilTypeSelect.jsx
- * FarmCast - Soil Type Selector (Enterprise / ML-safe)
- *
- * Responsibilities:
- * - Allow user to select a valid soil type
- * - Emit normalized, ML-safe soil value
- *
- * No backend logic
- * No ML logic
- * No routing
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   ALLOWED SOIL TYPES (LOCKED FOR ML SAFETY)
-====================================================== */
+
 
 const SOIL_OPTIONS = [
   { label: "Loamy Soil", value: "loamy_soil" },
@@ -32,9 +17,7 @@ const SOIL_OPTIONS = [
   { label: "Laterite Soil", value: "laterite_soil" },
 ];
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const SoilTypeSelect = ({
   value,
@@ -98,9 +81,7 @@ const SoilTypeSelect = ({
   );
 };
 
-/* ======================================================
-   PROPTYPES
-====================================================== */
+
 
 SoilTypeSelect.propTypes = {
   value: PropTypes.string.isRequired, // normalized value

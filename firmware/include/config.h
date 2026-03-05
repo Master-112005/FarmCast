@@ -4,15 +4,9 @@
 
 namespace firmware_config {
 
-// =============================
-// Stage 1: Core runtime
-// =============================
 static constexpr uint32_t SERIAL_BAUD_RATE = 115200;
 static constexpr uint8_t WATCHDOG_TIMEOUT_SECONDS = 12;
 
-// =============================
-// Network + backend
-// =============================
 static constexpr const char* WIFI_SSID = "Farmcast";
 static constexpr const char* WIFI_PASSWORD = "1234567890";
 static constexpr uint32_t WIFI_RECONNECT_INTERVAL_MS = 6000;
@@ -31,9 +25,6 @@ static constexpr uint8_t AUTH_MAX_CONSECUTIVE_401 = 3;
 // 🔥 IMPORTANT: Since we're using HTTP (not HTTPS)
 static constexpr bool ALLOW_INSECURE_TLS = true;
 
-// =============================
-// MQTT
-// =============================
 // You are using Docker Mosquitto locally on port 1883
 // If device must connect to your local broker, change host:
 
@@ -46,28 +37,16 @@ static constexpr uint16_t MQTT_KEEP_ALIVE_SECONDS = 30;
 static constexpr uint32_t MQTT_RECONNECT_INTERVAL_MS = 5000;
 static constexpr uint32_t MQTT_RECONNECT_MAX_MS = 60000;
 
-// =============================
-// Runtime intervals
-// =============================
 static constexpr uint32_t TELEMETRY_INTERVAL_MS = 60000;
 static constexpr uint32_t HEARTBEAT_INTERVAL_MS = 30000;
 static constexpr uint32_t MEMORY_LOG_INTERVAL_MS = 60000;
 
-// =============================
-// OTA
-// =============================
 static constexpr uint32_t OTA_REBOOT_DELAY_MS = 2000;
 
-// =============================
-// Stage 6: power hardening
-// =============================
 static constexpr bool DEEP_SLEEP_ENABLED = false;
 static constexpr uint32_t DEEP_SLEEP_SECONDS = 300;
 static constexpr uint32_t DEEP_SLEEP_GRACE_MS = 1200;
 
-// =============================
-// Sensor pins + calibration
-// =============================
 static constexpr int PIN_SOIL_MOISTURE = 34;
 static constexpr int PIN_TEMPERATURE = 35;
 static constexpr int PIN_BATTERY = 32;

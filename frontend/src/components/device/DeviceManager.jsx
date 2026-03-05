@@ -1,30 +1,10 @@
-/**
- * DeviceManager.jsx
- * ------------------------------------------------------
- * FarmCast – Enterprise Device Orchestration Layer
- *
- * Tier: 1 (Mission-Critical UI Orchestrator)
- *
- * Responsibilities:
- * - Render IoT device cards
- * - Enforce role-based permissions
- * - Provide safe device lifecycle actions
- *
- * Rules:
- * - No backend logic
- * - No routing
- * - No direct state mutation
- */
-
 "use strict";
 
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import DeviceCard from "./DeviceCard";
 
-/* ======================================================
-   SAFE NORMALIZER
-====================================================== */
+
 
 const normalizeDevice = (device) => ({
   id: device?.id ?? "",
@@ -73,9 +53,7 @@ const normalizeDevice = (device) => ({
   soilType: device?.soilType || null,
 });
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const DeviceManager = ({
   devices = [],
@@ -180,7 +158,7 @@ const DeviceManager = ({
       className="fc-device-manager"
       aria-label="Device manager"
     >
-      {/* ================= HEADER ================= */}
+      
       {(showHeader || canShowAdd) && (
         <header className="fc-device-manager__header">
           {showHeader && (
@@ -208,7 +186,7 @@ const DeviceManager = ({
         </header>
       )}
 
-      {/* ================= LIST ================= */}
+      
       {devices.length > 0 ? (
         showSelectorBar ? (
           <div className="fc-device-manager__selector-layout">
@@ -296,9 +274,7 @@ const DeviceManager = ({
   );
 };
 
-/* ======================================================
-   PROP TYPES
-====================================================== */
+
 
 DeviceManager.propTypes = {
   devices: PropTypes.array,
@@ -333,8 +309,6 @@ DeviceManager.propTypes = {
   onDelete: PropTypes.func.isRequired,
 };
 
-/* ======================================================
-   EXPORT (MEMOIZED)
-====================================================== */
+
 
 export default memo(DeviceManager);

@@ -1,23 +1,3 @@
-/**
- * src/modules/auth/auth.schema.js
- * ------------------------------------------------------
- * Authentication Validation Schemas
- *
- * CRITICAL FILE (AUTH INPUT CONTRACT)
- *
- * Responsibilities:
- * - Define validation rules for auth requests
- * - Enforce password & credential policies
- * - Protect auth endpoints from malformed input
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO environment variables
- *
- * If this file is wrong → auth security degrades
- */
-
 "use strict";
 
 const Joi = require("joi");
@@ -25,9 +5,7 @@ const {
   PASSWORD_POLICY,
 } = require("./auth.constants");
 
-/* ======================================================
-   COMMON FIELD SCHEMAS
-====================================================== */
+
 
 const email = Joi.string()
   .email({ tlds: { allow: false } })
@@ -49,9 +27,7 @@ const password = Joi.string()
     "any.required": "Password is required",
   });
 
-/* ======================================================
-   REGISTER
-====================================================== */
+
 
 /**
  * POST /auth/register
@@ -73,9 +49,7 @@ const registerSchema = Joi.object({
   password,
 }).required();
 
-/* ======================================================
-   LOGIN
-====================================================== */
+
 
 /**
  * POST /auth/login
@@ -85,9 +59,7 @@ const loginSchema = Joi.object({
   password,
 }).required();
 
-/* ======================================================
-   TOKEN REFRESH
-====================================================== */
+
 
 /**
  * POST /auth/refresh
@@ -102,9 +74,7 @@ const refreshSchema = Joi.object({
     }),
 }).required();
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   registerSchema,

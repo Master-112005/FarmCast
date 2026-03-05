@@ -1,24 +1,3 @@
-/**
- * src/jobs/cleanup.job.js
- * ------------------------------------------------------
- * Background Cleanup Job
- *
- * CRITICAL FILE (DATA HYGIENE & SYSTEM STABILITY)
- *
- * Responsibilities:
- * - Safely clean expired / orphaned data
- * - Never impact live traffic
- * - Never delete active user data
- *
- * Safety Guarantees:
- * - Disabled by default
- * - Dry-run support
- * - Hard limits on deletions
- * - Fully logged
- *
- * If this file is wrong → silent data loss or downtime
- */
-
 "use strict";
 
 const db = require("../models");
@@ -26,9 +5,7 @@ const logger = require("../utils/logger");
 
 const { Op } = db.Sequelize;
 
-/* ======================================================
-   CONFIGURATION (SAFE DEFAULTS)
-====================================================== */
+
 
 const CONFIG = Object.freeze({
   ENABLED: false, // 🔒 MUST be explicitly enabled
@@ -39,9 +16,7 @@ const CONFIG = Object.freeze({
   SOIL_DATA_RETENTION_DAYS: 365, // 1 year
 });
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 /**
  * Calculate date before N days
@@ -62,9 +37,7 @@ const assertEnabled = () => {
   return true;
 };
 
-/* ======================================================
-   CLEANUP TASKS
-====================================================== */
+
 
 /**
  * Cleanup expired refresh tokens
@@ -158,9 +131,7 @@ const cleanupOldSoilRecords = async () => {
   });
 };
 
-/* ======================================================
-   JOB EXECUTOR
-====================================================== */
+
 
 /**
  * Execute cleanup job
@@ -190,9 +161,7 @@ const runCleanupJob = async () => {
   }
 };
 
-/* ======================================================
-   EXPORT
-====================================================== */
+
 
 module.exports = {
   runCleanupJob,

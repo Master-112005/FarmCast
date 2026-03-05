@@ -1,31 +1,10 @@
-/**
- * src/modules/users/user.service.js
- * ------------------------------------------------------
- * User Domain Service
- *
- * CRITICAL FILE (USER DATA & MODERATION CORE)
- *
- * Responsibilities:
- * - Fetch and update user profiles
- * - Enforce ownership rules
- *
- * Rules:
- * - NO Express req/res usage
- * - NO response formatting
- * - MUST enforce data isolation
- *
- * If this file is wrong → user data leaks
- */
-
 "use strict";
 
 const db = require("../../models");
 const logger = require("../../utils/logger");
 const { USER_ERRORS } = require("./user.constants");
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 /**
  * Build domain error (handled by global error middleware)
@@ -66,9 +45,7 @@ const getActiveUserById = async (userId) => {
   return user;
 };
 
-/* ======================================================
-   USER: SELF PROFILE
-====================================================== */
+
 
 /**
  * Get current user's profile
@@ -195,9 +172,7 @@ const deleteMyAccount = async (userId) => {
   }
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   getMyProfile,

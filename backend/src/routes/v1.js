@@ -1,25 +1,13 @@
-/**
- * src/routes/v1.js
- * ------------------------------------------------------
- * API v1 Router (Enterprise Hardened)
- *
- * CRITICAL FILE (PUBLIC API SURFACE)
- */
-
 "use strict";
 
 const express = require("express");
 const logger = require("../utils/logger");
 
-/* ======================================================
-   ROUTER INITIALIZATION
-====================================================== */
+
 
 const router = express.Router();
 
-/* ======================================================
-   LOAD DOMAIN ROUTES (FAIL FAST)
-====================================================== */
+
 
 const authRoutes = require("../modules/auth/auth.routes");
 const userRoutes = require("../modules/users/user.routes");
@@ -48,9 +36,7 @@ if (
   throw new Error("One or more v1 route modules missing");
 }
 
-/* ======================================================
-   ROUTE MOUNTING
-====================================================== */
+
 
 // 🔐 Authentication
 router.use("/auth", authRoutes);
@@ -71,9 +57,7 @@ router.use("/chat", chatRoutes);
 router.use("/community", communityRoutes);
 router.use("/mqtt", mqttRoutes);
 
-/* ======================================================
-   SAFETY: UNMATCHED v1 ROUTES
-====================================================== */
+
 
 router.use((req, res) => {
   logger.warn("Unmatched v1 API route", {
@@ -92,8 +76,6 @@ router.use((req, res) => {
   });
 });
 
-/* ======================================================
-   EXPORT ROUTER (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze(router);

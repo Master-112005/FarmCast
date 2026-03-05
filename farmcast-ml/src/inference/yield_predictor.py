@@ -13,9 +13,6 @@ from src.features.build_geo_feature_vector import (
     build_feature_vector,
 )
 
-# =========================================================
-# CONFIG
-# =========================================================
 
 REQUIRED_KEYS = (
     "state",
@@ -46,9 +43,6 @@ _MODEL_CACHE = None
 _METADATA_CACHE: dict[str, Any] | None = None
 
 
-# =========================================================
-# LOADERS
-# =========================================================
 
 def _load_model():
     global _MODEL_CACHE
@@ -65,9 +59,6 @@ def _load_metadata() -> dict[str, Any]:
     return _METADATA_CACHE
 
 
-# =========================================================
-# VALIDATION
-# =========================================================
 
 def _validate_payload(payload: dict) -> dict[str, str]:
     if not isinstance(payload, dict):
@@ -90,9 +81,6 @@ def _validate_payload(payload: dict) -> dict[str, str]:
     }
 
 
-# =========================================================
-# ENCODER MAPPINGS
-# =========================================================
 
 def _apply_encoder_mappings(
     frame: pd.DataFrame,
@@ -144,9 +132,6 @@ def _apply_encoder_mappings(
     return encoded
 
 
-# =========================================================
-# PREDICT
-# =========================================================
 
 def predict_yield(payload: dict) -> dict:
     """Predict yield per hectare from geo-aware payload.
@@ -207,9 +192,6 @@ def predict_yield(payload: dict) -> dict:
             "NaN values detected in inference features."
         )
 
-    # =====================================================
-    # MODEL INFERENCE
-    # =====================================================
 
     model = _load_model()
 

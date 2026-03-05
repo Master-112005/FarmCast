@@ -1,29 +1,9 @@
-/**
- * Card.jsx
- * ------------------------------------------------------
- * FarmCast – Enterprise Reusable Card Component
- *
- * Tier: 2 (Foundational UI Primitive)
- *
- * Responsibilities:
- * - Provide consistent content container
- * - Optional header, body, footer, actions
- * - Safe loading state
- *
- * Rules:
- * - No business logic
- * - No routing
- * - No backend logic
- */
-
 "use strict";
 
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   STYLE MAP
-====================================================== */
+
 
 const VARIANT_CLASS_MAP = {
   default: "fc-card",
@@ -33,9 +13,7 @@ const VARIANT_CLASS_MAP = {
   neutral: "fc-card fc-card--neutral",
 };
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const Card = ({
   title = "",
@@ -59,7 +37,7 @@ const Card = ({
       aria-label={ariaLabel}
       aria-busy={isLoading}
     >
-      {/* ================= HEADER ================= */}
+      
       {(title || subtitle) && (
         <header className="fc-card__header">
           {title && (
@@ -76,7 +54,7 @@ const Card = ({
         </header>
       )}
 
-      {/* ================= BODY ================= */}
+      
       <div className="fc-card__body">
         {isLoading ? (
           <div
@@ -95,7 +73,7 @@ const Card = ({
         )}
       </div>
 
-      {/* ================= FOOTER ================= */}
+      
       {(footer || actions.length > 0) && (
         <footer className="fc-card__footer">
           {footer && (
@@ -139,9 +117,7 @@ const Card = ({
   );
 };
 
-/* ======================================================
-   PROP TYPES
-====================================================== */
+
 
 Card.propTypes = {
   title: PropTypes.string,
@@ -178,8 +154,6 @@ Card.propTypes = {
   ariaLabel: PropTypes.string,
 };
 
-/* ======================================================
-   EXPORT (MEMOIZED)
-====================================================== */
+
 
 export default memo(Card);

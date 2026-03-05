@@ -1,40 +1,23 @@
-/**
- * src/models/RefreshToken.js
- * ------------------------------------------------------
- * Refresh Token Model (Enterprise Hardened)
- *
- * Responsibilities:
- * - Persist hashed refresh tokens
- * - Enable logout & revocation
- * - Support multi-device sessions
- */
-
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
   const RefreshToken = sequelize.define(
     "RefreshToken",
     {
-      /* ==================================================
-         PRIMARY KEY
-      ================================================== */
+      
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
 
-      /* ==================================================
-         FOREIGN KEY
-      ================================================== */
+      
       userId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
 
-      /* ==================================================
-         TOKEN DATA
-      ================================================== */
+      
       token: {
         type: DataTypes.STRING(255),
         allowNull: false,
@@ -45,9 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
 
-      /* ==================================================
-         SECURITY METADATA
-      ================================================== */
+      
       userAgent: {
         type: DataTypes.STRING,
         allowNull: true,

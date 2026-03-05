@@ -1,32 +1,10 @@
-/**
- * src/modules/users/user.controller.js
- * ------------------------------------------------------
- * User Controller
- *
- * CRITICAL FILE (HTTP ↔ USER DOMAIN ADAPTER)
- *
- * Responsibilities:
- * - Handle HTTP requests for user/profile flows
- * - Delegate all logic to user.service
- * - Return standardized API responses
- *
- * Rules:
- * - NO business logic
- * - NO database access
- * - NO RBAC decisions here
- *
- * If this file is wrong → user flows break
- */
-
 "use strict";
 
 const userService = require("./user.service");
 const response = require("../../utils/response");
 const env = require("../../config/env");
 
-/* ======================================================
-   USER: SELF PROFILE
-====================================================== */
+
 
 /**
  * GET /api/v1/users/me
@@ -106,9 +84,7 @@ const deleteMyAccount = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   EXPORTS
-====================================================== */
+
 
 module.exports = {
   getMyProfile,

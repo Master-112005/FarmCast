@@ -1,13 +1,3 @@
-/**
- * src/modules/mqtt/mqtt.schema.js
- * ------------------------------------------------------
- * MQTT Auth Validation Schema
- *
- * Responsibilities:
- * - Validate Mosquitto auth callback payloads
- * - Keep endpoint contract strict and safe
- */
-
 "use strict";
 
 const Joi = require("joi");

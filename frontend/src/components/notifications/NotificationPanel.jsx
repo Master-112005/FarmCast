@@ -1,10 +1,4 @@
-﻿/**
- * NotificationPanel.jsx
- * ------------------------------------------------------
- * FarmCast - Notification Drawer (UI-only)
- */
-
-import React from "react";
+﻿import React from "react";
 import PropTypes from "prop-types";
 
 const formatNotificationTime = (value) => {

@@ -1,9 +1,3 @@
-/**
- * src/modules/chat/chat.schema.js
- * ------------------------------------------------------
- * Chat Validation Schemas
- */
-
 "use strict";
 
 const Joi = require("joi");

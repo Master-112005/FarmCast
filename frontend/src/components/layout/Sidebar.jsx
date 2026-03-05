@@ -1,23 +1,7 @@
-/**
- * Sidebar.jsx
- * FarmCast – Enterprise Navigation Sidebar (SaaS-grade)
- *
- * Responsibilities:
- * - Primary application navigation
- * - Sidebar collapse/expand
- * - Emit logout intent
- *
- * ❌ No routing logic
- * ❌ No auth logic
- * ❌ No backend logic
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   NAV CONFIG (LOCKED TO ROUTER)
-====================================================== */
+
 
 const NAV_ITEMS = [
   {
@@ -37,9 +21,7 @@ const NAV_ITEMS = [
   },
 ];
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const Sidebar = ({
   collapsed = false,
@@ -54,7 +36,7 @@ const Sidebar = ({
       }`}
       aria-label="Primary navigation"
     >
-      {/* ================= HEADER ================= */}
+      
       <div className="fc-sidebar__header">
         <span className="fc-sidebar__brand">
           {collapsed ? "FC" : "FarmCast"}
@@ -75,7 +57,7 @@ const Sidebar = ({
         )}
       </div>
 
-      {/* ================= NAV ================= */}
+      
       <nav className="fc-sidebar__nav" role="navigation">
         {NAV_ITEMS.map((item) => {
           const isActive = activeView === item.view;
@@ -101,7 +83,7 @@ const Sidebar = ({
         })}
       </nav>
 
-      {/* ================= FOOTER ================= */}
+      
       <div className="fc-sidebar__footer">
         <button
           type="button"

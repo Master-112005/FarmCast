@@ -1,27 +1,9 @@
-/**
- * ViewSwitch.jsx
- * FarmCast - Workspace Navigation Switch
- *
- * Responsibilities:
- * - Toggle between Device, Predictor, and Community views
- * - Show Admin view entry for admins
- * - Reflect current ViewContext state
- * - Switch workspace safely without routing
- *
- * No business logic
- * No auth logic
- * No backend logic
- * No routing logic
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 import { useView } from "../../context/ViewContext";
 import { useAuth } from "../../context/AuthContext";
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const ViewSwitch = ({ disabled = false }) => {
   const { view, setView, VIEWS } = useView();
@@ -68,9 +50,7 @@ const ViewSwitch = ({ disabled = false }) => {
   };
 
 
-  /* ======================================================
-     UI
-  ====================================================== */
+  
 
   return (
     <div

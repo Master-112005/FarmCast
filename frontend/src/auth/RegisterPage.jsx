@@ -1,21 +1,3 @@
-/**
- * RegisterPage.jsx
- * ------------------------------------------------------
- * FarmCast – Enterprise Registration Screen
- *
- * Tier: 0 (Security Entry Point)
- *
- * Responsibilities:
- * - Collect user details
- * - Trigger AuthContext register
- * - UX-level validation
- *
- * Rules:
- * - No API calls
- * - No routing logic
- * - No token handling
- */
-
 "use strict";
 
 import React, {
@@ -26,24 +8,18 @@ import React, {
 
 import { Link } from "react-router-dom";
 
-/* ======================================================
-   CONTEXT
-====================================================== */
+
 
 import { useAuth } from "../context/AuthContext";
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const EMAIL_REGEX =
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const MIN_PASSWORD_LENGTH = 8;
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const RegisterPage = () => {
   const { register, loading } = useAuth();
@@ -108,9 +84,7 @@ const RegisterPage = () => {
     }
   };
 
-  /* ======================================================
-     RENDER
-  ====================================================== */
+  
 
   return (
     <main

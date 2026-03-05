@@ -1,22 +1,7 @@
-/**
- * CropTypeSelect.jsx
- * FarmCast - Crop Type Selector (Enterprise / ML-safe)
- *
- * Responsibilities:
- * - Allow user to select a valid crop type
- * - Emit normalized, ML-safe crop value
- *
- * No backend logic
- * No ML logic
- * No routing
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 
-/* ======================================================
-   ALLOWED CROPS (LOCKED FOR ML SAFETY)
-====================================================== */
+
 
 const CROP_OPTIONS = [
   { label: "Wheat", value: "wheat" },
@@ -28,9 +13,7 @@ const CROP_OPTIONS = [
   { label: "Watermelon", value: "watermelon" },
 ];
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const CropTypeSelect = ({
   value,
@@ -95,9 +78,7 @@ const CropTypeSelect = ({
   );
 };
 
-/* ======================================================
-   PROPTYPES
-====================================================== */
+
 
 CropTypeSelect.propTypes = {
   value: PropTypes.string.isRequired, // normalized value

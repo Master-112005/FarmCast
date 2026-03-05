@@ -1,31 +1,13 @@
-/**
- * main.jsx
- * FarmCast Frontend Entry Point (CRITICAL)
- *
- * Responsibilities:
- * - React root mounting
- * - StrictMode enforcement
- * - Zero business logic
- *
- * ❌ No providers here (handled by AppProviders)
- * ❌ No routing
- * ❌ No side effects
- */
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 
 import App from "./app/App";
 
-/* ======================================================
-   GLOBAL STYLES (ONCE)
-====================================================== */
+
 
 import "./index.css";
 
-/* ======================================================
-   NOISY BROWSER EXTENSION REJECTION GUARD
-====================================================== */
+
 
 if (typeof window !== "undefined") {
   window.addEventListener("unhandledrejection", (event) => {
@@ -47,9 +29,7 @@ if (typeof window !== "undefined") {
   });
 }
 
-/* ======================================================
-   ROOT MOUNT
-====================================================== */
+
 
 const rootElement = document.getElementById("root");
 

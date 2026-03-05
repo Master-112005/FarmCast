@@ -1,15 +1,3 @@
-/**
- * src/integrations/mailer.js
- * ------------------------------------------------------
- * SMTP Mailer Integration (Enterprise Safe)
- *
- * Responsibilities:
- * - Send transactional emails via SMTP
- * - Enforce configuration checks
- *
- * No business logic
- */
-
 "use strict";
 
 const nodemailer = require("nodemailer");
@@ -18,9 +6,7 @@ const env = require("../config/env");
 const logger = require("../utils/logger");
 const { ERROR_CODES } = require("../utils/constants");
 
-/* ======================================================
-   INTERNAL HELPERS
-====================================================== */
+
 
 const mailError = (
   message,
@@ -74,9 +60,7 @@ const getTransporter = () => {
   return transporter;
 };
 
-/* ======================================================
-   PUBLIC API
-====================================================== */
+
 
 const sendMail = async ({
   to,

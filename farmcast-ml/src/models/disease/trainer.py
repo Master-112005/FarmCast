@@ -15,9 +15,6 @@ from src.models.disease.utils import compute_class_weights
 from src.core.logging import get_logger
 
 
-# =====================================================
-# LOGGER
-# =====================================================
 logger = get_logger(__name__)
 
 
@@ -79,9 +76,6 @@ def train_disease_model(bundle: Any, config: dict[str, Any], checkpoint_path: st
     epochs = int(disease_cfg["epochs"])
     num_classes = len(bundle.class_to_index)
 
-    # =====================================================
-    # TRAINING CONFIG LOGS
-    # =====================================================
     logger.info("Starting model training...")
     logger.info(f"Epochs: {epochs}")
     logger.info(f"Batch size: {batch_size}")
@@ -122,9 +116,6 @@ def train_disease_model(bundle: Any, config: dict[str, Any], checkpoint_path: st
 
     callbacks = build_tf_callbacks(checkpoint_path=checkpoint_path, patience=5)
 
-    # =====================================================
-    # TRAINING START
-    # =====================================================
     logger.info("Beginning training loop...")
     start_time = time.time()
 
@@ -139,9 +130,6 @@ def train_disease_model(bundle: Any, config: dict[str, Any], checkpoint_path: st
     elapsed = time.time() - start_time
     logger.info(f"Training completed in {elapsed:.2f} seconds.")
 
-    # =====================================================
-    # EVALUATION
-    # =====================================================
     logger.info("Running evaluation on validation dataset...")
 
     predictions = model.predict(val_ds, verbose=0)

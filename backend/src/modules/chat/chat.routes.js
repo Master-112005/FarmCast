@@ -1,9 +1,3 @@
-/**
- * src/modules/chat/chat.routes.js
- * ------------------------------------------------------
- * Chat Routes
- */
-
 "use strict";
 
 const express = require("express");

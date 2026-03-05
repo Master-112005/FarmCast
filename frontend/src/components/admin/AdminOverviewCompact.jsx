@@ -1,9 +1,3 @@
-/**
- * AdminOverviewCompact.jsx
- * ------------------------------------------------------
- * FarmCast - Compact admin summary for workspace header
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 

@@ -1,18 +1,10 @@
-/**
- * src/modules/predictors/predictor.controller.js
- * ------------------------------------------------------
- * Predictor Controller
- */
-
 "use strict";
 
 const predictorService = require("./predictor.service");
 const response = require("../../utils/response");
 const env = require("../../config/env");
 
-/* ======================================================
-   RUN FULL PIPELINE
-====================================================== */
+
 
 const runPrediction = async (req, res, next) => {
   try {
@@ -35,9 +27,7 @@ const runPrediction = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   RECOMMENDATIONS
-====================================================== */
+
 
 const fertilizer = async (req, res, next) => {
   try {
@@ -98,9 +88,7 @@ const yieldEstimation = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   DISEASE IMAGE UPLOAD
-====================================================== */
+
 
 const uploadDiseaseImage = async (req, res, next) => {
   try {
@@ -134,9 +122,7 @@ const uploadDiseaseImage = async (req, res, next) => {
   }
 };
 
-/* ======================================================
-   PREDICTION MAIL
-====================================================== */
+
 
 const sendPredictionMail = async (req, res, next) => {
   try {

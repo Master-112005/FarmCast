@@ -1,8 +1,3 @@
-/**
- * YieldPrediction.jsx
- * FarmCast - Yield and financial estimation output
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 

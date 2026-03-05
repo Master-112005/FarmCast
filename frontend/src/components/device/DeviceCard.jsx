@@ -1,13 +1,3 @@
-/**
- * DeviceCard.jsx
- * FarmCast - Enterprise IoT Device Summary Card
- *
- * Responsibilities:
- * - Display authoritative device metadata
- * - Communicate trust & operational status clearly
- * - Provide safe edit / delete controls
- */
-
 import React, {
   useEffect,
   useMemo,
@@ -16,9 +6,7 @@ import React, {
 import PropTypes from "prop-types";
 import DeviceMap from "./DeviceMap";
 
-/* ======================================================
-   DESIGN SYSTEM MAPS
-====================================================== */
+
 
 const STATUS_LABEL = {
   active: "fc-status fc-status--active",
@@ -33,9 +21,7 @@ const TRUST_BADGE = {
   compromised: "fc-badge fc-badge--danger",
 };
 
-/* ======================================================
-   HELPERS
-====================================================== */
+
 
 const formatTimestamp = (value) => {
   if (!value) return "Never";
@@ -45,9 +31,7 @@ const formatTimestamp = (value) => {
     : date.toLocaleString();
 };
 
-/* ======================================================
-   COMPONENT
-====================================================== */
+
 
 const DeviceCard = ({
   deviceUuid, // internal only (never displayed)
@@ -157,7 +141,7 @@ const DeviceCard = ({
           : undefined
       }
     >
-      {/* ================= HEADER ================= */}
+      
       <header className="fc-card__header fc-device-card__header">
         <div className="fc-device-card__title-wrap">
           <h2 className="fc-card__title">
@@ -193,7 +177,7 @@ const DeviceCard = ({
         )}
       </header>
 
-      {/* ================= BODY ================= */}
+      
       {isMapView ? (
         hasMapCoordinates ? (
           <div className="fc-device-card__map">
@@ -277,7 +261,7 @@ const DeviceCard = ({
         </dl>
       )}
 
-      {/* ================= ACTIONS ================= */}
+      
       {!isMapView && (canEdit || canDelete) && (
         <footer className="fc-card__actions">
           {canEdit && (
@@ -327,9 +311,7 @@ const DeviceCard = ({
   );
 };
 
-/* ======================================================
-   PROPTYPES
-====================================================== */
+
 
 DeviceCard.propTypes = {
   deviceUuid: PropTypes.oneOfType([

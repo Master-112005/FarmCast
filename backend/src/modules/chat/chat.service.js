@@ -1,9 +1,3 @@
-/**
- * src/modules/chat/chat.service.js
- * ------------------------------------------------------
- * Chat Domain Service
- */
-
 "use strict";
 
 const { Op } = require("sequelize");

@@ -1,9 +1,3 @@
-/**
- * src/models/PredictionHistory.js
- * ------------------------------------------------------
- * Prediction History Model
- */
-
 "use strict";
 
 const { PREDICTION } = require("../utils/constants");

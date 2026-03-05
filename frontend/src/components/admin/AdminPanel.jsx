@@ -1,16 +1,4 @@
-﻿/**
- * AdminPanel.jsx
- * ------------------------------------------------------
- * FarmCast - Admin User Overview
- *
- * Responsibilities:
- * - Show user counts + device counts
- * - Provide user detail preview
- * - Offer admin-to-user chat entry
- * - Allow admin user deletion
- */
-
-import React, { useEffect, useMemo, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 import Card from "../layout/Card";

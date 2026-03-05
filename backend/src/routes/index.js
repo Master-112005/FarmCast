@@ -1,11 +1,3 @@
-/**
- * src/routes/index.js
- * ------------------------------------------------------
- * API Root Router (Enterprise Hardened)
- *
- * CRITICAL FILE (API ENTRY POINT)
- */
-
 "use strict";
 
 const express = require("express");
@@ -14,29 +6,21 @@ const logger = require("../utils/logger");
 
 const v1Routes = require("./v1");
 
-/* ======================================================
-   ROUTER INITIALIZATION
-====================================================== */
+
 
 const router = express.Router();
 
-/* ======================================================
-   SAFETY CHECKS
-====================================================== */
+
 
 if (!v1Routes) {
   throw new Error("v1 route module missing");
 }
 
-/* ======================================================
-   API VERSION ROUTING
-====================================================== */
+
 
 router.use(`/${env.API_VERSION}`, v1Routes);
 
-/* ======================================================
-   SAFETY: INVALID API VERSION HANDLER
-====================================================== */
+
 
 router.use((req, res) => {
   logger.warn("Invalid API version access attempt", {
@@ -54,8 +38,6 @@ router.use((req, res) => {
   });
 });
 
-/* ======================================================
-   EXPORT ROUTER (IMMUTABLE)
-====================================================== */
+
 
 module.exports = Object.freeze(router);

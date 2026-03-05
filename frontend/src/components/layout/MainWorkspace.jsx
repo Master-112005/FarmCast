@@ -1,33 +1,14 @@
-/**
- * MainWorkspace.jsx
- * ------------------------------------------------------
- * FarmCast – Enterprise Workspace Engine (SaaS-grade)
- *
- * Responsibilities:
- * - Persistent application layout
- * - Sidebar + Topbar composition
- * - State-driven workspace rendering
- *
- * GUARANTEES:
- * - No routing logic
- * - No URL-based navigation
- * - No business logic
- * - No data fetching
- */
-
 "use strict";
 
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 
-/* ===================== LAYOUT ===================== */
+
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import ViewSwitch from "../navigation/ViewSwitch";
 
-/* =====================================================
-   COMPONENT
-===================================================== */
+
 
 const MainWorkspace = memo(
   ({
@@ -55,7 +36,7 @@ const MainWorkspace = memo(
     return (
       <div className={shellClassName}>
 
-        {/* ================= SIDEBAR ================= */}
+        
         {showSidebar && (
           <Sidebar
             collapsed={sidebarCollapsed}
@@ -65,7 +46,7 @@ const MainWorkspace = memo(
           />
         )}
 
-        {/* ================= MAIN ================= */}
+        
         <div
           className={`fc-main ${
             isCommunityView
@@ -74,7 +55,7 @@ const MainWorkspace = memo(
           }`.trim()}
         >
 
-          {/* ================= TOPBAR ================= */}
+          
           <Topbar
             userName={userName}
             onLogout={onLogout}
@@ -84,7 +65,7 @@ const MainWorkspace = memo(
             centerContent={<ViewSwitch />}
           />
 
-          {/* ================= CONTENT ================= */}
+          
           <div
             className={`fc-content ${
               isCommunityView

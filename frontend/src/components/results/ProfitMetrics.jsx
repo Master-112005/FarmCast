@@ -1,8 +1,3 @@
-/**
- * ProfitMetrics.jsx
- * FarmCast - Financial profit breakdown
- */
-
 import React from "react";
 import PropTypes from "prop-types";
 

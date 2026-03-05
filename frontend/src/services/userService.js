@@ -1,17 +1,3 @@
-/**
- * userService.js
- * ------------------------------------------------------
- * FarmCast – Enterprise Identity Gateway
- *
- * Tier: 0 (Mission Critical)
- *
- * Guarantees:
- * - Never throws to UI
- * - Predictable return contract
- * - Auth/session alignment with AuthContext
- * - Backend-agnostic response handling
- */
-
 "use strict";
 
 import api, {
@@ -25,9 +11,7 @@ import {
   STORAGE_KEYS,
 } from "../utils/constants";
 
-/* ======================================================
-   CONSTANTS
-====================================================== */
+
 
 const TOKEN_KEY =
   STORAGE_KEYS?.TOKEN ||
@@ -50,9 +34,7 @@ const ALLOWED_IMAGE_TYPES =
 const IMAGE_MAX_MB =
   LIMITS?.IMAGE_MAX_SIZE_MB || 5;
 
-/* ======================================================
-   RESPONSE HELPERS
-====================================================== */
+
 
 const ok = (data, status = 200) =>
   Object.freeze({
@@ -71,9 +53,7 @@ const fail = (err) =>
     code: err?.code || "API_ERROR",
   });
 
-/* ======================================================
-   STORAGE HELPERS
-====================================================== */
+
 
 const persistSession = (
   token,
@@ -124,9 +104,7 @@ const clearSession = () => {
   }
 };
 
-/* ======================================================
-   SAFE EXECUTOR
-====================================================== */
+
 
 const execute = async (fn) => {
   try {
@@ -145,9 +123,7 @@ const execute = async (fn) => {
   }
 };
 
-/* ======================================================
-   AUTH
-====================================================== */
+
 
 export const registerUser = (payload) => {
   if (!payload) {
@@ -199,9 +175,7 @@ export const logoutUser = () => {
   return ok(null);
 };
 
-/* ======================================================
-   PROFILE
-====================================================== */
+
 
 export const getMyProfile = () =>
   execute(() =>
@@ -232,9 +206,7 @@ export const updateMyProfile = (
 export const deleteMyAccount = () =>
   execute(() => api.delete(ENDPOINTS.USERS_ME));
 
-/* ======================================================
-   PROFILE IMAGE UPLOAD
-====================================================== */
+
 
 export const uploadProfilePicture = (
   file

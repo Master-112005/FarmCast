@@ -1,13 +1,3 @@
-/**
- * src/jobs/predictionHistoryRetention.job.js
- * ------------------------------------------------------
- * Prediction History Retention Scheduler
- *
- * Responsibilities:
- * - Automatically delete prediction history older than retention TTL
- * - Run periodically in-process without blocking API handlers
- */
-
 "use strict";
 
 const env = require("../config/env");

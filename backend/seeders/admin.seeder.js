@@ -1,17 +1,3 @@
-/**
- * seeders/admin.seeder.js
- * ------------------------------------------------------
- * Initial Admin User Seeder (Enterprise Hardened)
- *
- * CRITICAL FILE (SYSTEM BOOTSTRAP AUTHORITY)
- *
- * Guarantees:
- * - Idempotent
- * - Environment driven
- * - Transactional
- * - No plaintext secrets
- */
-
 "use strict";
 
 const bcrypt = require("bcrypt");
@@ -32,9 +18,7 @@ const ADMIN_CONFIG = Object.freeze({
 /** @type {import('sequelize-cli').Seeder} */
 module.exports = {
   async up(queryInterface) {
-    /* ======================================================
-       VALIDATION
-    ====================================================== */
+    
 
     if (!ADMIN_CONFIG.EMAIL || !ADMIN_CONFIG.PASSWORD) {
       throw new Error(
@@ -46,9 +30,7 @@ module.exports = {
       await queryInterface.sequelize.transaction();
 
     try {
-      /* ======================================================
-         CHECK EXISTING USER
-      ====================================================== */
+      
 
       const existing = await queryInterface.sequelize.query(
         `
@@ -74,9 +56,7 @@ module.exports = {
         return;
       }
 
-      /* ======================================================
-         CREATE ADMIN
-      ====================================================== */
+      
 
       const hashedPassword = await bcrypt.hash(
         ADMIN_CONFIG.PASSWORD,
