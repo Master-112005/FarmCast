@@ -8,6 +8,9 @@ from typing import Any
 import pandas as pd
 
 from src.core.exceptions import DatasetValidationError
+from src.features.column_normalizer import (
+    normalize_yield_dataframe,
+)
 
 
 def _normalize_text(value: object) -> str | None:
@@ -26,7 +29,7 @@ def build_yield_features(df: pd.DataFrame, config: dict[str, Any]) -> pd.DataFra
     if leakage_present:
         raise DatasetValidationError(f"Leakage columns present in yield data: {leakage_present}")
 
-    engineered = df.copy()
+    engineered = normalize_yield_dataframe(df)
     required = set(section["features"]["categorical"] + section["features"]["numerical"] + [section["target_column"]])
     missing_before = sorted((required - {"crop_duration_days"}) - set(engineered.columns))
     if missing_before:

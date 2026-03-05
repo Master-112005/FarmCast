@@ -9,6 +9,9 @@ import numpy as np
 import pandas as pd
 
 from src.core.exceptions import DatasetValidationError
+from src.features.column_normalizer import (
+    normalize_price_dataframe,
+)
 
 
 def _normalize_text(value: object) -> str:
@@ -46,9 +49,7 @@ def build_price_features(df: pd.DataFrame, config: dict[str, Any]) -> pd.DataFra
     lag_windows = section["lag_features"]
     rolling_window = section["rolling_window"]
 
-    engineered = df.copy()
-    if "mandi_id" not in engineered.columns and "mandi_name" in engineered.columns:
-        engineered = engineered.rename(columns={"mandi_name": "mandi_id"})
+    engineered = normalize_price_dataframe(df)
 
     if time_column not in engineered.columns:
         engineered[time_column] = _build_week_start(engineered, section, time_column)

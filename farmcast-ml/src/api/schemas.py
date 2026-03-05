@@ -2,10 +2,26 @@
 
 from __future__ import annotations
 
+from typing import Union
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
 class YieldRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    crop_type: str
+    soil_type: str
+    season: str
+    soil_ph: float
+    soil_moisture: float
+    soil_temperature: float
+    rainfall_mm: float
+    field_size_acre: float
+    crop_duration_days: float
+
+
+class YieldLegacyRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     state: str
@@ -16,9 +32,14 @@ class YieldRequest(BaseModel):
     field_size: float
 
 
+YieldPredictionRequest = Union[YieldRequest, YieldLegacyRequest]
+
+
 class YieldResponse(BaseModel):
     yield_per_hectare: float
-    model_version: str
+    confidence: float | None = None
+    unit: str | None = None
+    model_version: str | None = None
 
 
 class PriceRequest(BaseModel):

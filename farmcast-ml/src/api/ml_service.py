@@ -5,31 +5,20 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, status
-from pydantic import BaseModel, ConfigDict
 
 from src.api.dependencies import api_key_guard, get_app_config, get_inference_pipeline
-from src.api.schemas import DiseaseResponse, PriceRequest, PriceResponse
+from src.api.schemas import (
+    DiseaseResponse,
+    PriceRequest,
+    PriceResponse,
+    YieldPredictionRequest,
+    YieldResponse,
+)
 from src.inference.yield_predictor import predict_yield
 from src.pipelines.inference_pipeline import InferencePipeline
 
 
 app_config = get_app_config()
-
-
-class YieldRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    state: str
-    district: str
-    crop: str
-    soil: str
-    sowing_date: str
-    field_size: float
-
-
-class YieldResponse(BaseModel):
-    yield_per_hectare: float
-    model_version: str
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -48,10 +37,16 @@ def health() -> dict[str, str]:
 
 @app.post("/predict/yield", response_model=YieldResponse, dependencies=[Depends(api_key_guard)])
 def predict_yield_endpoint(
-    request: YieldRequest,
+    request: YieldPredictionRequest,
+    pipeline: InferencePipeline = Depends(get_inference_pipeline),
 ) -> YieldResponse:
     try:
-        result = predict_yield(request.model_dump())
+        payload = request.model_dump()
+        is_legacy_payload = "crop" in payload and "soil" in payload and "sowing_date" in payload
+        if is_legacy_payload:
+            result = predict_yield(payload)
+        else:
+            result = pipeline.predict("yield", payload)
     except FileNotFoundError as exc:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -65,6 +60,11 @@ def predict_yield_endpoint(
     except ImportError as exc:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=str(exc),
+        ) from exc
+    except TypeError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=str(exc),
         ) from exc
     except ValueError as exc:
