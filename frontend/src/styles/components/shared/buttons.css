@@ -9,9 +9,11 @@
   padding: 0.6rem 1.2rem;
   border-radius: var(--fc-r-md);
   transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.15s ease;
+    background-color var(--fc-transition-fast),
+    color var(--fc-transition-fast),
+    border-color var(--fc-transition-fast),
+    box-shadow var(--fc-transition-normal),
+    transform var(--fc-transition-fast);
   box-shadow: var(--fc-shadow-sm);
   display: inline-flex;
   align-items: center;
@@ -26,6 +28,11 @@
 
 .fc-btn:active {
   transform: scale(0.98);
+}
+
+.fc-btn:hover:not(:disabled) {
+  box-shadow: var(--fc-shadow-md);
+  transform: translateY(-1px);
 }
 
 .fc-btn:disabled {

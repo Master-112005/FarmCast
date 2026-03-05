@@ -31,6 +31,18 @@ const formatTimestamp = (value) => {
     : date.toLocaleString();
 };
 
+const toFiniteNumber = (value) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
+const batteryToneClass = (value) => {
+  if (value === null) return "neutral";
+  if (value <= 20) return "danger";
+  if (value <= 45) return "warning";
+  return "success";
+};
+
 
 
 const DeviceCard = ({
@@ -43,6 +55,10 @@ const DeviceCard = ({
   deviceStatus,
   trustLevel,
   lastSeenAt,
+  batteryLevel,
+  soilMoisture,
+  soilTemp,
+  activeAlertCount,
   cropType,
   soilType,
   canEdit = false,
@@ -100,6 +116,28 @@ const DeviceCard = ({
     ]
   );
 
+  const batteryValue = useMemo(() => {
+    const parsed = toFiniteNumber(batteryLevel);
+    if (parsed === null) return null;
+    return Math.max(0, Math.min(100, parsed));
+  }, [batteryLevel]);
+
+  const moistureValue = useMemo(
+    () => toFiniteNumber(soilMoisture),
+    [soilMoisture]
+  );
+
+  const tempValue = useMemo(
+    () => toFiniteNumber(soilTemp),
+    [soilTemp]
+  );
+
+  const alertCountValue = useMemo(() => {
+    const parsed = toFiniteNumber(activeAlertCount);
+    if (parsed === null) return 0;
+    return Math.max(0, Math.round(parsed));
+  }, [activeAlertCount]);
+
   const handleToggleMap = (event) => {
     event.stopPropagation();
     setIsMapView((prev) => !prev);
@@ -148,16 +186,43 @@ const DeviceCard = ({
             {deviceName}
           </h2>
 
-          <span
-            className={
-              TRUST_BADGE[trustLevel] ||
-              "fc-badge fc-badge--neutral"
-            }
-            role="status"
-            aria-label={`Trust level: ${trustLevel}`}
-          >
-            {trustLevel || "unknown"}
-          </span>
+          <div className="fc-device-card__badges">
+            <span
+              className={
+                STATUS_LABEL[deviceStatus] ||
+                "fc-status fc-status--neutral"
+              }
+              role="status"
+              aria-label={`Device status: ${deviceStatus}`}
+            >
+              {deviceStatus || "unknown"}
+            </span>
+
+            <span
+              className={
+                TRUST_BADGE[trustLevel] ||
+                "fc-badge fc-badge--neutral"
+              }
+              role="status"
+              aria-label={`Trust level: ${trustLevel}`}
+            >
+              {trustLevel || "unknown"}
+            </span>
+
+            {alertCountValue > 0 && (
+              <span
+                className="fc-badge fc-badge--danger"
+                role="status"
+                aria-label={`${alertCountValue} active alerts`}
+              >
+                {`${alertCountValue} alert${
+                  alertCountValue > 1
+                    ? "s"
+                    : ""
+                }`}
+              </span>
+            )}
+          </div>
         </div>
 
         {showMapToggle && (
@@ -192,7 +257,76 @@ const DeviceCard = ({
             device.
           </div>
         )
-      ) : (
+        ) : (
+          <div className="fc-device-card__quick-stats">
+            <div className="fc-device-card__quick-stat">
+              <span
+                className={`material-icons fc-device-card__quick-icon fc-device-card__quick-icon--${batteryToneClass(
+                  batteryValue
+                )}`}
+                aria-hidden="true"
+              >
+                battery_std
+              </span>
+              <div className="fc-device-card__quick-copy">
+                <span className="fc-device-card__quick-label">
+                  Battery
+                </span>
+                <strong>
+                  {batteryValue === null
+                    ? "N/A"
+                    : `${Math.round(
+                        batteryValue
+                      )}%`}
+                </strong>
+              </div>
+            </div>
+
+            <div className="fc-device-card__quick-stat">
+              <span
+                className="material-icons fc-device-card__quick-icon fc-device-card__quick-icon--info"
+                aria-hidden="true"
+              >
+                water_drop
+              </span>
+              <div className="fc-device-card__quick-copy">
+                <span className="fc-device-card__quick-label">
+                  Moisture
+                </span>
+                <strong>
+                  {moistureValue === null
+                    ? "N/A"
+                    : `${moistureValue.toFixed(
+                        1
+                      )}%`}
+                </strong>
+              </div>
+            </div>
+
+            <div className="fc-device-card__quick-stat">
+              <span
+                className="material-icons fc-device-card__quick-icon fc-device-card__quick-icon--warning"
+                aria-hidden="true"
+              >
+                thermostat
+              </span>
+              <div className="fc-device-card__quick-copy">
+                <span className="fc-device-card__quick-label">
+                  Soil Temp
+                </span>
+                <strong>
+                  {tempValue === null
+                    ? "N/A"
+                    : `${tempValue.toFixed(
+                        1
+                      )} C`}
+                </strong>
+              </div>
+            </div>
+          </div>
+        )}
+
+      {!isMapView && (
         <dl className="fc-metadata">
           <div className="fc-meta-row">
             <dt className="fc-label">Device ID</dt>
@@ -238,6 +372,15 @@ const DeviceCard = ({
             <dt className="fc-label">Last Seen</dt>
             <dd className="fc-meta-value">
               {formatTimestamp(lastSeenAt)}
+            </dd>
+          </div>
+
+          <div className="fc-meta-row">
+            <dt className="fc-label">Alerts</dt>
+            <dd className="fc-meta-value">
+              {alertCountValue > 0
+                ? `${alertCountValue} active`
+                : "Clear"}
             </dd>
           </div>
 
@@ -338,6 +481,22 @@ DeviceCard.propTypes = {
     "compromised",
   ]).isRequired,
   lastSeenAt: PropTypes.string,
+  batteryLevel: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  soilMoisture: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  soilTemp: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  activeAlertCount: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   cropType: PropTypes.string,
   soilType: PropTypes.string,
   canEdit: PropTypes.bool,

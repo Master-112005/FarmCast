@@ -1,54 +1,48 @@
-
+@import "./design-system/colors.css";
+@import "./design-system/spacing.css";
+@import "./design-system/typography.css";
+@import "./design-system/radius.css";
+@import "./design-system/shadows.css";
+@import "./design-system/motion.css";
 
 :root {
-
-  
-
-  --fc-color-primary: #15803d;        /* Farm green */
-  --fc-color-primary-dark: #0f6b2f;
+  --fc-color-primary: var(--ds-color-brand-600);
+  --fc-color-primary-dark: var(--ds-color-brand-700);
   --fc-color-primary-light: #dcfce7;
 
-  --fc-color-secondary: #0ea5e9;      /* Action blue */
-  --fc-color-secondary-dark: #0284c7;
+  --fc-color-secondary: var(--ds-color-accent-500);
+  --fc-color-secondary-dark: var(--ds-color-accent-600);
   --fc-color-secondary-light: #dbeafe;
 
-  
+  --fc-color-success: var(--ds-color-success-500);
+  --fc-color-warning: var(--ds-color-warning-500);
+  --fc-color-danger: var(--ds-color-danger-500);
+  --fc-color-info: var(--ds-color-info-500);
 
-  --fc-color-success: #22c55e;
-  --fc-color-warning: #f59e0b;
-  --fc-color-danger: #dc2626;
-  --fc-color-info: #0ea5e9;
+  --fc-color-bg-app: var(--ds-color-bg-canvas);
+  --fc-color-bg-surface: var(--ds-color-bg-surface);
+  --fc-color-bg-muted: var(--ds-color-bg-muted);
 
-  
+  --fc-color-border: var(--ds-color-border-soft);
+  --fc-color-divider: rgba(148, 163, 184, 0.35);
 
-  --fc-color-bg-app: #f5f7fb;
-  --fc-color-bg-surface: #ffffff;
-  --fc-color-bg-muted: #f9fafb;
+  --fc-color-text-main: var(--ds-color-text-primary);
+  --fc-color-text-muted: var(--ds-color-text-muted);
+  --fc-color-text-inverse: var(--ds-color-text-inverse);
 
-  --fc-color-border: #e5e7eb;
-  --fc-color-divider: #d1d5db;
+  --fc-font-family: var(--ds-font-sans);
 
-  --fc-color-text-main: #111827;
-  --fc-color-text-muted: #6b7280;
-  --fc-color-text-inverse: #ffffff;
+  --fc-font-size-xs: var(--ds-font-size-1);
+  --fc-font-size-sm: var(--ds-font-size-2);
+  --fc-font-size-md: var(--ds-font-size-3);
+  --fc-font-size-lg: var(--ds-font-size-4);
+  --fc-font-size-xl: var(--ds-font-size-5);
+  --fc-font-size-2xl: var(--ds-font-size-6);
 
-  
-
-  --fc-font-family: "Manrope", "Segoe UI", sans-serif;
-
-  --fc-font-size-xs: 0.75rem;
-  --fc-font-size-sm: 0.875rem;
-  --fc-font-size-md: 1rem;
-  --fc-font-size-lg: 1.125rem;
-  --fc-font-size-xl: 1.25rem;
-  --fc-font-size-2xl: 1.5rem;
-
-  --fc-font-weight-regular: 400;
-  --fc-font-weight-medium: 500;
-  --fc-font-weight-semibold: 600;
-  --fc-font-weight-bold: 700;
-
-  
+  --fc-font-weight-regular: var(--ds-font-weight-regular);
+  --fc-font-weight-medium: var(--ds-font-weight-medium);
+  --fc-font-weight-semibold: var(--ds-font-weight-semibold);
+  --fc-font-weight-bold: var(--ds-font-weight-bold);
 
   --fc-space-1: 4px;
   --fc-space-2: 8px;
@@ -59,20 +53,14 @@
   --fc-space-7: 32px;
   --fc-space-8: 40px;
 
-  
+  --fc-radius-sm: var(--ds-radius-sm);
+  --fc-radius-md: var(--ds-radius-md);
+  --fc-radius-lg: var(--ds-radius-lg);
+  --fc-radius-full: var(--ds-radius-full);
 
-  --fc-radius-sm: 6px;
-  --fc-radius-md: 10px;
-  --fc-radius-lg: 14px;
-  --fc-radius-full: 9999px;
-
-  
-
-  --fc-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
-  --fc-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --fc-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
-
-  
+  --fc-shadow-sm: var(--ds-shadow-sm);
+  --fc-shadow-md: var(--ds-shadow-md);
+  --fc-shadow-lg: var(--ds-shadow-lg);
 
   --fc-z-base: 1;
   --fc-z-dropdown: 100;
@@ -81,20 +69,43 @@
   --fc-z-modal: 1000;
   --fc-z-toast: 1100;
 
-  
-
-  --fc-transition-fast: 150ms ease;
-  --fc-transition-normal: 250ms ease;
-  --fc-transition-slow: 400ms ease;
-
-  
+  --fc-transition-fast: var(--ds-motion-fast);
+  --fc-transition-normal: var(--ds-motion-base);
+  --fc-transition-slow: var(--ds-motion-slow);
 
   --fc-input-height: 42px;
   --fc-input-padding-x: 12px;
   --fc-input-padding-y: 10px;
 
-  
-
-  --fc-sidebar-width: 260px;
+  --fc-sidebar-width: 272px;
   --fc-topbar-height: 64px;
+
+  --fc-primary: var(--fc-color-primary);
+  --fc-primary-dark: var(--fc-color-primary-dark);
+  --fc-secondary: var(--fc-color-secondary);
+  --fc-secondary-dark: var(--fc-color-secondary-dark);
+  --fc-success: var(--fc-color-success);
+  --fc-warning: var(--fc-color-warning);
+  --fc-danger: var(--fc-color-danger);
+  --fc-info: var(--fc-color-info);
+  --fc-bg-app: var(--fc-color-bg-app);
+  --fc-bg-app-gradient: var(--ds-gradient-app);
+  --fc-bg-card: var(--ds-color-bg-elevated);
+  --fc-bg-sidebar: #0b1220;
+  --fc-border: var(--fc-color-border);
+  --fc-text-main: var(--fc-color-text-main);
+  --fc-text-muted: var(--fc-color-text-muted);
+  --fc-text-inverse: var(--fc-color-text-inverse);
+  --fc-r-sm: var(--fc-radius-sm);
+  --fc-r-md: var(--fc-radius-md);
+  --fc-r-lg: var(--ds-radius-xl);
+  --fc-s1: var(--ds-space-1);
+  --fc-s2: var(--ds-space-2);
+  --fc-s3: var(--ds-space-3);
+  --fc-s4: var(--ds-space-4);
+  --fc-s5: var(--ds-space-5);
+  --fc-s6: var(--ds-space-6);
+  --fc-s7: var(--ds-space-7);
+  --fc-font: var(--ds-font-sans);
+  --fc-font-display: var(--ds-font-display);
 }

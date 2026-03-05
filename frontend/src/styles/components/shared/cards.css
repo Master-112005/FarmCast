@@ -1,17 +1,23 @@
 
 
 .fc-card {
-  transition: box-shadow 0.2s ease;
+  transition:
+    box-shadow var(--fc-transition-normal),
+    transform var(--fc-transition-fast),
+    border-color var(--fc-transition-normal);
 }
 
 .fc-card:hover {
   box-shadow: var(--fc-shadow-md);
+  transform: translateY(-1px);
+  border-color: var(--ds-color-border-strong);
 }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .fc-card:hover {
     box-shadow: var(--fc-shadow-sm);
+    transform: none;
   }
 }
 

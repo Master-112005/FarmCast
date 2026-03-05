@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 
 
-const NAV_ITEMS = [
+const BASE_NAV_ITEMS = [
   {
-    view: "device", // DeviceView (DEFAULT)
+    view: "device",
     label: "Devices",
     icon: "devices",
   },
@@ -13,6 +13,11 @@ const NAV_ITEMS = [
     view: "predictor",
     label: "Predictor",
     icon: "analytics",
+  },
+  {
+    view: "community",
+    label: "Community",
+    icon: "forum",
   },
   {
     view: "profile",
@@ -25,10 +30,32 @@ const NAV_ITEMS = [
 
 const Sidebar = ({
   collapsed = false,
+  open = false,
+  isOverlay = false,
   onToggleCollapse,
+  onClose,
+  onNavigate,
+  canAccessAdmin = false,
   onLogout,
   activeView = "device",
 }) => {
+  const navItems = canAccessAdmin
+    ? [
+        ...BASE_NAV_ITEMS,
+        {
+          view: "admin",
+          label: "Admin",
+          icon: "shield",
+        },
+      ]
+    : BASE_NAV_ITEMS;
+
+  const navigateTo = (nextView) => {
+    if (typeof onNavigate === "function") {
+      onNavigate(nextView);
+    }
+  };
+
   return (
     <aside
       className={`fc-sidebar ${
@@ -42,7 +69,7 @@ const Sidebar = ({
           {collapsed ? "FC" : "FarmCast"}
         </span>
 
-        {onToggleCollapse && (
+        {!isOverlay && onToggleCollapse && (
           <button
             type="button"
             onClick={onToggleCollapse}
@@ -55,20 +82,36 @@ const Sidebar = ({
             </span>
           </button>
         )}
+
+        {isOverlay && open && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="fc-btn fc-btn--icon fc-sidebar__close"
+            aria-label="Close sidebar"
+          >
+            <span className="material-icons">
+              close
+            </span>
+          </button>
+        )}
       </div>
 
       
       <nav className="fc-sidebar__nav" role="navigation">
-        {NAV_ITEMS.map((item) => {
+        {navItems.map((item) => {
           const isActive = activeView === item.view;
 
           return (
-            <div
+            <button
               key={item.view}
+              type="button"
               className={`fc-sidebar__link ${
                 isActive ? "is-active" : ""
               }`}
               aria-current={isActive ? "page" : undefined}
+              aria-label={item.label}
+              onClick={() => navigateTo(item.view)}
             >
               <span className="material-icons">
                 {item.icon}
@@ -78,7 +121,7 @@ const Sidebar = ({
                   {item.label}
                 </span>
               )}
-            </div>
+            </button>
           );
         })}
       </nav>
@@ -101,7 +144,12 @@ const Sidebar = ({
 
 Sidebar.propTypes = {
   collapsed: PropTypes.bool,
+  open: PropTypes.bool,
+  isOverlay: PropTypes.bool,
   onToggleCollapse: PropTypes.func,
+  onClose: PropTypes.func,
+  onNavigate: PropTypes.func,
+  canAccessAdmin: PropTypes.bool,
   onLogout: PropTypes.func.isRequired,
   activeView: PropTypes.oneOf([
     "device",

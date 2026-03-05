@@ -1,0 +1,31 @@
+:root {
+  --ds-color-brand-500: #16a34a;
+  --ds-color-brand-600: #15803d;
+  --ds-color-brand-700: #166534;
+  --ds-color-accent-500: #0ea5e9;
+  --ds-color-accent-600: #0284c7;
+
+  --ds-color-success-500: #22c55e;
+  --ds-color-warning-500: #f59e0b;
+  --ds-color-danger-500: #dc2626;
+  --ds-color-info-500: #0ea5e9;
+
+  --ds-color-bg-canvas: #f4f7fb;
+  --ds-color-bg-surface: #ffffff;
+  --ds-color-bg-muted: #f8fafc;
+  --ds-color-bg-elevated: rgba(255, 255, 255, 0.92);
+
+  --ds-color-text-primary: #0f172a;
+  --ds-color-text-secondary: #475569;
+  --ds-color-text-muted: #64748b;
+  --ds-color-text-inverse: #f8fafc;
+
+  --ds-color-border-soft: rgba(148, 163, 184, 0.3);
+  --ds-color-border-strong: rgba(100, 116, 139, 0.35);
+  --ds-color-focus-ring: rgba(14, 165, 233, 0.42);
+
+  --ds-gradient-app:
+    radial-gradient(1200px 640px at 5% -10%, rgba(219, 234, 254, 0.82), rgba(219, 234, 254, 0)),
+    radial-gradient(980px 560px at 105% -5%, rgba(220, 252, 231, 0.78), rgba(220, 252, 231, 0)),
+    #f4f7fb;
+}

@@ -140,9 +140,10 @@
 
 .device-grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--fc-s6);
+  grid-template-columns: minmax(350px, 1.1fr) minmax(0, 1fr);
+  gap: clamp(0.85rem, 1.5vw, 1.25rem);
   align-items: start;
+  min-width: 0;
 }
 
 .device-grid > .fc-alert {
@@ -150,24 +151,33 @@
 }
 
 .device-grid__main {
-  grid-column: span 7;
+  grid-column: 1;
   min-width: 0;
 }
 
 .device-grid__map {
-  grid-column: span 5;
+  grid-column: 2;
   min-width: 0;
 }
 
 .device-grid__insights {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--fc-s6);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(0.75rem, 1.4vw, 1.1rem);
 }
 
 .device-grid__insight-card {
   min-width: 0;
+}
+
+.device-grid__main .fc-card,
+.device-grid__map .fc-card {
+  min-height: 100%;
+}
+
+.device-grid__map .fc-card__body {
+  min-height: clamp(300px, 42vh, 520px);
 }
 
 .device-grid__insight-card .fc-card {
@@ -475,6 +485,16 @@
   box-shadow: none;
 }
 
+@media (min-width: 1600px) {
+  .device-grid {
+    grid-template-columns: minmax(380px, 1fr) minmax(0, 1.25fr);
+  }
+
+  .predictor-grid {
+    grid-template-columns: minmax(360px, 460px) minmax(0, 1fr);
+  }
+}
+
 
 
 .page-empty {
@@ -509,9 +529,18 @@
     grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr);
   }
 
+  .device-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .device-grid__main,
-  .device-grid__map {
-    grid-column: span 6;
+  .device-grid__map,
+  .device-grid__insights {
+    grid-column: 1 / -1;
+  }
+
+  .device-grid__insights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .profile-page {
@@ -578,6 +607,36 @@
 
   .auth-page {
     padding: var(--fc-s5);
+  }
+}
+
+@media (max-width: 480px) {
+  .device-grid__map .fc-card__body {
+    min-height: 260px;
+  }
+
+  .device-grid__insights {
+    gap: var(--fc-s3);
+  }
+}
+
+@media (max-width: 360px) {
+  .workspace-content {
+    padding: var(--fc-s3);
+  }
+
+  .device-grid {
+    gap: var(--fc-s3);
+  }
+
+  .device-grid__insights {
+    grid-template-columns: 1fr;
+    gap: var(--fc-s2);
+  }
+
+  .predictor-toast {
+    right: var(--fc-s3);
+    max-width: calc(100vw - (var(--fc-s3) * 2));
   }
 }
 

@@ -8,6 +8,9 @@ const Topbar = ({
   userName = "User",
   onLogout,
   onProfile,
+  onToggleSidebar,
+  showSidebarToggle = false,
+  isSidebarOpen = false,
   onOpenNotifications,
   hasNotificationSignal = false,
   centerContent = null,
@@ -24,6 +27,20 @@ const Topbar = ({
     >
       
       <div className="fc-topbar__brand" aria-label={brand}>
+        {showSidebarToggle && (
+          <button
+            type="button"
+            className="fc-btn fc-btn--neutral fc-btn--icon fc-topbar__sidebar-toggle"
+            onClick={onToggleSidebar}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isSidebarOpen}
+          >
+            <span className="material-icons" aria-hidden="true">
+              {isSidebarOpen ? "menu_open" : "menu"}
+            </span>
+          </button>
+        )}
+
         <img
           className="fc-topbar__brand-logo"
           src="/farmcast-logo.png"
@@ -78,6 +95,9 @@ Topbar.propTypes = {
   userName: PropTypes.string,
   onLogout: PropTypes.func.isRequired,
   onProfile: PropTypes.func.isRequired,
+  onToggleSidebar: PropTypes.func,
+  showSidebarToggle: PropTypes.bool,
+  isSidebarOpen: PropTypes.bool,
   onOpenNotifications: PropTypes.func,
   hasNotificationSignal: PropTypes.bool,
   centerContent: PropTypes.node,

@@ -32,7 +32,10 @@
 }
 
 .fc-device-card-shell[role="button"]:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 30px rgba(15, 23, 42, 0.14),
+    0 0 0 1px rgba(148, 163, 184, 0.2);
 }
 
 .fc-device-card__header {
@@ -46,6 +49,88 @@
 .fc-device-card__title-wrap {
   display: grid;
   gap: 0.3rem;
+  min-width: 0;
+}
+
+.fc-device-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.fc-device-card__quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.fc-device-card__quick-stat {
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: var(--fc-r-md);
+  background: linear-gradient(
+    145deg,
+    rgba(248, 250, 252, 0.9),
+    rgba(255, 255, 255, 0.95)
+  );
+  padding: 0.5rem 0.58rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.fc-device-card__quick-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #0f172a;
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.fc-device-card__quick-icon--success {
+  color: #14532d;
+  background: rgba(34, 197, 94, 0.18);
+}
+
+.fc-device-card__quick-icon--warning {
+  color: #92400e;
+  background: rgba(245, 158, 11, 0.18);
+}
+
+.fc-device-card__quick-icon--danger {
+  color: #991b1b;
+  background: rgba(239, 68, 68, 0.18);
+}
+
+.fc-device-card__quick-icon--info {
+  color: #075985;
+  background: rgba(14, 165, 233, 0.18);
+}
+
+.fc-device-card__quick-icon--neutral {
+  color: #334155;
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.fc-device-card__quick-copy {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.fc-device-card__quick-copy strong {
+  font-size: 0.9rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.fc-device-card__quick-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12px;
+  color: var(--fc-text-muted);
 }
 
 .fc-device-card__map-toggle {
@@ -160,5 +245,30 @@
 
 .fc-device-selector__item[data-status="inactive"] .fc-device-selector__meta {
   color: #1d4ed8;
+}
+
+@media (max-width: 900px) {
+  .fc-device-card__quick-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .fc-device-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fc-device-card__map-toggle {
+    margin-left: 0;
+  }
+
+  .fc-device-card__quick-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .fc-device-selector__item {
+    min-width: 138px;
+  }
 }
 

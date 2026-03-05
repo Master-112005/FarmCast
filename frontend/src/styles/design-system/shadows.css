@@ -1,0 +1,5 @@
+:root {
+  --ds-shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --ds-shadow-md: 0 12px 30px rgba(15, 23, 42, 0.12);
+  --ds-shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.18);
+}

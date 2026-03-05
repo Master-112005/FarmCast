@@ -13,8 +13,13 @@ import ViewSwitch from "../navigation/ViewSwitch";
 const MainWorkspace = memo(
   ({
     sidebarCollapsed = false,
-    showSidebar = false,
+    sidebarOpen = false,
+    showSidebar = true,
+    isOverlaySidebar = false,
     onToggleSidebar,
+    onCloseSidebar,
+    onNavigate,
+    canAccessAdmin = false,
     onLogout,
     onProfile,
     onOpenNotifications,
@@ -27,20 +32,51 @@ const MainWorkspace = memo(
     const isCommunityView =
       activeView === "community";
 
-    const shellClassName = showSidebar
-      ? sidebarCollapsed
-        ? "fc-app-shell fc-app-shell--collapsed"
-        : "fc-app-shell"
-      : "fc-app-shell fc-app-shell--no-sidebar";
+    const shellClassName = [
+      "fc-app-shell",
+      !showSidebar
+        ? "fc-app-shell--no-sidebar"
+        : "",
+      showSidebar &&
+      !isOverlaySidebar &&
+      sidebarCollapsed
+        ? "fc-app-shell--collapsed"
+        : "",
+      showSidebar && isOverlaySidebar
+        ? "fc-app-shell--overlay"
+        : "",
+      showSidebar &&
+      isOverlaySidebar &&
+      sidebarOpen
+        ? "fc-app-shell--sidebar-open"
+        : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
 
     return (
       <div className={shellClassName}>
 
-        
+        {showSidebar &&
+          isOverlaySidebar &&
+          sidebarOpen && (
+            <button
+              type="button"
+              className="fc-sidebar-backdrop"
+              onClick={onCloseSidebar}
+              aria-label="Close navigation menu"
+            />
+          )}
+
         {showSidebar && (
           <Sidebar
             collapsed={sidebarCollapsed}
+            open={sidebarOpen}
+            isOverlay={isOverlaySidebar}
             onToggleCollapse={onToggleSidebar}
+            onClose={onCloseSidebar}
+            onNavigate={onNavigate}
+            canAccessAdmin={canAccessAdmin}
             onLogout={onLogout}
             activeView={activeView}
           />
@@ -60,6 +96,13 @@ const MainWorkspace = memo(
             userName={userName}
             onLogout={onLogout}
             onProfile={onProfile}
+            onToggleSidebar={onToggleSidebar}
+            showSidebarToggle={showSidebar}
+            isSidebarOpen={
+              isOverlaySidebar
+                ? sidebarOpen
+                : !sidebarCollapsed
+            }
             onOpenNotifications={onOpenNotifications}
             hasNotificationSignal={hasNotificationSignal}
             centerContent={<ViewSwitch />}
@@ -106,8 +149,13 @@ export default MainWorkspace;
 
 MainWorkspace.propTypes = {
   sidebarCollapsed: PropTypes.bool,
+  sidebarOpen: PropTypes.bool,
   showSidebar: PropTypes.bool,
+  isOverlaySidebar: PropTypes.bool,
   onToggleSidebar: PropTypes.func,
+  onCloseSidebar: PropTypes.func,
+  onNavigate: PropTypes.func,
+  canAccessAdmin: PropTypes.bool,
   onLogout: PropTypes.func.isRequired,
   onProfile: PropTypes.func.isRequired,
   onOpenNotifications: PropTypes.func,

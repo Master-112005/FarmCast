@@ -12,12 +12,6 @@ import { getLatestSoilRecord } from "../../services/deviceService";
 const LATEST_POSITION_REFRESH_MS = 10000;
 const LATEST_POSITION_NO_DATA_BACKOFF_MS = 60000;
 
-const ICONS = {
-  default: "/leaflet/icons/device.png",
-  compromised: "/leaflet/icons/alert.png",
-  crop: "/leaflet/icons/crop.png",
-};
-
 const toNumber = (value) => {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : null;
@@ -50,6 +44,112 @@ const escapeText = (value = "") =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
+const toStatus = (device) => {
+  const raw = String(
+    device?.device_status ||
+      device?.status ||
+      ""
+  )
+    .trim()
+    .toLowerCase();
+
+  if (raw === "active") return "active";
+  if (raw === "maintenance") return "maintenance";
+  if (raw === "inactive") return "inactive";
+  if (raw === "offline") return "offline";
+  return "inactive";
+};
+
+const toSoilStatus = (device) => {
+  const explicit = String(
+    device?.soil_status ||
+      device?.soilStatus ||
+      ""
+  )
+    .trim()
+    .toLowerCase();
+
+  if (explicit) {
+    return explicit;
+  }
+
+  const moisture = toNumber(
+    device?.soil_moisture ??
+      device?.soilMoisture
+  );
+
+  if (moisture === null) {
+    return "unknown";
+  }
+
+  if (moisture < 25) return "dry";
+  if (moisture > 75) return "wet";
+  return "optimal";
+};
+
+const toAlertCount = (device) => {
+  const direct = toNumber(
+    device?.activeAlertCount ??
+      device?.active_alert_count ??
+      device?.alertCount
+  );
+
+  if (direct !== null) {
+    return Math.max(0, Math.round(direct));
+  }
+
+  if (Array.isArray(device?.alerts)) {
+    return device.alerts.length;
+  }
+
+  if (toStatus(device) === "offline") {
+    return 1;
+  }
+
+  return 0;
+};
+
+const markerTone = (device) => {
+  const status = toStatus(device);
+  if (status === "offline") return "offline";
+  if (status === "maintenance") return "maintenance";
+  if (
+    String(
+      device?.trust_level ||
+        device?.trustLevel ||
+        ""
+    ).toLowerCase() === "compromised"
+  ) {
+    return "alert";
+  }
+  return "active";
+};
+
+const createDeviceMarkerIcon = (
+  device,
+  alertCount
+) => {
+  const tone = markerTone(device);
+  const badge =
+    alertCount > 0
+      ? `<span class="fc-map-marker__badge">${alertCount}</span>`
+      : "";
+
+  return L.divIcon({
+    className: "fc-map-marker-wrap",
+    html: `
+      <span class="fc-map-marker fc-map-marker--${tone}">
+        <span class="fc-map-marker__pulse"></span>
+        <span class="fc-map-marker__core"></span>
+        ${badge}
+      </span>
+    `,
+    iconSize: [30, 38],
+    iconAnchor: [15, 34],
+    popupAnchor: [0, -30],
+  });
+};
+
 const DeviceMap = ({ devices, weatherData = [] }) => {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
@@ -77,6 +177,7 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
     mapRef.current = L.map(containerRef.current, {
       zoomControl: true,
       attributionControl: true,
+      preferCanvas: true,
     });
 
     L.tileLayer(
@@ -91,6 +192,46 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
     return () => {
       mapRef.current?.remove();
       mapRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!mapRef.current || !containerRef.current) {
+      return undefined;
+    }
+
+    const map = mapRef.current;
+    const container = containerRef.current;
+
+    let frame = null;
+    const requestResize = () => {
+      if (frame) {
+        cancelAnimationFrame(frame);
+      }
+      frame = requestAnimationFrame(() => {
+        map.invalidateSize();
+      });
+    };
+
+    let observer = null;
+    if (typeof ResizeObserver !== "undefined") {
+      observer = new ResizeObserver(requestResize);
+      observer.observe(container);
+    }
+
+    window.addEventListener("resize", requestResize, {
+      passive: true,
+    });
+
+    return () => {
+      if (frame) {
+        cancelAnimationFrame(frame);
+      }
+      observer?.disconnect();
+      window.removeEventListener(
+        "resize",
+        requestResize
+      );
     };
   }, []);
 
@@ -196,6 +337,7 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
   useEffect(() => {
     if (!mapRef.current) return;
 
+    mapRef.current.invalidateSize();
     deviceLayerRef.current.clearLayers();
 
     const markerPositions = [];
@@ -223,36 +365,39 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
 
       markerPositions.push([lat, lng]);
 
-      let iconUrl = ICONS.default;
-      if (device.trust_level === "compromised") {
-        iconUrl = ICONS.compromised;
-      }
-      if (
-        device.device_type === "crop-sensor" ||
-        device.type === "crop-sensor"
-      ) {
-        iconUrl = ICONS.crop;
-      }
-
-      const icon = L.icon({
-        iconUrl,
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32],
-      });
+      const status = toStatus(device);
+      const soilStatus = toSoilStatus(device);
+      const alertCount = toAlertCount(device);
+      const icon = createDeviceMarkerIcon(
+        device,
+        alertCount
+      );
 
       const popupHtml = `
         <div class="fc-map-popup">
           <strong>${escapeText(device.deviceName || device.name || "Device")}</strong><br/>
           ID: ${escapeText(device.deviceId || device.deviceCode || device.id)}<br/>
           Type: ${escapeText(device.device_type || device.type || "unknown")}<br/>
-          Status: ${escapeText(device.device_status || device.status || "unknown")}<br/>
-          Trust: ${escapeText(device.trust_level || "unknown")}<br/>
+          Status: ${escapeText(status)}<br/>
+          Soil Status: ${escapeText(soilStatus)}<br/>
+          Alerts: ${alertCount}<br/>
           Last Seen: ${escapeText(device.lastSeenAt || latest?.measuredAt || "Unknown")}
         </div>
       `;
 
-      L.marker([lat, lng], { icon })
+      L.marker([lat, lng], { icon, riseOnHover: true })
+        .bindTooltip(
+          escapeText(
+            device.deviceName ||
+              device.name ||
+              "Device"
+          ),
+          {
+            direction: "top",
+            offset: [0, -28],
+            opacity: 0.9,
+          }
+        )
         .bindPopup(popupHtml)
         .addTo(deviceLayerRef.current);
     });
@@ -339,6 +484,24 @@ DeviceMap.propTypes = {
       device_status: PropTypes.string,
       trust_level: PropTypes.string,
       lastSeenAt: PropTypes.string,
+      soil_status: PropTypes.string,
+      soilStatus: PropTypes.string,
+      soil_moisture: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      soilMoisture: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      activeAlertCount: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      active_alert_count: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
       latitude: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string,

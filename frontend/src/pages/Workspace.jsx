@@ -21,6 +21,21 @@ import { getChatContacts } from "../services/chatService";
 import { useAuth } from "../context/AuthContext";
 import { useView } from "../context/ViewContext";
 
+const getLayoutMode = () => {
+  if (typeof window === "undefined") {
+    return {
+      compact: false,
+      overlay: false,
+    };
+  }
+
+  const width = window.innerWidth;
+  return {
+    compact: width <= 1280,
+    overlay: width <= 1024,
+  };
+};
+
 const toTime = (value) => {
   const date = value ? new Date(value) : null;
   if (!date) return 0;
@@ -37,7 +52,15 @@ const Workspace = () => {
     setView,
   } = useView();
 
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [layoutMode, setLayoutMode] =
+    useState(getLayoutMode);
+  const [sidebarCollapsed, setSidebarCollapsed] =
+    useState(() =>
+      getLayoutMode().compact &&
+      !getLayoutMode().overlay
+    );
+  const [sidebarOpen, setSidebarOpen] =
+    useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [chatRecipientId, setChatRecipientId] = useState(null);
@@ -54,14 +77,83 @@ const Workspace = () => {
     byContact: {},
   });
 
-  const toggleSidebar = () =>
+  const toggleSidebar = useCallback(() => {
+    if (layoutMode.overlay) {
+      setSidebarOpen((prev) => !prev);
+      return;
+    }
     setSidebarCollapsed((prev) => !prev);
+  }, [layoutMode.overlay]);
+
+  const closeSidebar = useCallback(() => {
+    setSidebarOpen(false);
+  }, []);
 
   useEffect(() => {
     if (view === VIEWS.ADMIN && role !== "admin") {
       setView(VIEWS.DEVICE);
     }
   }, [view, role, VIEWS, setView]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const handleResize = () => {
+      setLayoutMode(getLayoutMode());
+    };
+
+    window.addEventListener("resize", handleResize, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    if (layoutMode.overlay) {
+      setSidebarOpen(false);
+      setSidebarCollapsed(false);
+      return;
+    }
+
+    setSidebarCollapsed(layoutMode.compact);
+  }, [layoutMode.overlay, layoutMode.compact]);
+
+  useEffect(() => {
+    if (!layoutMode.overlay) {
+      return;
+    }
+    setSidebarOpen(false);
+  }, [layoutMode.overlay, view]);
+
+  const handleSidebarNavigate = useCallback(
+    (nextView) => {
+      if (
+        nextView === VIEWS.ADMIN &&
+        role !== "admin"
+      ) {
+        return;
+      }
+
+      setView(nextView);
+      if (layoutMode.overlay) {
+        setSidebarOpen(false);
+      }
+    },
+    [
+      VIEWS.ADMIN,
+      layoutMode.overlay,
+      role,
+      setView,
+    ]
+  );
 
   useEffect(() => {
     chatSeenRef.current = {
@@ -295,8 +387,14 @@ const Workspace = () => {
   return (
     <>
       <MainWorkspace
+        showSidebar
         sidebarCollapsed={sidebarCollapsed}
+        sidebarOpen={sidebarOpen}
+        isOverlaySidebar={layoutMode.overlay}
         onToggleSidebar={toggleSidebar}
+        onCloseSidebar={closeSidebar}
+        onNavigate={handleSidebarNavigate}
+        canAccessAdmin={role === "admin"}
         onLogout={logout}
         onProfile={goProfile}
         onOpenNotifications={() =>

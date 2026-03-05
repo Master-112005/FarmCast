@@ -45,6 +45,30 @@ const normalizeDevice = (device) => ({
     "unverified",
 
   lastSeenAt: device?.lastSeenAt || null,
+  batteryLevel:
+    device?.batteryLevel ??
+    device?.battery_level ??
+    device?.battery ??
+    null,
+  soilMoisture:
+    device?.soilMoisture ??
+    device?.soil_moisture ??
+    device?.latestSoilMoisture ??
+    null,
+  soilTemp:
+    device?.soilTemp ??
+    device?.soil_temp ??
+    device?.latestSoilTemp ??
+    null,
+  activeAlertCount:
+    Number(
+      device?.activeAlertCount ??
+        device?.active_alert_count ??
+        device?.alertCount ??
+        (Array.isArray(device?.alerts)
+          ? device.alerts.length
+          : 0)
+    ) || 0,
   cropType:
     device?.cropType ||
     device?.crop_type ||
@@ -118,6 +142,10 @@ const DeviceManager = ({
         deviceStatus={device.deviceStatus}
         trustLevel={device.trustLevel}
         lastSeenAt={device.lastSeenAt}
+        batteryLevel={device.batteryLevel}
+        soilMoisture={device.soilMoisture}
+        soilTemp={device.soilTemp}
+        activeAlertCount={device.activeAlertCount}
         cropType={device.cropType}
         soilType={device.soilType}
         canEdit={canEdit}
