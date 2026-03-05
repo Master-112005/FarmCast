@@ -283,7 +283,14 @@ const Workspace = () => {
       default:
         return <DeviceView />;
     }
-  }, [view, VIEWS, role, adminSearchQuery]);
+  }, [
+    view,
+    VIEWS,
+    role,
+    adminSearchQuery,
+    adminStats.totalUsers,
+    adminStats.totalDevices,
+  ]);
 
   return (
     <>
