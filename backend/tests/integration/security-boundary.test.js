@@ -139,6 +139,39 @@ describe("Security boundary integration", () => {
       return null;
     });
 
+    mockDb.Device.findOne.mockImplementation(async (query = {}) => {
+      const requestedDeviceCode =
+        query &&
+        query.where &&
+        typeof query.where.deviceCode === "string"
+          ? query.where.deviceCode
+          : null;
+
+      if (requestedDeviceCode === DEVICE_A) {
+        return {
+          id: DEVICE_PK,
+          deviceCode: DEVICE_A,
+          userId: USER_A.id,
+          status: "active",
+          isOnline: true,
+          lastSeenAt: new Date(),
+        };
+      }
+
+      if (requestedDeviceCode === DEVICE_B) {
+        return {
+          id: DEVICE_PK,
+          deviceCode: DEVICE_B,
+          userId: USER_B.id,
+          status: "active",
+          isOnline: true,
+          lastSeenAt: new Date(),
+        };
+      }
+
+      return null;
+    });
+
     mockDb.Device.count.mockResolvedValue(0);
     mockDb.Device.update.mockResolvedValue([1]);
     mockDb.AuditLog.create.mockResolvedValue({
