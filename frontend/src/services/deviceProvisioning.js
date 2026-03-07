@@ -803,6 +803,15 @@ const inferMqttHostFromApiBaseUrl = (
   }
 };
 
+const normalizeMqttPort = (mqttPort) => {
+  const parsed = Number(mqttPort);
+  return Number.isInteger(parsed) &&
+    parsed > 0 &&
+    parsed <= 65535
+    ? parsed
+    : 1883;
+};
+
 export const claimDevice = async ({
   deviceName,
 }) => {
@@ -832,6 +841,9 @@ export const claimDevice = async ({
     const backendMqttHost = String(
       payload?.deviceMqttHost || ""
     ).trim();
+    const deviceMqttPort = normalizeMqttPort(
+      payload?.deviceMqttPort
+    );
     const deviceMqttHost =
       backendMqttHost ||
       inferMqttHostFromApiBaseUrl(
@@ -853,6 +865,7 @@ export const claimDevice = async ({
       deviceSecret,
       deviceApiBaseUrl,
       deviceMqttHost,
+      deviceMqttPort,
     };
   } catch (error) {
     if (error instanceof ProvisioningError) {
@@ -872,6 +885,7 @@ export const sendProvisioningPayload = async (
     deviceSecret,
     apiBaseUrl = "",
     mqttHost = "",
+    mqttPort = 1883,
   }
 ) => {
   if (
@@ -901,6 +915,7 @@ export const sendProvisioningPayload = async (
     ...(String(mqttHost || "").trim()
       ? { mqttHost: String(mqttHost).trim() }
       : {}),
+    mqttPort: normalizeMqttPort(mqttPort),
   });
 
   await writeLine(session, payload);
@@ -1240,6 +1255,7 @@ export const runProvisioningFlow = async ({
     deviceSecret: claim.deviceSecret,
     apiBaseUrl: claim.deviceApiBaseUrl,
     mqttHost: claim.deviceMqttHost,
+    mqttPort: claim.deviceMqttPort,
   });
   claim.deviceSecret = "";
 

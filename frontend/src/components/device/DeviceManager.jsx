@@ -27,11 +27,7 @@ const normalizeDevice = (device) => ({
   firmwareVersion:
     device?.firmwareVersion ||
     device?.firmware_version ||
-    "—",
-
-  connectivityType:
-    device?.connectivityType ||
-    "unknown",
+    "\u2014",
 
   deviceStatus:
     device?.deviceStatus ||
@@ -138,13 +134,10 @@ const DeviceManager = ({
         deviceName={device.deviceName}
         deviceType={device.deviceType}
         firmwareVersion={device.firmwareVersion}
-        connectivityType={device.connectivityType}
         deviceStatus={device.deviceStatus}
         trustLevel={device.trustLevel}
         lastSeenAt={device.lastSeenAt}
         batteryLevel={device.batteryLevel}
-        soilMoisture={device.soilMoisture}
-        soilTemp={device.soilTemp}
         activeAlertCount={device.activeAlertCount}
         cropType={device.cropType}
         soilType={device.soilType}
@@ -340,3 +333,4 @@ DeviceManager.propTypes = {
 
 
 export default memo(DeviceManager);
+

@@ -1,4 +1,4 @@
-.pio/build/esp32dev/lib24b/PubSubClient/PubSubClient.cpp.o: \
+.pio/build/esp32dev/lib278/PubSubClient/PubSubClient.cpp.o: \
  .pio/libdeps/esp32dev/PubSubClient/src/PubSubClient.cpp \
  .pio/libdeps/esp32dev/PubSubClient/src/PubSubClient.h \
  C:/Users/rakes/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \

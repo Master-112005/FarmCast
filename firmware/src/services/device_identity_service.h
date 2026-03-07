@@ -23,6 +23,7 @@ class DeviceIdentityService {
   String getDeviceSecret();
   String getApiBaseUrl();
   String getMqttHost();
+  uint16_t getMqttPort();
 
   bool setDeviceId(const String& deviceId);
   bool setWifiCredentials(const String& ssid,
@@ -30,6 +31,7 @@ class DeviceIdentityService {
   bool setDeviceSecret(const String& secret);
   bool setApiBaseUrl(const String& apiBaseUrl);
   bool setMqttHost(const String& mqttHost);
+  bool setMqttPort(uint16_t mqttPort);
 
   void clearProvisioningData();
   bool clearAllData();

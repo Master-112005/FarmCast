@@ -1,3 +1,9 @@
+.fc-map-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .fc-map {
   position: relative;
   width: 100%;
@@ -11,6 +17,23 @@
     rgba(241, 245, 249, 0.95)
   );
   border: 1px solid rgba(148, 163, 184, 0.24);
+}
+
+.fc-map__empty-state {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  z-index: 500;
+  pointer-events: none;
+  padding: 0.3rem 0.62rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.38);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--fc-text-muted);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .leaflet-container {

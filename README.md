@@ -139,6 +139,9 @@ npm run dev
 cd docker
 docker compose -f docker-compose.mqtt.yml up -d
 ```
+The local Docker host mapping defaults to `2883`, so set
+`MQTT_BROKER_URL=mqtt://localhost:2883` unless you explicitly override
+`MQTT_HOST_PORT`.
 5. Start ML inference service.
 ```bash
 cd <ml-service-directory>

@@ -173,7 +173,7 @@ const env = {
   MQTT: {
     BROKER_URL: optional(
       "MQTT_BROKER_URL",
-      "mqtt://localhost:1883"
+      "mqtt://localhost:2883"
     ),
     CLIENT_USERNAME: optional(
       "MQTT_CLIENT_USERNAME",

@@ -4,7 +4,7 @@ services:
     container_name: farmcast-mqtt
     restart: unless-stopped
     ports:
-      - "1883:1883"
+      - "${MQTT_HOST_PORT:-2883}:1883"
     volumes:
       - ./mosquitto.conf:/etc/mosquitto/mosquitto.conf:ro
       - ./aclfile:/etc/mosquitto/aclfile:ro

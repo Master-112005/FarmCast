@@ -87,6 +87,8 @@ void DeviceContext::begin() {
       deviceIdentityService_.getApiBaseUrl();
   const String persistedMqttHost =
       deviceIdentityService_.getMqttHost();
+  const uint16_t persistedMqttPort =
+      deviceIdentityService_.getMqttPort();
 
   if (persistedApiBaseUrl.length() > 0) {
     authService_.setApiBaseUrl(persistedApiBaseUrl);
@@ -100,6 +102,13 @@ void DeviceContext::begin() {
     logger::info(TAG, String("Using provisioned MQTT host: ") + persistedMqttHost);
   } else {
     mqttService_.setBrokerHost(String(firmware_config::MQTT_HOST));
+  }
+
+  if (persistedMqttPort > 0) {
+    mqttService_.setBrokerPort(persistedMqttPort);
+    logger::info(TAG, String("Using provisioned MQTT port: ") + String(persistedMqttPort));
+  } else {
+    mqttService_.setBrokerPort(firmware_config::MQTT_PORT);
   }
 
   if (deviceIdentityService_.isFactoryResetRequested()) {
@@ -367,6 +376,9 @@ void DeviceContext::handleProvisionPayload(const String& payload) {
   const char* deviceId = doc["deviceId"];
   const char* apiBaseUrl = doc["apiBaseUrl"];
   const char* mqttHost = doc["mqttHost"];
+  const uint32_t mqttPort =
+      doc["mqttPort"] |
+      static_cast<uint32_t>(firmware_config::MQTT_PORT);
 
   if (!ssid || !password || !secret || !deviceId) {
     sendProvisioningAck(false, "missing_fields");
@@ -376,6 +388,11 @@ void DeviceContext::handleProvisionPayload(const String& payload) {
   if (ssid[0] == '\0' || password[0] == '\0' || secret[0] == '\0' ||
       deviceId[0] == '\0') {
     sendProvisioningAck(false, "empty_fields");
+    return;
+  }
+
+  if (mqttPort == 0 || mqttPort > 65535) {
+    sendProvisioningAck(false, "invalid_mqtt_port");
     return;
   }
 
@@ -395,11 +412,14 @@ void DeviceContext::handleProvisionPayload(const String& payload) {
           String(mqttHost && mqttHost[0] != '\0'
                      ? mqttHost
                      : firmware_config::MQTT_HOST));
+  const bool mqttPortSaved =
+      deviceIdentityService_.setMqttPort(
+          static_cast<uint16_t>(mqttPort));
   const bool marked =
       deviceIdentityService_.markProvisioned(true);
 
   if (!deviceIdSaved || !wifiSaved || !secretSaved || !apiBaseUrlSaved ||
-      !mqttHostSaved || !marked) {
+      !mqttHostSaved || !mqttPortSaved || !marked) {
     deviceIdentityService_.clearProvisioningData();
     sendProvisioningAck(false, "persist_failed");
     return;

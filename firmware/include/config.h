@@ -37,7 +37,7 @@ static constexpr uint16_t MQTT_KEEP_ALIVE_SECONDS = 30;
 static constexpr uint32_t MQTT_RECONNECT_INTERVAL_MS = 5000;
 static constexpr uint32_t MQTT_RECONNECT_MAX_MS = 60000;
 
-static constexpr uint32_t TELEMETRY_INTERVAL_MS = 60000;
+static constexpr uint32_t TELEMETRY_INTERVAL_MS = 30000;
 static constexpr uint32_t HEARTBEAT_INTERVAL_MS = 30000;
 static constexpr uint32_t MEMORY_LOG_INTERVAL_MS = 60000;
 

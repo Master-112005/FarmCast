@@ -25,6 +25,7 @@ import {
   addDevice,
   updateDevice,
   getLiveDeviceData,
+  getLatestSoilRecord,
 } from "../services/deviceService";
 import {
   runBackendDeleteFlow,
@@ -51,6 +52,119 @@ const toFiniteNumber = (value) => {
   }
   const number = Number(value);
   return Number.isFinite(number) ? number : null;
+};
+
+const buildSoilDataFallback = (device) => {
+  if (!device) {
+    return {
+      soilPh: null,
+      soilTemp: null,
+      soilMoisture: null,
+      latitude: null,
+      longitude: null,
+      battery: null,
+      sensorQuality: "unknown",
+      measuredAt: null,
+    };
+  }
+
+  return {
+    soilPh: null,
+    soilTemp: toFiniteNumber(
+      device.soilTemp ?? device.soil_temp
+    ),
+    soilMoisture: toFiniteNumber(
+      device.soilMoisture ??
+        device.soil_moisture
+    ),
+    latitude: toFiniteNumber(
+      device.latitude ?? device.lat
+    ),
+    longitude: toFiniteNumber(
+      device.longitude ?? device.lng
+    ),
+    battery: toFiniteNumber(
+      device.batteryLevel ??
+        device.battery_level ??
+        device.battery
+    ),
+    sensorQuality: "unknown",
+    measuredAt: device.lastSeenAt || null,
+  };
+};
+
+const extractLivePayload = (value) => {
+  if (!value || typeof value !== "object") {
+    return {};
+  }
+
+  if (value.soilData || value.device || value.recommendations) {
+    return value;
+  }
+
+  if (value.data && typeof value.data === "object") {
+    return value.data;
+  }
+
+  return value;
+};
+
+const normalizeSoilData = (
+  source,
+  fallbackMeasuredAt = null
+) => {
+  const normalized = {
+    soilPh: toFiniteNumber(
+      source?.soilPh ?? source?.soil_ph
+    ),
+    soilTemp: toFiniteNumber(
+      source?.soilTemp ??
+        source?.soil_temp ??
+        source?.temperature
+    ),
+    soilMoisture: toFiniteNumber(
+      source?.soilMoisture ??
+        source?.soil_moisture ??
+        source?.moisture
+    ),
+    latitude: toFiniteNumber(
+      source?.latitude ?? source?.lat
+    ),
+    longitude: toFiniteNumber(
+      source?.longitude ?? source?.lng
+    ),
+    battery: toFiniteNumber(
+      source?.battery ?? source?.battery_level
+    ),
+    measuredAt:
+      source?.measuredAt ||
+      source?.measured_at ||
+      source?.createdAt ||
+      fallbackMeasuredAt ||
+      null,
+  };
+
+  const hasMeasuredValue =
+    normalized.soilTemp !== null ||
+    normalized.soilMoisture !== null;
+
+  normalized.sensorQuality =
+    source?.sensorQuality ||
+    source?.sensor_quality ||
+    (hasMeasuredValue ? "good" : "unknown");
+
+  return normalized;
+};
+
+const hasMeasuredSoilData = (soilData) => {
+  if (!soilData || typeof soilData !== "object") {
+    return false;
+  }
+
+  return (
+    toFiniteNumber(soilData.soilTemp) !== null ||
+    toFiniteNumber(soilData.soilMoisture) !== null
+  );
 };
 
 
@@ -406,6 +520,9 @@ const DeviceView = () => {
       const soilMoisture = toFiniteNumber(
         data.moisture
       );
+      const battery = toFiniteNumber(
+        data.battery
+      );
       const latitude = toFiniteNumber(
         data.latitude ?? data.lat
       );
@@ -419,6 +536,13 @@ const DeviceView = () => {
             ? {
                 ...device,
                 lastSeenAt: measuredAt,
+                soilTemp:
+                  soilTemp ?? device.soilTemp,
+                soilMoisture:
+                  soilMoisture ??
+                  device.soilMoisture,
+                batteryLevel:
+                  battery ?? device.batteryLevel,
                 latitude:
                   latitude ?? device.latitude,
                 longitude:
@@ -433,6 +557,13 @@ const DeviceView = () => {
           ? {
               ...prev,
               lastSeenAt: measuredAt,
+              soilTemp:
+                soilTemp ?? prev.soilTemp,
+              soilMoisture:
+                soilMoisture ??
+                prev.soilMoisture,
+              batteryLevel:
+                battery ?? prev.batteryLevel,
               latitude:
                 latitude ?? prev.latitude,
               longitude:
@@ -597,31 +728,77 @@ const DeviceView = () => {
       return;
     }
 
-    const loadTelemetry = async () => {
-      setTelemetryLoading(true);
-      setTelemetryError("");
+    let cancelled = false;
+    let refreshTimer = null;
+    let isFirstLoad = true;
 
-      const response = await getLiveDeviceData(
+    const loadTelemetry = async () => {
+      if (isFirstLoad) {
+        setTelemetryLoading(true);
+      }
+
+      let livePayload = {};
+      let liveError = "";
+
+      const liveResponse = await getLiveDeviceData(
         selectedDevice.id
       );
 
-      if (!response?.success) {
-        setTelemetryError(
-          response?.error ||
-            "Unable to load device telemetry."
+      if (!liveResponse?.success) {
+        liveError =
+          liveResponse?.error ||
+          "Unable to load device telemetry.";
+      } else {
+        livePayload = extractLivePayload(
+          liveResponse.data
         );
-        setTelemetryLoading(false);
+      }
+
+      let nextSoilData = normalizeSoilData(
+        livePayload?.soilData || {},
+        selectedDevice.lastSeenAt || null
+      );
+
+      if (!hasMeasuredSoilData(nextSoilData)) {
+        const latestResponse =
+          await getLatestSoilRecord(selectedDevice.id);
+
+        if (latestResponse?.success && latestResponse.data) {
+          nextSoilData = normalizeSoilData(
+            latestResponse.data,
+            latestResponse.data?.createdAt ||
+              selectedDevice.lastSeenAt ||
+              null
+          );
+        }
+      }
+
+      if (!hasMeasuredSoilData(nextSoilData)) {
+        nextSoilData = buildSoilDataFallback(
+          selectedDevice
+        );
+      }
+
+      if (cancelled) {
         return;
       }
 
-      const payload = response.data || {};
-      setSoilData(payload.soilData || null);
+      setSoilData(nextSoilData);
+      setTelemetryError(
+        hasMeasuredSoilData(nextSoilData) ? "" : liveError
+      );
+
       const latestLatitude = toFiniteNumber(
-        payload?.soilData?.latitude
+        nextSoilData?.latitude
       );
       const latestLongitude = toFiniteNumber(
-        payload?.soilData?.longitude
+        nextSoilData?.longitude
       );
+
+      const firmwareVersion =
+        livePayload?.device?.firmwareVersion ||
+        livePayload?.device?.firmware_version ||
+        null;
 
       if (
         latestLatitude !== null &&
@@ -634,6 +811,9 @@ const DeviceView = () => {
                   ...device,
                   latitude: latestLatitude,
                   longitude: latestLongitude,
+                  ...(firmwareVersion
+                    ? { firmwareVersion }
+                    : {}),
                 }
               : device
           )
@@ -645,21 +825,62 @@ const DeviceView = () => {
                 ...prev,
                 latitude: latestLatitude,
                 longitude: latestLongitude,
+                ...(firmwareVersion
+                  ? { firmwareVersion }
+                  : {}),
+              }
+            : prev
+        );
+      } else if (firmwareVersion) {
+        setDevices((prev) =>
+          prev.map((device) =>
+            device.id === selectedDevice.id
+              ? {
+                  ...device,
+                  firmwareVersion,
+                }
+              : device
+          )
+        );
+
+        setSelectedDevice((prev) =>
+          prev && prev.id === selectedDevice.id
+            ? {
+                ...prev,
+                firmwareVersion,
               }
             : prev
         );
       }
 
       setFertilizer(
-        payload.recommendations?.fertilizer || null
+        livePayload?.recommendations?.fertilizer ||
+          null
       );
-      setWater(payload.recommendations?.water || null);
-
+      setWater(
+        livePayload?.recommendations?.water || null
+      );
       setTelemetryLoading(false);
+      isFirstLoad = false;
     };
 
-    loadTelemetry();
-  }, [selectedDevice]);
+    const runLoadCycle = async () => {
+      await loadTelemetry();
+      if (cancelled) {
+        return;
+      }
+      refreshTimer = setTimeout(runLoadCycle, 10000);
+    };
+
+    runLoadCycle();
+
+    return () => {
+      cancelled = true;
+      if (refreshTimer) {
+        clearTimeout(refreshTimer);
+      }
+    };
+  }, [selectedDevice?.id]);
 
   
 
@@ -753,13 +974,20 @@ const DeviceView = () => {
               >
                 Loading soil telemetry...
               </div>
-            ) : soilData ? (
-              <SoilDataCard {...soilData} />
             ) : (
-              <p className="fc-empty">
-                {telemetryError ||
-                  "No soil telemetry available for this device."}
-              </p>
+              <>
+                {telemetryError && (
+                  <p className="fc-meta">
+                    {telemetryError}
+                  </p>
+                )}
+                <SoilDataCard
+                  {...(soilData ||
+                    buildSoilDataFallback(
+                      selectedDevice
+                    ))}
+                />
+              </>
             )}
           </Card>
         </div>

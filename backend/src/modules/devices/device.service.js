@@ -216,6 +216,27 @@ const resolveDeviceMqttHost = () => {
   return selectDeviceReachableHost();
 };
 
+const resolveDeviceMqttPort = () => {
+  try {
+    const brokerUrl = new URL(env.MQTT.BROKER_URL);
+    const parsedPort = Number(brokerUrl.port);
+
+    if (
+      Number.isInteger(parsedPort) &&
+      parsedPort > 0 &&
+      parsedPort <= 65535
+    ) {
+      return parsedPort;
+    }
+
+    return brokerUrl.protocol === "mqtts:"
+      ? 8883
+      : 1883;
+  } catch {
+    return 1883;
+  }
+};
+
 const clearRetainedDeviceTopics = async (
   deviceCode
 ) => {
@@ -680,6 +701,7 @@ const provisionDevice = async (
   const deviceApiBaseUrl =
     resolveDeviceApiBaseUrl();
   const deviceMqttHost = resolveDeviceMqttHost();
+  const deviceMqttPort = resolveDeviceMqttPort();
 
   await db.Device.create({
     name: deviceName,
@@ -695,6 +717,7 @@ const provisionDevice = async (
     deviceId,
     deviceApiBaseUrl,
     deviceMqttHost,
+    deviceMqttPort,
   });
 
   await logAuditEvent({
@@ -714,6 +737,7 @@ const provisionDevice = async (
     deviceSecret: rawDeviceSecret,
     deviceApiBaseUrl,
     deviceMqttHost,
+    deviceMqttPort,
   };
 };
 
@@ -961,7 +985,8 @@ const getLiveDeviceData = async (
     order: [["createdAt", "DESC"]],
   });
 
-  const soilData = latest
+  const hasMeasuredSoilData = Boolean(latest);
+  const soilData = hasMeasuredSoilData
     ? {
         soilPh: null,
         soilTemp: toFiniteNumber(
@@ -978,13 +1003,22 @@ const getLiveDeviceData = async (
           ? new Date(latest.createdAt).toISOString()
           : null,
       }
-    : null;
+    : {
+        soilPh: null,
+        soilTemp: null,
+        soilMoisture: null,
+        latitude: toFiniteNumber(device.latitude),
+        longitude: toFiniteNumber(device.longitude),
+        battery: null,
+        sensorQuality: "unknown",
+        measuredAt: null,
+      };
 
   const season = deriveSeasonLabel(
     latest?.createdAt
   );
 
-  const fertilizer = soilData
+  const fertilizer = hasMeasuredSoilData
     ? buildFertilizerRecommendation({
         cropType: null,
         soilType: null,
@@ -993,7 +1027,7 @@ const getLiveDeviceData = async (
       })
     : null;
 
-  const water = soilData
+  const water = hasMeasuredSoilData
     ? buildWaterRecommendation({
         cropType: null,
         soilType: null,
@@ -1013,6 +1047,7 @@ const getLiveDeviceData = async (
       latitude: device.latitude,
       longitude: device.longitude,
       deviceCode: device.deviceCode,
+      firmwareVersion: device.firmwareVersion || null,
     },
     soilData,
     recommendations: {

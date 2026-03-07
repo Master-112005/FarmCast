@@ -161,6 +161,14 @@ String DeviceIdentityService::getMqttHost() {
   return readString(device_identity::KEY_MQTT_HOST);
 }
 
+uint16_t DeviceIdentityService::getMqttPort() {
+  if (!ensureReady()) {
+    return 0;
+  }
+
+  return preferences_.getUShort(device_identity::KEY_MQTT_PORT, 0);
+}
+
 bool DeviceIdentityService::setDeviceId(const String& deviceId) {
   if (!ensureReady()) {
     return false;
@@ -235,6 +243,17 @@ bool DeviceIdentityService::setMqttHost(const String& mqttHost) {
   return writeString(device_identity::KEY_MQTT_HOST, normalized);
 }
 
+bool DeviceIdentityService::setMqttPort(uint16_t mqttPort) {
+  if (!ensureReady() || mqttPort == 0) {
+    return false;
+  }
+
+  return preferences_.putUShort(
+             device_identity::KEY_MQTT_PORT,
+             mqttPort
+         ) == sizeof(uint16_t);
+}
+
 void DeviceIdentityService::clearProvisioningData() {
   if (!ensureReady()) {
     return;
@@ -245,6 +264,7 @@ void DeviceIdentityService::clearProvisioningData() {
   preferences_.remove(device_identity::KEY_DEVICE_SECRET);
   preferences_.remove(device_identity::KEY_API_BASE_URL);
   preferences_.remove(device_identity::KEY_MQTT_HOST);
+  preferences_.remove(device_identity::KEY_MQTT_PORT);
   preferences_.putBool(device_identity::KEY_PROVISIONED, false);
 }
 

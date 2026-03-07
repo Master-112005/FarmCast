@@ -51,13 +51,10 @@ const DeviceCard = ({
   deviceName,
   deviceType,
   firmwareVersion,
-  connectivityType,
   deviceStatus,
   trustLevel,
   lastSeenAt,
   batteryLevel,
-  soilMoisture,
-  soilTemp,
   activeAlertCount,
   cropType,
   soilType,
@@ -121,16 +118,6 @@ const DeviceCard = ({
     if (parsed === null) return null;
     return Math.max(0, Math.min(100, parsed));
   }, [batteryLevel]);
-
-  const moistureValue = useMemo(
-    () => toFiniteNumber(soilMoisture),
-    [soilMoisture]
-  );
-
-  const tempValue = useMemo(
-    () => toFiniteNumber(soilTemp),
-    [soilTemp]
-  );
 
   const alertCountValue = useMemo(() => {
     const parsed = toFiniteNumber(activeAlertCount);
@@ -225,21 +212,57 @@ const DeviceCard = ({
           </div>
         </div>
 
-        {showMapToggle && (
-          <button
-            type="button"
-            className="fc-btn fc-btn--neutral fc-device-card__map-toggle"
-            onClick={handleToggleMap}
-            aria-pressed={isMapView}
+        <div className="fc-device-card__header-tools">
+          <div
+            className={`fc-device-card__battery fc-device-card__battery--${batteryToneClass(
+              batteryValue
+            )}`}
+            role="status"
+            aria-label={`Battery level: ${
+              batteryValue === null
+                ? "not available"
+                : `${Math.round(batteryValue)} percent`
+            }`}
           >
-            <span className="material-icons" aria-hidden="true">
-              {isMapView ? "arrow_back" : "map"}
+            <span
+              className="material-icons fc-device-card__battery-icon"
+              aria-hidden="true"
+            >
+              battery_std
             </span>
-            {isMapView
-              ? "Back"
-              : "View on map"}
-          </button>
-        )}
+            <div className="fc-device-card__battery-copy">
+              <span className="fc-device-card__quick-label">
+                Battery
+              </span>
+              <strong>
+                {batteryValue === null
+                  ? "N/A"
+                  : `${Math.round(
+                      batteryValue
+                    )}%`}
+              </strong>
+            </div>
+          </div>
+
+          {showMapToggle && (
+            <button
+              type="button"
+              className="fc-btn fc-btn--neutral fc-device-card__map-toggle"
+              onClick={handleToggleMap}
+              aria-pressed={isMapView}
+            >
+              <span
+                className="material-icons"
+                aria-hidden="true"
+              >
+                {isMapView ? "arrow_back" : "map"}
+              </span>
+              {isMapView
+                ? "Back"
+                : "View on map"}
+            </button>
+          )}
+        </div>
       </header>
 
       
@@ -257,74 +280,7 @@ const DeviceCard = ({
             device.
           </div>
         )
-        ) : (
-          <div className="fc-device-card__quick-stats">
-            <div className="fc-device-card__quick-stat">
-              <span
-                className={`material-icons fc-device-card__quick-icon fc-device-card__quick-icon--${batteryToneClass(
-                  batteryValue
-                )}`}
-                aria-hidden="true"
-              >
-                battery_std
-              </span>
-              <div className="fc-device-card__quick-copy">
-                <span className="fc-device-card__quick-label">
-                  Battery
-                </span>
-                <strong>
-                  {batteryValue === null
-                    ? "N/A"
-                    : `${Math.round(
-                        batteryValue
-                      )}%`}
-                </strong>
-              </div>
-            </div>
-
-            <div className="fc-device-card__quick-stat">
-              <span
-                className="material-icons fc-device-card__quick-icon fc-device-card__quick-icon--info"
-                aria-hidden="true"
-              >
-                water_drop
-              </span>
-              <div className="fc-device-card__quick-copy">
-                <span className="fc-device-card__quick-label">
-                  Moisture
-                </span>
-                <strong>
-                  {moistureValue === null
-                    ? "N/A"
-                    : `${moistureValue.toFixed(
-                        1
-                      )}%`}
-                </strong>
-              </div>
-            </div>
-
-            <div className="fc-device-card__quick-stat">
-              <span
-                className="material-icons fc-device-card__quick-icon fc-device-card__quick-icon--warning"
-                aria-hidden="true"
-              >
-                thermostat
-              </span>
-              <div className="fc-device-card__quick-copy">
-                <span className="fc-device-card__quick-label">
-                  Soil Temp
-                </span>
-                <strong>
-                  {tempValue === null
-                    ? "N/A"
-                    : `${tempValue.toFixed(
-                        1
-                      )} C`}
-                </strong>
-              </div>
-            </div>
-          </div>
-        )}
+      ) : null}
 
       {!isMapView && (
         <dl className="fc-metadata">
@@ -345,14 +301,7 @@ const DeviceCard = ({
           <div className="fc-meta-row">
             <dt className="fc-label">Firmware</dt>
             <dd className="fc-meta-value">
-              {firmwareVersion || "-"}
-            </dd>
-          </div>
-
-          <div className="fc-meta-row">
-            <dt className="fc-label">Connectivity</dt>
-            <dd className="fc-meta-value">
-              {connectivityType}
+              {firmwareVersion || "\u2014"}
             </dd>
           </div>
 
@@ -468,7 +417,6 @@ DeviceCard.propTypes = {
   deviceName: PropTypes.string.isRequired,
   deviceType: PropTypes.string.isRequired,
   firmwareVersion: PropTypes.string,
-  connectivityType: PropTypes.string.isRequired,
   deviceStatus: PropTypes.oneOf([
     "active",
     "inactive",
@@ -482,14 +430,6 @@ DeviceCard.propTypes = {
   ]).isRequired,
   lastSeenAt: PropTypes.string,
   batteryLevel: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  soilMoisture: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  soilTemp: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
   ]),
@@ -518,3 +458,4 @@ DeviceCard.propTypes = {
 };
 
 export default DeviceCard;
+

@@ -125,6 +125,12 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
 
+      firmwareVersion: {
+        type: DataTypes.STRING(64),
+        allowNull: true,
+        field: "firmware_version",
+      },
+
       lastSeenAt: {
         type: DataTypes.DATE,
         allowNull: true,

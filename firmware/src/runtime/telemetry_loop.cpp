@@ -6,10 +6,6 @@
 
 namespace {
 const char* TAG = "TelemetryLoop";
-
-// Stale thresholds (industrial tuning)
-constexpr uint32_t kGpsStaleThresholdMs = 10000;
-constexpr uint32_t kSoilStaleThresholdMs = 10000;
 }
 
 TelemetryLoop::TelemetryLoop(SoilSensorService& soilSensor,
@@ -42,14 +38,13 @@ bool TelemetryLoop::loop(uint32_t nowMs) {
   const bool gpsValid = gpsService_.hasFix();
   const bool soilValid = soilReading.valid;
 
-  // Backend contract only accepts telemetry with both validity flags true.
-  if (!gpsValid || !soilValid) {
+  // Publish telemetry whenever soil data is valid.
+  // GPS fix may be unavailable in indoor/obstructed environments.
+  if (!soilValid) {
     scheduler_.markRun(nowMs);
     logger::warn(TAG,
-                 "Telemetry skipped (INVALID) gps=" +
-                     String(gpsValid ? 1 : 0) +
-                     " soil=" +
-                     String(soilValid ? 1 : 0));
+                 "Telemetry skipped (INVALID_SOIL) gps=" +
+                     String(gpsValid ? 1 : 0));
     return false;
   }
 
@@ -60,8 +55,13 @@ bool TelemetryLoop::loop(uint32_t nowMs) {
   TelemetryPacket packet;
   packet.deviceId = mqttService_.deviceId();
 
-  packet.latitude = gpsService_.getLatitude();
-  packet.longitude = gpsService_.getLongitude();
+  if (gpsValid) {
+    packet.latitude = gpsService_.getLatitude();
+    packet.longitude = gpsService_.getLongitude();
+  } else {
+    packet.latitude = NAN;
+    packet.longitude = NAN;
+  }
 
   packet.moisture = soilReading.moisture;
   packet.temperature = soilReading.temperature;
@@ -97,10 +97,8 @@ bool TelemetryLoop::loop(uint32_t nowMs) {
                    String(packet.moisture, 2) +
                    " temp=" +
                    String(packet.temperature, 2) +
-                   " lat=" +
-                   String(packet.latitude, 6) +
-                   " lng=" +
-                   String(packet.longitude, 6));
+                   " gps=" +
+                   String(gpsValid ? 1 : 0));
 
   return true;
 }

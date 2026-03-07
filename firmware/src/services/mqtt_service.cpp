@@ -55,6 +55,15 @@ void MqttService::setBrokerHost(const String& host) {
   client_.setServer(host_.c_str(), port_);
 }
 
+void MqttService::setBrokerPort(uint16_t port) {
+  if (port == 0) {
+    return;
+  }
+
+  port_ = port;
+  client_.setServer(host_.c_str(), port_);
+}
+
 void MqttService::setDeviceId(const String& deviceId) {
   deviceId_ = deviceId;
 }

@@ -58,6 +58,73 @@
   gap: 0.35rem;
 }
 
+.fc-device-card__header-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.45rem;
+  margin-left: auto;
+}
+
+.fc-device-card__battery {
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: var(--fc-r-md);
+  background: linear-gradient(
+    145deg,
+    rgba(248, 250, 252, 0.9),
+    rgba(255, 255, 255, 0.96)
+  );
+  padding: 0.4rem 0.56rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.fc-device-card__battery-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #334155;
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.fc-device-card__battery-copy {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+  text-align: right;
+}
+
+.fc-device-card__battery-copy strong {
+  font-size: 0.9rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.fc-device-card__battery--success .fc-device-card__battery-icon {
+  color: #14532d;
+  background: rgba(34, 197, 94, 0.18);
+}
+
+.fc-device-card__battery--warning .fc-device-card__battery-icon {
+  color: #92400e;
+  background: rgba(245, 158, 11, 0.18);
+}
+
+.fc-device-card__battery--danger .fc-device-card__battery-icon {
+  color: #991b1b;
+  background: rgba(239, 68, 68, 0.18);
+}
+
+.fc-device-card__battery--neutral .fc-device-card__battery-icon {
+  color: #334155;
+  background: rgba(148, 163, 184, 0.2);
+}
+
 .fc-device-card__quick-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -134,7 +201,6 @@
 }
 
 .fc-device-card__map-toggle {
-  margin-left: auto;
   padding: 0.42rem 0.72rem;
   font-size: 0.78rem;
   line-height: 1;
@@ -257,6 +323,16 @@
   .fc-device-card__header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .fc-device-card__header-tools {
+    width: 100%;
+    align-items: flex-start;
+    margin-left: 0;
+  }
+
+  .fc-device-card__battery-copy {
+    text-align: left;
   }
 
   .fc-device-card__map-toggle {

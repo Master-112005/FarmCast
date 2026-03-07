@@ -36,6 +36,35 @@ const toFiniteNumber = (value) => {
   return Number.isFinite(parsed) ? parsed : null;
 };
 
+const isValidLatitude = (value) =>
+  typeof value === "number" &&
+  Number.isFinite(value) &&
+  value >= -90 &&
+  value <= 90;
+
+const isValidLongitude = (value) =>
+  typeof value === "number" &&
+  Number.isFinite(value) &&
+  value >= -180 &&
+  value <= 180;
+
+const isZeroCoordinate = (lat, lng) =>
+  Math.abs(lat) < 0.000001 &&
+  Math.abs(lng) < 0.000001;
+
+const isValidCoordinatePair = (lat, lng) =>
+  isValidLatitude(lat) &&
+  isValidLongitude(lng) &&
+  !isZeroCoordinate(lat, lng);
+
+const normalizeFirmwareVersion = (value) => {
+  const raw = String(value || "").trim();
+  if (!raw) {
+    return null;
+  }
+  return raw.slice(0, 64);
+};
+
 const hasUserId = (value) =>
   typeof value === "string" &&
   value.trim().length > 0;
@@ -69,12 +98,6 @@ const validateTelemetryPayload = (payload) => {
     );
   }
 
-  if (payload.gpsValid !== true) {
-    throw new Error(
-      "Telemetry rejected: gpsValid must be true"
-    );
-  }
-
   if (payload.soilValid !== true) {
     throw new Error(
       "Telemetry rejected: soilValid must be true"
@@ -104,12 +127,6 @@ const validateTelemetryPayload = (payload) => {
     );
   }
 
-  if (latitude === null || longitude === null) {
-    throw new Error(
-      "Missing or invalid latitude/longitude"
-    );
-  }
-
   if (moisture < 0 || moisture > 100) {
     throw new Error(
       "Moisture out of supported range 0-100"
@@ -122,31 +139,29 @@ const validateTelemetryPayload = (payload) => {
     );
   }
 
-  if (latitude < -90 || latitude > 90) {
-    throw new Error("Latitude out of range");
-  }
-
-  if (longitude < -180 || longitude > 180) {
-    throw new Error("Longitude out of range");
-  }
-
-  if (
-    Math.abs(latitude) < 0.000001 &&
-    Math.abs(longitude) < 0.000001
-  ) {
-    throw new Error(
-      "0,0 coordinates are not allowed"
-    );
-  }
+  const hasValidCoordinates = isValidCoordinatePair(
+    latitude,
+    longitude
+  );
 
   const battery = toFiniteNumber(payload.battery);
+  const firmwareVersion = normalizeFirmwareVersion(
+    payload.firmware ??
+      payload.firmwareVersion ??
+      payload.fwVersion
+  );
 
   return {
     moisture,
     temperature,
-    latitude,
-    longitude,
+    latitude: hasValidCoordinates
+      ? latitude
+      : null,
+    longitude: hasValidCoordinates
+      ? longitude
+      : null,
     battery,
+    firmwareVersion,
   };
 };
 
@@ -320,13 +335,25 @@ const handleTelemetryMessage = async (
       : device.status;
 
   if (!hasUserId(device.userId)) {
-    await device.update({
+    const deviceUpdatePayload = {
       lastSeenAt: new Date(),
       isOnline: true,
       status: nextStatus,
-      latitude: telemetry.latitude,
-      longitude: telemetry.longitude,
-    });
+    };
+    if (
+      isValidCoordinatePair(
+        telemetry.latitude,
+        telemetry.longitude
+      )
+    ) {
+      deviceUpdatePayload.latitude = telemetry.latitude;
+      deviceUpdatePayload.longitude = telemetry.longitude;
+    }
+    if (telemetry.firmwareVersion) {
+      deviceUpdatePayload.firmwareVersion =
+        telemetry.firmwareVersion;
+    }
+    await device.update(deviceUpdatePayload);
 
     if (!wasOnline) {
       await auditOnlineTransition({ device });
@@ -359,13 +386,25 @@ const handleTelemetryMessage = async (
     battery: telemetry.battery,
   });
 
-  await device.update({
+  const deviceUpdatePayload = {
     lastSeenAt: new Date(),
     isOnline: true,
     status: nextStatus,
-    latitude: telemetry.latitude,
-    longitude: telemetry.longitude,
-  });
+  };
+  if (
+    isValidCoordinatePair(
+      telemetry.latitude,
+      telemetry.longitude
+    )
+  ) {
+    deviceUpdatePayload.latitude = telemetry.latitude;
+    deviceUpdatePayload.longitude = telemetry.longitude;
+  }
+  if (telemetry.firmwareVersion) {
+    deviceUpdatePayload.firmwareVersion =
+      telemetry.firmwareVersion;
+  }
+  await device.update(deviceUpdatePayload);
 
   const deviceWithCrop =
     (await Device.findByPk(device.id, {
@@ -482,12 +521,23 @@ const handleHeartbeatMessage = async (
     device.status === DEVICE.STATUS.OFFLINE
       ? DEVICE.STATUS.ACTIVE
       : device.status;
+  const firmwareVersion = normalizeFirmwareVersion(
+    payload?.firmware ??
+      payload?.firmwareVersion ??
+      payload?.fwVersion
+  );
 
-  await device.update({
+  const deviceUpdatePayload = {
     lastSeenAt: new Date(),
     isOnline: true,
     status: nextStatus,
-  });
+  };
+  if (firmwareVersion) {
+    deviceUpdatePayload.firmwareVersion =
+      firmwareVersion;
+  }
+
+  await device.update(deviceUpdatePayload);
 
   if (hasUserId(device.userId)) {
     await resolveDeviceOfflineAlert({

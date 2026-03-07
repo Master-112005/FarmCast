@@ -12,6 +12,17 @@ From this directory:
 docker compose -f docker-compose.mqtt.yml up -d
 ```
 
+Host port `2883` is used by default because `1883` is reserved on some
+Windows machines. Override it when needed:
+
+```powershell
+$env:MQTT_HOST_PORT=31883
+docker compose -f docker-compose.mqtt.yml up -d
+```
+
+If you change the host port, keep `MQTT_BROKER_URL` in the backend aligned
+with it.
+
 ## Restart After Config Changes
 
 ```powershell

@@ -23,6 +23,7 @@ class MqttService {
               const JsonBuilder& jsonBuilder);
 
   void setBrokerHost(const String& host);
+  void setBrokerPort(uint16_t port);
   void setDeviceId(const String& deviceId);
   const String& deviceId() const;
   void begin();

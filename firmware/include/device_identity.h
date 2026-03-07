@@ -15,6 +15,7 @@ static constexpr const char* KEY_PROVISIONED = "provisioned";
 static constexpr const char* KEY_FACTORY_RESET = "f_reset";
 static constexpr const char* KEY_API_BASE_URL = "api_url";
 static constexpr const char* KEY_MQTT_HOST = "mqtt_host";
+static constexpr const char* KEY_MQTT_PORT = "mqtt_port";
 
 // Device identity format: fc-XXXXXXXX where X is [A-Z0-9].
 static constexpr const char* DEVICE_ID_PREFIX = "fc-";

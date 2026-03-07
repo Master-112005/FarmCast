@@ -11,6 +11,13 @@ import { getLatestSoilRecord } from "../../services/deviceService";
 
 const LATEST_POSITION_REFRESH_MS = 10000;
 const LATEST_POSITION_NO_DATA_BACKOFF_MS = 60000;
+const DEFAULT_MAP_CENTER = [20.5937, 78.9629];
+const DEFAULT_MAP_ZOOM = 5;
+const SELECTED_DEVICE_ZOOM = 14;
+const MAP_MAX_BOUNDS = [
+  [-85, -180],
+  [85, 180],
+];
 
 const toNumber = (value) => {
   const parsed = Number(value);
@@ -150,7 +157,11 @@ const createDeviceMarkerIcon = (
   });
 };
 
-const DeviceMap = ({ devices, weatherData = [] }) => {
+const DeviceMap = ({
+  devices,
+  selectedDevice = null,
+  weatherData = [],
+}) => {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -160,6 +171,7 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
   const noDataBackoffUntilRef = useRef({});
 
   const [latestPositions, setLatestPositions] = useState({});
+  const [hasMapMarkers, setHasMapMarkers] = useState(false);
 
   const deviceIdsKey = useMemo(
     () =>
@@ -178,13 +190,24 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
       zoomControl: true,
       attributionControl: true,
       preferCanvas: true,
+      worldCopyJump: false,
+      minZoom: 3,
+      maxBounds: MAP_MAX_BOUNDS,
+      maxBoundsViscosity: 1.0,
     });
 
     L.tileLayer(
       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      { attribution: "OpenStreetMap contributors" }
+      {
+        attribution: "OpenStreetMap contributors",
+        noWrap: true,
+        bounds: MAP_MAX_BOUNDS,
+      }
     ).addTo(mapRef.current);
-    mapRef.current.fitWorld();
+    mapRef.current.setView(
+      DEFAULT_MAP_CENTER,
+      DEFAULT_MAP_ZOOM
+    );
 
     deviceLayerRef.current.addTo(mapRef.current);
     weatherLayerRef.current.addTo(mapRef.current);
@@ -402,13 +425,53 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
         .addTo(deviceLayerRef.current);
     });
 
+    setHasMapMarkers(markerPositions.length > 0);
+
+    const selectedLat = toNumber(
+      selectedDevice?.latitude ?? selectedDevice?.lat
+    );
+    const selectedLng = toNumber(
+      selectedDevice?.longitude ?? selectedDevice?.lng
+    );
+    const selectedLatest =
+      selectedDevice?.id &&
+      latestPositions[selectedDevice.id]
+        ? latestPositions[selectedDevice.id]
+        : null;
+    const focusLat = isValidLatLng(
+      selectedLat,
+      selectedLng
+    )
+      ? selectedLat
+      : selectedLatest?.latitude;
+    const focusLng = isValidLatLng(
+      selectedLat,
+      selectedLng
+    )
+      ? selectedLng
+      : selectedLatest?.longitude;
+
+    if (isValidLatLng(focusLat, focusLng)) {
+      mapRef.current.setView(
+        [focusLat, focusLng],
+        SELECTED_DEVICE_ZOOM
+      );
+      return;
+    }
+
     if (markerPositions.length > 0) {
       mapRef.current.fitBounds(
         L.latLngBounds(markerPositions),
         { padding: [24, 24], maxZoom: 17 }
       );
+      return;
     }
-  }, [devices, latestPositions]);
+
+    mapRef.current.setView(
+      DEFAULT_MAP_CENTER,
+      DEFAULT_MAP_ZOOM
+    );
+  }, [devices, latestPositions, selectedDevice]);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -466,11 +529,23 @@ const DeviceMap = ({ devices, weatherData = [] }) => {
   }, []);
 
   return (
-    <section
-      ref={containerRef}
-      className="fc-map"
-      aria-label="Device geospatial map"
-    />
+    <div className="fc-map-shell">
+      <section
+        ref={containerRef}
+        className="fc-map"
+        aria-label="Device geospatial map"
+      />
+
+      {!hasMapMarkers && (
+        <div
+          className="fc-map__empty-state"
+          role="status"
+        >
+          Waiting for valid GPS coordinates from your
+          device.
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -512,6 +587,26 @@ DeviceMap.propTypes = {
       ]),
     })
   ).isRequired,
+
+  selectedDevice: PropTypes.shape({
+    id: PropTypes.string,
+    latitude: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    lat: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    longitude: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    lng: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+  }),
 
   weatherData: PropTypes.arrayOf(
     PropTypes.shape({

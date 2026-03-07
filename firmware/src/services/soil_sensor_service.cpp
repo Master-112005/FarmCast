@@ -14,9 +14,9 @@ constexpr int kTemperatureSamples = 4;
 constexpr int kFloatingHighThreshold = 4090;
 constexpr int kFloatingLowThreshold = 5;
 constexpr int kStableSpanThreshold = 6;
-constexpr int kMinRequiredVariance = 1;
 constexpr int kNoisyFloatingSpanThreshold = 700;
 constexpr float kTemperatureMaxC = 125.0f;
+constexpr float kTemperatureFallbackC = 0.0f;
 }
 
 SoilSensorService::SoilSensorService(int moisturePin,
@@ -84,49 +84,59 @@ SoilReading SoilSensorService::read() const {
 
   const bool floatingHigh =
       raw >= kFloatingHighThreshold && span <= kStableSpanThreshold;
-  const bool floatingLow = raw <= kFloatingLowThreshold;
+  const bool saturatedLow =
+      raw <= kFloatingLowThreshold && span <= kStableSpanThreshold;
   const bool floatingNoisy = span >= kNoisyFloatingSpanThreshold;
-  const bool missingVariance = span < kMinRequiredVariance;
-  if (floatingHigh || floatingLow || floatingNoisy || missingVariance) {
+  if (floatingHigh || floatingNoisy) {
     logger::warn(TAG,
                  "Moisture input appears floating/invalid. raw=" + String(raw) +
                      " span=" + String(span));
     return reading;
   }
 
+  if (saturatedLow) {
+    logger::warn(TAG,
+                 "Moisture reading near saturated low end. Accepting raw=" +
+                     String(raw) + " span=" + String(span));
+  }
+
   const float moisture = static_cast<float>(mapMoisturePercentage(raw));
 
   long temperatureMvSum = 0;
+  bool temperatureReadValid = true;
   for (int i = 0; i < kTemperatureSamples; i++) {
     const int mv = analogReadMilliVolts(temperaturePin_);
     if (mv < 0) {
-      logger::warn(TAG, "Temperature mV read invalid: " + String(mv));
-      return reading;
+      temperatureReadValid = false;
+      break;
     }
     temperatureMvSum += mv;
   }
 
-  if (std::fabs(tempMvPerC_) < 0.0001f) {
-    logger::error(TAG, "Temperature calibration invalid: tempMvPerC is zero");
-    return reading;
+  float temperature = kTemperatureFallbackC;
+  bool usedTemperatureFallback = false;
+
+  if (!temperatureReadValid || std::fabs(tempMvPerC_) < 0.0001f) {
+    usedTemperatureFallback = true;
+  } else {
+    const float avgMv = static_cast<float>(temperatureMvSum) /
+                        static_cast<float>(kTemperatureSamples);
+    const float converted = (avgMv - tempMvAt0_) / tempMvPerC_;
+
+    const bool unsupportedNegative =
+        !allowNegativeTemperature_ && converted < 0.0f;
+    if (!std::isfinite(converted) || converted > kTemperatureMaxC ||
+        unsupportedNegative) {
+      usedTemperatureFallback = true;
+    } else {
+      temperature = converted;
+    }
   }
 
-  const float avgMv = static_cast<float>(temperatureMvSum) /
-                      static_cast<float>(kTemperatureSamples);
-  const float temperature = (avgMv - tempMvAt0_) / tempMvPerC_;
-
-  if (!std::isfinite(temperature) || temperature > kTemperatureMaxC) {
+  if (usedTemperatureFallback) {
     logger::warn(TAG,
-                 "Temperature value out of supported range: " +
-                     String(temperature, 2));
-    return reading;
-  }
-
-  if (!allowNegativeTemperature_ && temperature < 0.0f) {
-    logger::warn(
-        TAG,
-        "Negative temperature not supported by current sensor profile");
-    return reading;
+                 "Temperature reading unavailable/out-of-range. Using fallback " +
+                     String(kTemperatureFallbackC, 2) + " C");
   }
 
   Serial.printf("SOIL ADC RAW: %d\n", raw);
