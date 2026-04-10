@@ -1,38 +1,116 @@
-# -----------------------
-# Python
-# -----------------------
-.venv
-.venv-ml
+# ==================================================
+#  PYTHON / ML
+# ==================================================
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
 .pytest_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
 
-# -----------------------
-# Environment
-# -----------------------
-.env
+# Virtual environments
+.venv/
+.venv-ml/
+venv/
+env/
+ENV/
 
-# -----------------------
-# Node
-# -----------------------
+# ==================================================
+#  NODE / JAVASCRIPT
+# ==================================================
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+.eslintcache
+coverage/
 
-# -----------------------
-# ML Data (do NOT push)
-# -----------------------
+# Frontend build output
+frontend/dist/
+frontend/build/
+
+# ==================================================
+#  MACHINE LEARNING DATA & RUNTIME ARTIFACTS
+# ==================================================
 farmcast-ml/data/raw/
 farmcast-ml/data/processed/
+farmcast-ml/data/validated/
 farmcast-ml/data/artifacts/
 farmcast-ml/data/snapshots/
-
-# -----------------------
-# Logs
-# -----------------------
-*.log
+farmcast-ml/checkpoints/
 farmcast-ml/logs/
+farmcast-ml/dist/
+farmcast-ml/build/
+farmcast-ml/experiments/mlruns/
+farmcast-ml/experiments/optuna/
 
-# -----------------------
-# OS
-# -----------------------
+# Keep versioned model releases trackable; ignore runtime staging/production copies.
+farmcast-ml/models/*/staging/*
+farmcast-ml/models/*/production/*
+!farmcast-ml/models/*/staging/.gitkeep
+!farmcast-ml/models/*/production/.gitkeep
+
+# ==================================================
+#  FIRMWARE / PLATFORMIO
+# ==================================================
+.pio/
+firmware/build/
+.vscode/.browse.c_cpp.db*
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/ipch/
+
+# ==================================================
+#  RUNTIME DATA
+# ==================================================
+backend/uploads/
+mqtt/data/
+mqtt/log/
+*.pid
+*.sock
+
+# ==================================================
+#  ENV / SECRETS
+# ==================================================
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.crt
+
+# ==================================================
+#  LOGS
+# ==================================================
+*.log
+logs/
+backend/logs/
+
+# ==================================================
+#  OS / EDITORS
+# ==================================================
 .DS_Store
 Thumbs.db
+desktop.ini
+.vs/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# ==================================================
+#  MISC
+# ==================================================
+tmp/
+.tmp/
+*.tmp
+.cache/

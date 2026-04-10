@@ -502,6 +502,8 @@ The system is already capable of full operational workflows from USB provisionin
 npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
 
+.venv-ml/Scripts/Activate.ps1
+
 uvicorn src.api.ml_service:app --host 0.0.0.0 --port 5001
 
 pip install -r requirements-ml.txt
