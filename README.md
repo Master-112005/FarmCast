@@ -263,128 +263,554 @@ Top-level structure:
 Source-focused snapshot of the repository. Generated or local runtime folders such as `.git/`, `.venv-ml/`, `.vs/`, `node_modules/`, `dist/`, `.pio/`, `libdeps/`, `.pytest_cache/`, and `__pycache__/` are omitted for readability.
 
 ```text
-FarmCast/
-|-- .gitignore
-|-- FARMCAST.md
-|-- README.md
-|-- backend/
-|   |-- package.json
-|   |-- migrations/
-|   |-- seeders/
-|   |-- src/
-|   |   |-- app.js
-|   |   |-- server.js
-|   |   |-- config/
-|   |   |-- infrastructure/
-|   |   |   `-- mqtt/
-|   |   |-- integrations/
-|   |   |-- jobs/
-|   |   |-- middlewares/
-|   |   |-- models/
-|   |   |-- modules/
-|   |   |   |-- admin/
-|   |   |   |-- alerts/
-|   |   |   |-- audit/
-|   |   |   |-- auth/
-|   |   |   |-- chat/
-|   |   |   |-- community/
-|   |   |   |-- devices/
-|   |   |   |-- mqtt/
-|   |   |   |-- predictors/
-|   |   |   |-- soil/
-|   |   |   `-- users/
-|   |   |-- realtime/
-|   |   |-- routes/
-|   |   `-- utils/
-|   |-- tests/
-|   |   `-- integration/
-|   `-- uploads/
-|       |-- community/
-|       |-- predictors/
-|       `-- profiles/
-|-- frontend/
-|   |-- index.html
-|   |-- package.json
-|   |-- public/
-|   |   `-- leaflet/
-|   |       |-- icons/
-|   |       |-- overlays/
-|   |       `-- styles/
-|   `-- src/
-|       |-- app/
-|       |-- auth/
-|       |-- components/
-|       |   |-- admin/
-|       |   |-- buttons/
-|       |   |-- chat/
-|       |   |-- device/
-|       |   |-- inputs/
-|       |   |-- layout/
-|       |   |-- navigation/
-|       |   |-- notifications/
-|       |   |-- profile/
-|       |   `-- results/
-|       |-- context/
-|       |-- pages/
-|       |-- services/
-|       |-- styles/
-|       |   |-- components/
-|       |   `-- design-system/
-|       `-- utils/
-|-- farmcast-ml/
-|   |-- pyproject.toml
-|   |-- requirements-ml.txt
-|   |-- configs/
-|   |   |-- domain/
-|   |   `-- schemas/
-|   |-- data/
-|   |   |-- artifacts/
-|   |   |-- processed/
-|   |   |-- raw/
-|   |   |-- snapshots/
-|   |   `-- validated/
-|   |-- logs/
-|   |-- models/
-|   |   |-- disease/
-|   |   |-- price/
-|   |   |-- registry/
-|   |   `-- yield/
-|   |-- scripts/
-|   |-- src/
-|   |   |-- api/
-|   |   |-- core/
-|   |   |-- features/
-|   |   |   `-- encoders/
-|   |   |-- inference/
-|   |   |-- ingestion/
-|   |   |-- models/
-|   |   |   |-- disease/
-|   |   |   |-- price/
-|   |   |   `-- yield/
-|   |   |-- monitoring/
-|   |   |-- pipelines/
-|   |   `-- registry/
-|   `-- tests/
-|-- firmware/
-|   |-- ARCHITECTURE.md
-|   |-- platformio.ini
-|   |-- include/
-|   |-- src/
-|   |   |-- core/
-|   |   |-- domain/
-|   |   |-- infrastructure/
-|   |   |-- runtime/
-|   |   |-- services/
-|   |   `-- utils/
-|   `-- test/
-|-- docker/
-|   |-- aclfile
-|   |-- docker-compose.mqtt.yml
-|   |-- mosquitto.conf
-|   |-- passwordfile
-|   `-- README.md
-`-- mqtt/
-    |-- config/
-    |-- data/
-    `-- log/
+FC/
+│
+├── backend/
+│   ├── migrations/
+│   │   ├── 001-create-users.js
+│   │   ├── 002-create-devices.js
+│   │   ├── 003-create-soil-records.js
+│   │   ├── 004-create-refresh-tokens.js
+│   │   ├── 005-add-device-type-column.js
+│   │   ├── 006-create-chat-messages.js
+│   │   ├── 007-create-prediction-histories.js
+│   │   ├── 008-create-community-posts.js
+│   │   ├── 009-community-posts-optional-content.js
+│   │   ├── 010-create-crops.js
+│   │   ├── 011-add-alert-columns-to-devices.js
+│   │   ├── 012-create-alerts.js
+│   │   ├── 013-add-device-secret-hash.js
+│   │   ├── 014-enforce-soil-geo-columns.js
+│   │   ├── 015-create-audit-logs.js
+│   │   └── 016-add-secure-device-delete-columns.js
+│   ├── seeders/
+│   │   └── admin.seeder.js
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── cors.js
+│   │   │   ├── db.js
+│   │   │   ├── env.js
+│   │   │   ├── rateLimit.js
+│   │   │   └── sequelize-cli.js
+│   │   ├── infrastructure/
+│   │   │   └── mqtt/
+│   │   │       ├── mqttClient.js
+│   │   │       └── telemetryHandler.js
+│   │   ├── integrations/
+│   │   │   ├── mailer.js
+│   │   │   └── mlClient.js
+│   │   ├── jobs/
+│   │   │   ├── cleanup.job.js
+│   │   │   ├── communityPostRetention.job.js
+│   │   │   ├── offlineMonitor.job.js
+│   │   │   └── predictionHistoryRetention.job.js
+│   │   ├── middlewares/
+│   │   │   ├── asyncHandler.middleware.js
+│   │   │   ├── auth.middleware.js
+│   │   │   ├── error.middleware.js
+│   │   │   ├── notFound.middleware.js
+│   │   │   ├── rbac.middleware.js
+│   │   │   ├── upload.middleware.js
+│   │   │   └── validate.middleware.js
+│   │   ├── models/
+│   │   │   ├── Alert.js
+│   │   │   ├── AuditLog.js
+│   │   │   ├── ChatMessage.js
+│   │   │   ├── CommunityPost.js
+│   │   │   ├── Crop.js
+│   │   │   ├── Device.js
+│   │   │   ├── index.js
+│   │   │   ├── PredictionHistory.js
+│   │   │   ├── RefreshToken.js
+│   │   │   ├── SoilRecord.js
+│   │   │   └── User.js
+│   │   ├── modules/
+│   │   │   ├── admin/
+│   │   │   │   ├── admin.controller.js
+│   │   │   │   ├── admin.routes.js
+│   │   │   │   ├── admin.schema.js
+│   │   │   │   └── admin.service.js
+│   │   │   ├── alerts/
+│   │   │   │   ├── alert.model.js
+│   │   │   │   ├── alert.service.js
+│   │   │   │   └── thresholdResolver.js
+│   │   │   ├── audit/
+│   │   │   │   └── audit.service.js
+│   │   │   ├── auth/
+│   │   │   │   ├── auth.constants.js
+│   │   │   │   ├── auth.controller.js
+│   │   │   │   ├── auth.routes.js
+│   │   │   │   ├── auth.schema.js
+│   │   │   │   └── auth.service.js
+│   │   │   ├── chat/
+│   │   │   │   ├── chat.controller.js
+│   │   │   │   ├── chat.routes.js
+│   │   │   │   ├── chat.schema.js
+│   │   │   │   └── chat.service.js
+│   │   │   ├── community/
+│   │   │   │   ├── community.controller.js
+│   │   │   │   ├── community.routes.js
+│   │   │   │   ├── community.schema.js
+│   │   │   │   └── community.service.js
+│   │   │   ├── devices/
+│   │   │   │   ├── device.auth.controller.js
+│   │   │   │   ├── device.auth.schema.js
+│   │   │   │   ├── device.auth.service.js
+│   │   │   │   ├── device.constants.js
+│   │   │   │   ├── device.controller.js
+│   │   │   │   ├── device.routes.js
+│   │   │   │   ├── device.schema.js
+│   │   │   │   └── device.service.js
+│   │   │   ├── mqtt/
+│   │   │   │   ├── mqtt.controller.js
+│   │   │   │   ├── mqtt.routes.js
+│   │   │   │   ├── mqtt.schema.js
+│   │   │   │   └── mqtt.service.js
+│   │   │   ├── predictors/
+│   │   │   │   ├── predictor.controller.js
+│   │   │   │   ├── predictor.routes.js
+│   │   │   │   ├── predictor.schema.js
+│   │   │   │   └── predictor.service.js
+│   │   │   ├── soil/
+│   │   │   │   ├── soil.controller.js
+│   │   │   │   ├── soil.routes.js
+│   │   │   │   ├── soil.schema.js
+│   │   │   │   └── soil.service.js
+│   │   │   └── users/
+│   │   │       ├── user.constants.js
+│   │   │       ├── user.controller.js
+│   │   │       ├── user.routes.js
+│   │   │       ├── user.schema.js
+│   │   │       └── user.service.js
+│   │   ├── realtime/
+│   │   │   └── socket.js
+│   │   ├── routes/
+│   │   │   ├── index.js
+│   │   │   └── v1.js
+│   │   ├── utils/
+│   │   │   ├── constants.js
+│   │   │   ├── hash.js
+│   │   │   ├── logger.js
+│   │   │   ├── response.js
+│   │   │   └── token.js
+│   │   ├── app.js
+│   │   └── server.js
+│   ├── tests/
+│   │   └── integration/
+│   │       └── security-boundary.test.js
+│   ├── package.json
+│   ├── package-lock.json
+│   └── README.md
+├── docker/
+│   ├── aclfile
+│   ├── docker-compose.mqtt.yml
+│   ├── mosquitto.conf
+│   ├── passwordfile
+│   └── README.md
+│
+├── farmcast-ml/
+│   ├── configs/
+│   │   ├── domain/
+│   │   │   ├── crops.yaml
+│   │   │   ├── diseases.yaml
+│   │   │   ├── seasons.yaml
+│   │   │   └── soils.yaml
+│   │   ├── schemas/
+│   │   │   ├── feature_schema.yaml
+│   │   │   ├── price_schema.yaml
+│   │   │   ├── registry_schema.yaml
+│   │   │   └── yield_schema.yaml
+│   │   ├── app_config.yaml
+│   │   ├── monitoring_config.yaml
+│   │   ├── retraining_config.yaml
+│   │   └── training_config.yaml
+│   ├── data/
+│   │   ├── artifacts/
+│   │   ├── processed/
+│   │   ├── raw/
+│   │   │   ├── disease_images/
+│   │   │   │   ├── chillies/
+│   │   │   │   │   ├── Chilli __Whitefly/
+│   │   │   │   │   ├── Chilli __Yellowish/
+│   │   │   │   │   └── Chilli___Healthy/
+│   │   │   │   ├── cotton/
+│   │   │   │   │   ├── Cotton__Curl__Virus/
+│   │   │   │   │   ├── Cotton__Fussarium__Wilt/
+│   │   │   │   │   └── Cotton__Healthy/
+│   │   │   │   ├── groundnuts/
+│   │   │   │   │   ├── Groundnuts__Early_leaf_spot/
+│   │   │   │   │   ├── Groundnuts__Healthy/
+│   │   │   │   │   └── Groundnuts__late_leaf_spot/
+│   │   │   │   ├── maize/
+│   │   │   │   │   ├── Maize__Common_Rust/
+│   │   │   │   │   ├── Maize__Gray_Leaf_Spot/
+│   │   │   │   │   └── Maize__Healthy/
+│   │   │   │   ├── rice/
+│   │   │   │   │   ├── Rice__Brownspot/
+│   │   │   │   │   ├── Rice__Healthy/
+│   │   │   │   │   └── Rice__Tungro/
+│   │   │   │   ├── watermelon/
+│   │   │   │   │   ├── Watermelon___Downy_Mildew/
+│   │   │   │   │   ├── Watermelon___Healthy/
+│   │   │   │   │   └── Watermelon___Mosaic_Virus/
+│   │   │   │   └── wheat/
+│   │   │   │       ├── Wheat__Healthy/
+│   │   │   │       ├── Wheat__Tan__spot/
+│   │   │   │       └── Wheay__Yellow__Rust/
+│   │   │   ├── prices/
+│   │   │   ├── weather/
+│   │   │   └── yield/
+│   │   ├── snapshots/
+│   │   │   ├── disease/
+│   │   │   ├── price/
+│   │   │   └── yield/
+│   │   └── validated/
+│   ├── logs/
+│   │   └── farmcast_ml.log
+│   ├── models/
+│   │   ├── disease/
+│   │   │   ├── production/
+│   │   │   │   ├── class_map.json
+│   │   │   │   ├── metadata.json
+│   │   │   │   └── model.keras
+│   │   │   └── staging/
+│   │   │       └── disease_v1.0.0/
+│   │   │           ├── checkpoint.keras
+│   │   │           ├── class_map.json
+│   │   │           ├── metadata.json
+│   │   │           └── model.keras
+│   │   ├── registry/
+│   │   │   └── model_registry.json
+│   │   └── yield/
+│   │       ├── production/
+│   │       │   ├── metadata.json
+│   │       │   ├── model.joblib
+│   │       │   └── preprocessor.joblib
+│   │       ├── staging/
+│   │       │   └── yield_v1.0.0/
+│   │       │       ├── metadata.json
+│   │       │       ├── model.joblib
+│   │       │       └── preprocessor.joblib
+│   │       └── v2/
+│   │           ├── metadata.json
+│   │           └── model.pkl
+│   ├── scripts/
+│   │   ├── run_api.sh
+│   │   ├── run_inference.sh
+│   │   ├── run_retraining.sh
+│   │   └── run_training.sh
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── __init__.py
+│   │   │   ├── auth.py
+│   │   │   ├── dependencies.py
+│   │   │   ├── ml_service.py
+│   │   │   └── schemas.py
+│   │   ├── core/
+│   │   │   ├── __init__.py
+│   │   │   ├── augmentation.py
+│   │   │   ├── callbacks.py
+│   │   │   ├── config.py
+│   │   │   ├── deterministic.py
+│   │   │   ├── exceptions.py
+│   │   │   ├── hashing.py
+│   │   │   ├── logging.py
+│   │   │   ├── losses.py
+│   │   │   └── metrics.py
+│   │   ├── features/
+│   │   │   ├── encoders/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── crop_encoder.py
+│   │   │   │   ├── season_encoder.py
+│   │   │   │   └── soil_encoder.py
+│   │   │   ├── __init__.py
+│   │   │   ├── build_geo_feature_vector.py
+│   │   │   ├── determine_season.py
+│   │   │   ├── persistence.py
+│   │   │   ├── price_feature_builder.py
+│   │   │   ├── weather_repository.py
+│   │   │   └── yield_feature_builder.py
+│   │   ├── inference/
+│   │   │   ├── __init__.py
+│   │   │   └── yield_predictor.py
+│   │   ├── ingestion/
+│   │   │   ├── __init__.py
+│   │   │   ├── price_loader.py
+│   │   │   ├── validator.py
+│   │   │   ├── weather_loader.py
+│   │   │   └── yield_loader.py
+│   │   ├── models/
+│   │   │   ├── disease/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── dataset_builder.py
+│   │   │   │   ├── evaluator.py
+│   │   │   │   ├── model.py
+│   │   │   │   ├── predictor.py
+│   │   │   │   ├── trainer.py
+│   │   │   │   └── utils.py
+│   │   │   ├── price/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── evaluator.py
+│   │   │   │   ├── model.py
+│   │   │   │   ├── predictor.py
+│   │   │   │   ├── trainer.py
+│   │   │   │   └── utils.py
+│   │   │   ├── yield/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── evaluator.py
+│   │   │   │   ├── model.py
+│   │   │   │   ├── predictor.py
+│   │   │   │   ├── trainer.py
+│   │   │   │   └── utils.py
+│   │   │   └── __init__.py
+│   │   ├── monitoring/
+│   │   │   ├── __init__.py
+│   │   │   ├── alert_manager.py
+│   │   │   ├── drift_detector.py
+│   │   │   └── performance_monitor.py
+│   │   ├── pipelines/
+│   │   │   ├── __init__.py
+│   │   │   ├── inference_pipeline.py
+│   │   │   ├── retraining_pipeline.py
+│   │   │   ├── training_pipeline.py
+│   │   │   └── utils.py
+│   │   ├── registry/
+│   │   │   ├── __init__.py
+│   │   │   ├── metadata_manager.py
+│   │   │   ├── model_registry.py
+│   │   │   └── promotion.py
+│   │   └── __init__.py
+│   ├── tests/
+│   │   ├── test_api.py
+│   │   ├── test_disease_model.py
+│   │   ├── test_feature_engineering.py
+│   │   ├── test_ingestion.py
+│   │   ├── test_price_model.py
+│   │   ├── test_registry.py
+│   │   └── test_yield_model.py
+│   ├── pyproject.toml
+│   ├── README.md
+│   └── requirements-ml.txt
+│
+├── firmware/
+│   ├── include/
+│   │   ├── build_info.h
+│   │   ├── config.h
+│   │   ├── device_identity.h
+│   │   └── topics.h
+│   ├── src/
+│   │   ├── core/
+│   │   │   ├── device_context.cpp
+│   │   │   ├── device_context.h
+│   │   │   ├── system_boot.cpp
+│   │   │   └── system_boot.h
+│   │   ├── domain/
+│   │   │   ├── device_state.h
+│   │   │   ├── firmware_info.h
+│   │   │   └── telemetry_packet.h
+│   │   ├── infrastructure/
+│   │   │   ├── http_client.cpp
+│   │   │   ├── http_client.h
+│   │   │   ├── json_builder.cpp
+│   │   │   └── json_builder.h
+│   │   ├── runtime/
+│   │   │   ├── heartbeat_loop.cpp
+│   │   │   ├── heartbeat_loop.h
+│   │   │   ├── scheduler.cpp
+│   │   │   ├── scheduler.h
+│   │   │   ├── telemetry_loop.cpp
+│   │   │   └── telemetry_loop.h
+│   │   ├── services/
+│   │   │   ├── auth_service.cpp
+│   │   │   ├── auth_service.h
+│   │   │   ├── battery_service.cpp
+│   │   │   ├── battery_service.h
+│   │   │   ├── device_identity_service.cpp
+│   │   │   ├── device_identity_service.h
+│   │   │   ├── gps_service.cpp
+│   │   │   ├── gps_service.h
+│   │   │   ├── mqtt_service.cpp
+│   │   │   ├── mqtt_service.h
+│   │   │   ├── ota_service.cpp
+│   │   │   ├── ota_service.h
+│   │   │   ├── soil_sensor_service.cpp
+│   │   │   ├── soil_sensor_service.h
+│   │   │   ├── wifi_service.cpp
+│   │   │   └── wifi_service.h
+│   │   ├── utils/
+│   │   │   ├── logger.cpp
+│   │   │   ├── logger.h
+│   │   │   ├── time_utils.cpp
+│   │   │   └── time_utils.h
+│   │   └── main.cpp
+│   ├── ARCHITECTURE.md
+│   └── platformio.ini
+│
+├── frontend/
+│   ├── dist/
+│   │   ├── assets/
+│   │   │   ├── index-rN8RjL7_.js
+│   │   │   └── index-WJABT6zt.css
+│   │   ├── leaflet/
+│   │   │   ├── icons/
+│   │   │   │   ├── alert.png
+│   │   │   │   ├── crop.png
+│   │   │   │   └── device.png
+│   │   │   ├── overlays/
+│   │   │   │   └── farm-boundary.geojson
+│   │   │   └── styles/
+│   │   │       └── leaflet-overrides.css
+│   │   ├── index.html
+│   │   └── profile-placeholder.svg
+│   ├── public/
+│   │   ├── leaflet/
+│   │   │   ├── icons/
+│   │   │   │   ├── alert.png
+│   │   │   │   ├── crop.png
+│   │   │   │   └── device.png
+│   │   │   ├── overlays/
+│   │   │   │   └── farm-boundary.geojson
+│   │   │   └── styles/
+│   │   │       └── leaflet-overrides.css
+│   │   └── profile-placeholder.svg
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── App.jsx
+│   │   │   ├── AppProviders.jsx
+│   │   │   ├── DashboardShell.jsx
+│   │   │   └── Router.jsx
+│   │   ├── auth/
+│   │   │   ├── AuthLayout.jsx
+│   │   │   ├── LoginPage.jsx
+│   │   │   └── RegisterPage.jsx
+│   │   ├── components/
+│   │   │   ├── admin/
+│   │   │   │   ├── AdminOverviewCompact.jsx
+│   │   │   │   └── AdminPanel.jsx
+│   │   │   ├── buttons/
+│   │   │   │   ├── ActionButtons.jsx
+│   │   │   │   ├── PredictButton.jsx
+│   │   │   │   └── UploadButton.jsx
+│   │   │   ├── chat/
+│   │   │   │   └── ChatPanel.jsx
+│   │   │   ├── device/
+│   │   │   │   ├── DeviceCard.jsx
+│   │   │   │   ├── DeviceDeleteModal.jsx
+│   │   │   │   ├── DeviceFormModal.jsx
+│   │   │   │   ├── DeviceManager.jsx
+│   │   │   │   ├── DeviceMap.jsx
+│   │   │   │   └── DeviceProvisionWizard.jsx
+│   │   │   ├── inputs/
+│   │   │   │   ├── CropTypeInput.jsx
+│   │   │   │   ├── DateInputs.jsx
+│   │   │   │   ├── DistrictInput.jsx
+│   │   │   │   ├── SoilTypeInput.jsx
+│   │   │   │   └── StateInput.jsx
+│   │   │   ├── layout/
+│   │   │   │   ├── Card.jsx
+│   │   │   │   ├── LoginSplash.jsx
+│   │   │   │   ├── MainWorkspace.jsx
+│   │   │   │   ├── Sidebar.jsx
+│   │   │   │   └── Topbar.jsx
+│   │   │   ├── navigation/
+│   │   │   │   ├── ProfileButton.jsx
+│   │   │   │   └── ViewSwitch.jsx
+│   │   │   ├── notifications/
+│   │   │   │   └── NotificationPanel.jsx
+│   │   │   ├── profile/
+│   │   │   │   ├── EditProfileForm.jsx
+│   │   │   │   ├── ProfileActions.jsx
+│   │   │   │   └── UserProfile.jsx
+│   │   │   └── results/
+│   │   │       ├── DiseaseResultCard.jsx
+│   │   │       ├── FertilizerRecommendation.jsx
+│   │   │       ├── ProfitMetrics.jsx
+│   │   │       ├── SoilDataCard.jsx
+│   │   │       ├── WaterRecommendation.jsx
+│   │   │       └── YieldPrediction.jsx
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx
+│   │   │   ├── SocketContext.jsx
+│   │   │   └── ViewContext.jsx
+│   │   ├── pages/
+│   │   │   ├── AdminView.jsx
+│   │   │   ├── CommunityView.jsx
+│   │   │   ├── CommunityView.module.css
+│   │   │   ├── DeviceView.jsx
+│   │   │   ├── PredictorView.jsx
+│   │   │   ├── ProfileView.jsx
+│   │   │   └── Workspace.jsx
+│   │   ├── services/
+│   │   │   ├── adminService.js
+│   │   │   ├── api.js
+│   │   │   ├── chatService.js
+│   │   │   ├── communityService.js
+│   │   │   ├── deviceProvisioning.js
+│   │   │   ├── deviceService.js
+│   │   │   ├── predictorService.js
+│   │   │   └── userService.js
+│   │   ├── styles/
+│   │   │   ├── components/
+│   │   │   │   ├── admin/
+│   │   │   │   │   └── admin-panel.css
+│   │   │   │   ├── buttons/
+│   │   │   │   │   └── action-buttons.css
+│   │   │   │   ├── chat/
+│   │   │   │   │   └── chat-panel.css
+│   │   │   │   ├── device/
+│   │   │   │   │   ├── device-card.css
+│   │   │   │   │   ├── device-delete-modal.css
+│   │   │   │   │   ├── device-form-modal.css
+│   │   │   │   │   └── device-provision-wizard.css
+│   │   │   │   ├── layout/
+│   │   │   │   │   ├── card-structure.css
+│   │   │   │   │   └── layout-components.css
+│   │   │   │   ├── navigation/
+│   │   │   │   │   └── view-switch.css
+│   │   │   │   ├── notifications/
+│   │   │   │   │   └── notification-panel.css
+│   │   │   │   ├── profile/
+│   │   │   │   │   ├── profile-image.css
+│   │   │   │   │   └── profile-metadata.css
+│   │   │   │   ├── results/
+│   │   │   │   │   ├── confidence-bar.css
+│   │   │   │   │   └── result-panels.css
+│   │   │   │   └── shared/
+│   │   │   │       ├── alerts.css
+│   │   │   │       ├── buttons.css
+│   │   │   │       ├── cards.css
+│   │   │   │       ├── empty-states.css
+│   │   │   │       ├── forms.css
+│   │   │   │       ├── inputs.css
+│   │   │   │       ├── modal.css
+│   │   │   │       ├── responsive-helpers.css
+│   │   │   │       └── status-badges.css
+│   │   │   ├── animations.css
+│   │   │   ├── base.css
+│   │   │   ├── components.css
+│   │   │   ├── globals.css
+│   │   │   ├── map.css
+│   │   │   ├── pages.css
+│   │   │   ├── utilities.css
+│   │   │   └── variables.css
+│   │   ├── utils/
+│   │   │   └── constants.js
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   └── README.md
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   └── README.md
+├── mqtt/
+│   ├── config/
+│   │   ├── aclfile
+│   │   ├── mosquitto.conf
+│   │   └── passwordfile
+│   ├── data/
+│   │   └── mosquitto.db
+│   └── log/
+│       └── mosquitto.log
+├── README.md
+
 ```
