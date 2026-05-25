@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.git
+*.log
+.gitignore
+README.md
+data/
+logs/
+tests/
+.venv/
+.env
+.pytest_cache
+scripts/
