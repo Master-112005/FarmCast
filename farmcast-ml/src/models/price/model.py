@@ -8,7 +8,7 @@ from typing import Any
 def build_price_regressor(params: dict[str, Any], seed: int):
     try:
         import lightgbm as lgb
-    except Exception as exc:  # pragma: no cover
+    except Exception as exc:
         raise ImportError("lightgbm is required for price training.") from exc
 
     merged = dict(params)

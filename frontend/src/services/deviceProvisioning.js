@@ -50,7 +50,7 @@ const cancelReaderSafely = async (
       delay(timeoutMs),
     ]);
   } catch {
-    // no-op
+
   }
 };
 
@@ -67,7 +67,7 @@ const releaseControlSignals = async (
       requestToSend: false,
     });
   } catch {
-    // no-op
+
   }
 };
 
@@ -120,13 +120,13 @@ const drainBootText = async (
         hadData = true;
       }
     } catch {
-      // no-op
+
     } finally {
       if (reader) {
         try {
           reader.releaseLock();
         } catch {
-          // no-op
+
         }
       }
     }
@@ -222,8 +222,8 @@ export const openPort = async (
 
     await delay(800);
   } else {
-    // Keep existing runtime state for flows (delete/reset) that do not
-    // require an auto-reset pulse on connect.
+
+
     await delay(120);
   }
 
@@ -258,7 +258,7 @@ export const openPort = async (
     disconnectHandler
   );
 
-  // Drain buffered boot/debug noise before issuing command handshake.
+
   await drainBootText(
     port,
     resetDeviceOnConnect
@@ -299,7 +299,7 @@ export const closePort = async (session) => {
       );
     }
   } catch {
-    // no-op
+
   }
 
   const activeReader = session.activeReader;
@@ -310,7 +310,7 @@ export const closePort = async (session) => {
     try {
       activeReader.releaseLock();
     } catch {
-      // no-op
+
     }
   }
 
@@ -320,7 +320,7 @@ export const closePort = async (session) => {
   try {
     await session.port.close();
   } catch {
-    // no-op
+
   }
 };
 
@@ -366,7 +366,7 @@ export const writeLine = async (
     try {
       writer.releaseLock();
     } catch {
-      // no-op
+
     }
   }
 };
@@ -486,7 +486,7 @@ export const readLine = async (
     try {
       reader.releaseLock();
     } catch {
-      // no-op
+
     }
   }
 };
@@ -532,7 +532,7 @@ const readFirstJsonLine = async (
     }
 
     if (!raw.startsWith("{")) {
-      // Ignore non-JSON boot/debug lines.
+
       continue;
     }
 
@@ -564,7 +564,7 @@ const readProvisioningAck = async (
       if (
         error?.code === "SERIAL_DISCONNECTED"
       ) {
-        // Device may reboot quickly after applying payload.
+
         return "rebooted";
       }
 
@@ -931,7 +931,7 @@ export const sendProvisioningPayload = async (
     );
   }
 
-  // Ensure ESP32 control lines are deasserted before reboot sequence completes.
+
   await releaseControlSignals(session);
   await delay(PROVISION_APPLY_SETTLE_MS);
 };

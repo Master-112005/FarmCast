@@ -20,4 +20,4 @@ void warn(const char* tag, const String& message);
 void info(const char* tag, const String& message);
 void debug(const char* tag, const String& message);
 
-}  // namespace logger
+}

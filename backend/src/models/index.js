@@ -78,7 +78,7 @@ db.CommunityPost = CommunityPostFactory(
   DataTypes
 );
 
-// USER -> DEVICES
+
 if (db.User && db.Device) {
   db.User.hasMany(db.Device, {
     foreignKey: "userId",
@@ -92,7 +92,7 @@ if (db.User && db.Device) {
   });
 }
 
-// CROP -> DEVICES
+
 if (db.Crop && db.Device) {
   db.Crop.hasMany(db.Device, {
     foreignKey: "cropId",
@@ -106,7 +106,7 @@ if (db.Crop && db.Device) {
   });
 }
 
-// DEVICE -> SOIL RECORDS
+
 if (db.Device && db.SoilRecord) {
   db.Device.hasMany(db.SoilRecord, {
     foreignKey: "deviceId",
@@ -120,7 +120,7 @@ if (db.Device && db.SoilRecord) {
   });
 }
 
-// USER -> ALERTS
+
 if (db.User && db.Alert) {
   db.User.hasMany(db.Alert, {
     foreignKey: "userId",
@@ -134,7 +134,7 @@ if (db.User && db.Alert) {
   });
 }
 
-// DEVICE -> ALERTS
+
 if (db.Device && db.Alert) {
   db.Device.hasMany(db.Alert, {
     foreignKey: "deviceId",
@@ -148,7 +148,7 @@ if (db.Device && db.Alert) {
   });
 }
 
-// USER -> REFRESH TOKENS
+
 if (db.User && db.RefreshToken) {
   db.User.hasMany(db.RefreshToken, {
     foreignKey: "userId",
@@ -162,7 +162,7 @@ if (db.User && db.RefreshToken) {
   });
 }
 
-// USER -> CHAT MESSAGES
+
 if (db.User && db.ChatMessage) {
   db.User.hasMany(db.ChatMessage, {
     foreignKey: "senderId",
@@ -187,7 +187,7 @@ if (db.User && db.ChatMessage) {
   });
 }
 
-// USER -> PREDICTION HISTORIES
+
 if (db.User && db.PredictionHistory) {
   db.User.hasMany(db.PredictionHistory, {
     foreignKey: "userId",
@@ -201,7 +201,7 @@ if (db.User && db.PredictionHistory) {
   });
 }
 
-// USER -> COMMUNITY POSTS
+
 if (db.User && db.CommunityPost) {
   db.User.hasMany(db.CommunityPost, {
     foreignKey: "userId",

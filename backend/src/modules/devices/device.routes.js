@@ -91,10 +91,10 @@ const deviceAuthLimiter = rateLimit({
 
 
 
-/**
- * POST /api/v1/devices/auth
- * Public (device credentials only)
- */
+
+
+
+
 router.post(
   "/auth",
   deviceAuthLimiter,
@@ -104,10 +104,10 @@ router.post(
 
 
 
-/**
- * GET /api/v1/devices
- * USER + ADMIN
- */
+
+
+
+
 router.get(
   "/",
   authenticate,
@@ -118,10 +118,10 @@ router.get(
   deviceController.getMyDevices
 );
 
-/**
- * GET /api/v1/devices/:id
- * USER + ADMIN (ownership enforced in service)
- */
+
+
+
+
 router.get(
   "/:id",
   authenticate,
@@ -133,10 +133,10 @@ router.get(
   deviceController.getMyDeviceById
 );
 
-/**
- * GET /api/v1/devices/:id/status
- * USER + ADMIN (ownership enforced in service)
- */
+
+
+
+
 router.get(
   "/:id/status",
   authenticate,
@@ -151,10 +151,10 @@ router.get(
   deviceController.getDeviceStatus
 );
 
-/**
- * POST /api/v1/devices
- * USER + ADMIN
- */
+
+
+
+
 router.post(
   "/",
   authenticate,
@@ -166,10 +166,10 @@ router.post(
   deviceController.createDevice
 );
 
-/**
- * POST /api/v1/devices/provision
- * USER + ADMIN
- */
+
+
+
+
 router.post(
   "/provision",
   authenticate,
@@ -181,10 +181,10 @@ router.post(
   deviceController.provisionDevice
 );
 
-/**
- * PUT /api/v1/devices/:id
- * USER + ADMIN (ownership enforced in service)
- */
+
+
+
+
 router.put(
   "/:id",
   authenticate,
@@ -199,10 +199,10 @@ router.put(
   deviceController.updateMyDevice
 );
 
-/**
- * DELETE /api/v1/devices/:id/pre-delete
- * USER + ADMIN (ownership enforced in service)
- */
+
+
+
+
 router.delete(
   "/:id/pre-delete",
   authenticate,
@@ -214,10 +214,10 @@ router.delete(
   deviceController.preDeleteDevice
 );
 
-/**
- * POST /api/v1/devices/:id/finalize-delete
- * USER + ADMIN (ownership enforced in service)
- */
+
+
+
+
 router.post(
   "/:id/finalize-delete",
   authenticate,
@@ -229,11 +229,11 @@ router.post(
   deviceController.finalizeDeleteDevice
 );
 
-/**
- * DELETE /api/v1/devices/:id
- * USER + ADMIN
- * Legacy hard-delete route retained as blocked compatibility endpoint.
- */
+
+
+
+
+
 router.delete(
   "/:id",
   authenticate,
@@ -247,10 +247,10 @@ router.delete(
 
 
 
-/**
- * GET /api/v1/devices/:id/live
- * USER + ADMIN
- */
+
+
+
+
 router.get(
   "/:id/live",
   authenticate,
@@ -262,10 +262,10 @@ router.get(
   deviceController.getLiveDeviceData
 );
 
-/**
- * PATCH /api/v1/devices/sync/:id
- * USER + ADMIN
- */
+
+
+
+
 router.patch(
   "/sync/:id",
   authenticate,

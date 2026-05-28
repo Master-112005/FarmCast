@@ -7,8 +7,8 @@ from pathlib import Path
 
 def build_tf_callbacks(checkpoint_path: str | Path, patience: int, min_lr: float = 1.0e-6) -> list:
     try:
-        import tensorflow as tf  # type: ignore
-    except Exception as exc:  # pragma: no cover
+        import tensorflow as tf
+    except Exception as exc:
         raise ImportError("TensorFlow is required for disease callbacks.") from exc
 
     path = Path(checkpoint_path)

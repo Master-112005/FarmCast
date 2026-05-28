@@ -63,7 +63,7 @@ async function connectMQTT() {
       };
 
       client = mqtt.connect(BROKER_URL, {
-        reconnectPeriod: 3000, // auto reconnect every 3s
+        reconnectPeriod: 3000,
         clean: true,
         username: env.MQTT.CLIENT_USERNAME,
         password: env.MQTT.CLIENT_PASSWORD || undefined,

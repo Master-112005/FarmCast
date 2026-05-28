@@ -22,14 +22,14 @@ const UploadButton = ({
 
   const isDisabled = disabled || isLoading;
 
-  /* ---------------- CLICK ---------------- */
+
 
   const handleClick = () => {
     if (isDisabled) return;
     fileInputRef.current?.click();
   };
 
-  /* ---------------- VALIDATION ---------------- */
+
 
   const validateFile = (file) => {
     if (!ALLOWED_TYPES.includes(file.type)) {
@@ -44,12 +44,12 @@ const UploadButton = ({
     return "";
   };
 
-  /* ---------------- CHANGE ---------------- */
+
 
   const handleChange = (event) => {
     const file = event.target.files?.[0];
 
-    // Always reset input so same file can be reselected
+
     event.target.value = "";
 
     if (!file || isDisabled) return;
@@ -102,7 +102,7 @@ const UploadButton = ({
         )}
       </button>
 
-      {/* Hidden file input */}
+      {}
       <input
         ref={fileInputRef}
         type="file"
@@ -111,7 +111,7 @@ const UploadButton = ({
         hidden
       />
 
-      {/* Error message */}
+      {}
       {error && (
         <div
           className="fc-alert fc-alert--error"
@@ -121,7 +121,7 @@ const UploadButton = ({
         </div>
       )}
 
-      {/* Helper text */}
+      {}
       <p className="fc-upload__hint">
         JPG or PNG • Max {MAX_FILE_SIZE_MB} MB
       </p>

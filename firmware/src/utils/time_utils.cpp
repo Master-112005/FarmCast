@@ -5,7 +5,7 @@ namespace {
 uint64_t g_rolloverOffset = 0;
 uint32_t g_lastMillis = 0;
 
-}  // namespace
+}
 
 namespace time_utils {
 
@@ -25,4 +25,4 @@ uint64_t millis64() {
   return g_rolloverOffset + now;
 }
 
-}  // namespace time_utils
+}

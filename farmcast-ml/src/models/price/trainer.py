@@ -49,7 +49,7 @@ def _train_once(
     regressor = build_price_regressor(params, seed=seed)
     try:
         import lightgbm as lgb
-    except Exception as exc:  # pragma: no cover
+    except Exception as exc:
         raise ImportError("lightgbm is required for price training.") from exc
 
     regressor.fit(
@@ -79,7 +79,7 @@ def _run_optuna_if_enabled(
         return base_params
     try:
         import optuna
-    except Exception as exc:  # pragma: no cover
+    except Exception as exc:
         raise ImportError("optuna is required when price optuna.enabled is true.") from exc
 
     target_column = section["target_column"]

@@ -23,9 +23,9 @@ if (!db?.User) {
 
 
 
-/**
- * Extract Bearer token from Authorization header
- */
+
+
+
 const extractToken = (req) => {
   const header =
     req.headers[AUTH.HEADER_NAME.toLowerCase()];
@@ -47,9 +47,9 @@ const extractToken = (req) => {
   return parts[1].trim();
 };
 
-/**
- * Build standardized auth error
- */
+
+
+
 const authError = (code, message) => {
   const err = new Error(message);
   err.code = code;
@@ -69,7 +69,7 @@ const authenticate = async (req, _res, next) => {
       );
     }
 
-    // Centralized JWT verification
+
     const payload = verifyAccessToken(token);
 
     const user = await db.User.findByPk(
@@ -83,7 +83,7 @@ const authenticate = async (req, _res, next) => {
       );
     }
 
-    // Attach minimal trusted user
+
     req.user = {
       id: user.id,
       role: user.role,

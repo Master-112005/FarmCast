@@ -33,7 +33,7 @@ class ProviderErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      // Fail closed in production, fail loud in dev
+
       if (!isProd) {
         return (
           <pre style={{ color: "red" }}>
@@ -50,13 +50,13 @@ class ProviderErrorBoundary extends React.Component {
 
 
 
-/**
- * Provider order is STRICT and intentional:
- *
- * 1. AuthProvider
- * 2. SocketProvider
- * 3. ViewProvider
- */
+
+
+
+
+
+
+
 const AppProviders = ({ children }) => {
   if (children === undefined || children === null) {
     if (!isProd) {

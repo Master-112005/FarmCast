@@ -5,9 +5,9 @@ const { QueryTypes } = require("sequelize");
 const crypto = require("crypto");
 
 
-/**
- * Environment-driven configuration
- */
+
+
+
 const ADMIN_CONFIG = Object.freeze({
   EMAIL: process.env.ADMIN_EMAIL,
   PASSWORD: process.env.ADMIN_PASSWORD,
@@ -15,7 +15,7 @@ const ADMIN_CONFIG = Object.freeze({
   ROLE: "admin",
 });
 
-/** @type {import('sequelize-cli').Seeder} */
+
 module.exports = {
   async up(queryInterface) {
     
@@ -97,10 +97,10 @@ module.exports = {
   },
 
   async down() {
-    /**
-     * Intentionally NOOP.
-     * Admin users must never be auto-removed.
-     */
+
+
+
+
     console.info(
       "[ADMIN SEEDER] Down skipped (admin preserved)."
     );

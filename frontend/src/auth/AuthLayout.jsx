@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 
 const AuthLayout = ({ children }) => {
-  // Defensive guard: prevent silent blank screens
+
   if (!children) {
     if (import.meta.env.MODE !== "production") {
       console.warn("⚠️ AuthLayout rendered without children");
@@ -18,10 +18,10 @@ const AuthLayout = ({ children }) => {
         className="auth-layout-content"
         aria-label="Authentication"
       >
-        {/* Branding Slot (optional via CSS background/logo) */}
+        {}
         <div className="auth-brand" aria-hidden="true" />
 
-        {/* Auth Page */}
+        {}
         <section className="auth-container">
           {children}
         </section>

@@ -69,7 +69,7 @@ void WifiService::connect(uint32_t nowMs) {
 
   uint32_t startAttempt = millis();
 
-  // Wait up to 10 seconds for connection
+
   while (WiFi.status() != WL_CONNECTED &&
          millis() - startAttempt < 10000) {
     delay(500);

@@ -17,7 +17,7 @@ const ProfileButton = ({
 
   return (
     <div className="fc-profile-button">
-      {/* PROFILE */}
+      {}
       <button
         type="button"
         onClick={handleProfileClick}
@@ -38,7 +38,7 @@ const ProfileButton = ({
         )}
       </button>
 
-      {/* LOGOUT (OPTIONAL) */}
+      {}
       {typeof onLogout === "function" && (
         <button
           type="button"

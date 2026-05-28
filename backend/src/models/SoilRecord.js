@@ -6,18 +6,18 @@ module.exports = (sequelize) => {
   const SoilRecord = sequelize.define(
     "SoilRecord",
     {
-      /* ------------------------------------
-         PRIMARY KEY
-      ------------------------------------ */
+
+
+
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
 
-      /* ------------------------------------
-         DEVICE ASSOCIATION
-      ------------------------------------ */
+
+
+
       deviceId: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -30,9 +30,9 @@ module.exports = (sequelize) => {
         field: "user_id",
       },
 
-      /* ------------------------------------
-         TELEMETRY METRICS
-      ------------------------------------ */
+
+
+
       moisture: {
         type: DataTypes.FLOAT,
         allowNull: false,
@@ -72,7 +72,7 @@ module.exports = (sequelize) => {
     },
     {
       tableName: "soil_records",
-      timestamps: true,  // keeps created_at & updated_at
+      timestamps: true,
       underscored: true,
       paranoid: true,
       indexes: [

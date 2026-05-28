@@ -6,9 +6,9 @@ const env = require("../../config/env");
 
 
 
-/**
- * GET /api/v1/users/me
- */
+
+
+
 const getMyProfile = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -22,9 +22,9 @@ const getMyProfile = async (req, res, next) => {
   }
 };
 
-/**
- * PUT /api/v1/users/me
- */
+
+
+
 const updateMyProfile = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -42,9 +42,9 @@ const updateMyProfile = async (req, res, next) => {
   }
 };
 
-/**
- * POST /api/v1/users/me/upload
- */
+
+
+
 const uploadMyProfileImage = async (
   req,
   res,
@@ -69,9 +69,9 @@ const uploadMyProfileImage = async (
   }
 };
 
-/**
- * DELETE /api/v1/users/me
- */
+
+
+
 const deleteMyAccount = async (req, res, next) => {
   try {
     const userId = req.user.id;

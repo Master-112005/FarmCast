@@ -31,7 +31,7 @@ void emit(LogLevel level, const char* tag, const String& message) {
                 message.c_str());
 }
 
-}  // namespace
+}
 
 namespace logger {
 
@@ -57,4 +57,4 @@ void debug(const char* tag, const String& message) {
   emit(LogLevel::Debug, tag, message);
 }
 
-}  // namespace logger
+}

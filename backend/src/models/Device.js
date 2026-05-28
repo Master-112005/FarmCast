@@ -7,18 +7,18 @@ module.exports = (sequelize) => {
   const Device = sequelize.define(
     "Device",
     {
-      /* ------------------------------------
-         PRIMARY KEY
-      ------------------------------------ */
+
+
+
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
 
-      /* ------------------------------------
-         OWNERSHIP
-      ------------------------------------ */
+
+
+
       userId: {
         type: DataTypes.UUID,
         allowNull: true,
@@ -29,9 +29,9 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
 
-      /* ------------------------------------
-         DEVICE IDENTITY
-      ------------------------------------ */
+
+
+
       name: {
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -48,27 +48,27 @@ module.exports = (sequelize) => {
       },
 
       deviceCode: {
-        /**
-         * Human / firmware-visible identifier
-         * (printed on device casing)
-         */
+
+
+
+
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: true,
       },
 
       deviceSecretHash: {
-        /**
-         * Hashed device credential used for
-         * hardware-level authentication.
-         */
+
+
+
+
         type: DataTypes.STRING(255),
         allowNull: true,
       },
 
-      /* ------------------------------------
-         STATUS & LIFECYCLE
-      ------------------------------------ */
+
+
+
       status: {
         type: DataTypes.ENUM(
           DEVICE.STATUS.ACTIVE,
@@ -96,9 +96,9 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
 
-      /* ------------------------------------
-         LOCATION (MAP SUPPORT)
-      ------------------------------------ */
+
+
+
       latitude: {
         type: DataTypes.DECIMAL(10, 7),
         allowNull: true,
@@ -117,9 +117,9 @@ module.exports = (sequelize) => {
         },
       },
 
-      /* ------------------------------------
-         OPTIONAL METADATA
-      ------------------------------------ */
+
+
+
       description: {
         type: DataTypes.TEXT,
         allowNull: true,

@@ -398,10 +398,10 @@ const normalizeYieldResult = (
 
 
 const PredictorView = () => {
-  /* ---------------- AUTH ---------------- */
+
   const { user } = useAuth();
 
-  /* ---------------- STATE ---------------- */
+
   const [activePredictor, setActivePredictor] =
     useState("yield");
 
@@ -450,7 +450,7 @@ const PredictorView = () => {
     setDiseaseUploadNoticeToken,
   ] = useState(0);
 
-  /* ---------------- INPUT HANDLERS ---------------- */
+
 
   const handleSelectChange = useCallback(
     (field, value) => {
@@ -523,7 +523,7 @@ const PredictorView = () => {
     []
   );
 
-  /* ---------------- VALIDATION ---------------- */
+
 
   const validationError = useMemo(() => {
     if (!yieldForm.state)
@@ -543,7 +543,7 @@ const PredictorView = () => {
     return null;
   }, [yieldForm]);
 
-  /* ---------------- YIELD PREDICTION ---------------- */
+
 
   const handleYieldPredict = async () => {
     if (yieldLoading) return;
@@ -588,7 +588,7 @@ const PredictorView = () => {
     setYieldLoading(false);
   };
 
-  /* ---------------- DISEASE PREDICTION ---------------- */
+
 
   const handleDiseasePredict = async () => {
     if (diseaseLoading) return;
@@ -672,7 +672,7 @@ const PredictorView = () => {
     ]
   );
 
-  /* ---------------- ACTIONS ---------------- */
+
 
   const handleYieldMail = async () => {
     if (!yieldResults || yieldMailing) return;

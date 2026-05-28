@@ -66,7 +66,7 @@ def _collect_class_dirs(dataset_root: Path) -> list[tuple[str, Path]]:
     if not top_level:
         return []
 
-    # Try two-level structure: crop directory -> disease class directory.
+
     nested: list[tuple[str, Path]] = []
     for crop_dir in top_level:
         for class_dir in sorted([path for path in crop_dir.rglob("*") if path.is_dir()]):
@@ -84,7 +84,7 @@ def _collect_class_dirs(dataset_root: Path) -> list[tuple[str, Path]]:
     if nested:
         return nested
 
-    # Fallback to flat class directories.
+
     flat: list[tuple[str, Path]] = []
     for class_dir in top_level:
         has_images = any(
@@ -108,7 +108,7 @@ def build_disease_dataset(
     if not dataset_root.exists():
         raise DatasetValidationError(f"Disease dataset root not found: {dataset_root}")
 
-    # 🔥 LOG: scanning start
+
     logger.info("Scanning disease image directories...")
 
     class_entries = _collect_class_dirs(dataset_root)
@@ -121,7 +121,7 @@ def build_disease_dataset(
     class_to_index = {label: idx for idx, label in enumerate(labels_unique)}
     class_counts: dict[str, int] = {label: 0 for label in labels_unique}
 
-    # 🔥 LOG: classes detected
+
     logger.info(f"Detected {len(labels_unique)} classes.")
 
     paths: list[str] = []
@@ -146,11 +146,11 @@ def build_disease_dataset(
 
     total_images = len(paths)
 
-    # 🔥 LOG: image statistics
+
     logger.info(f"Total images found: {total_images}")
     logger.info(f"Corrupted images detected: {corrupted_count}")
 
-    # Optional Professional Log
+
     logger.info(f"Class distribution: {Counter(labels)}")
 
     for class_label, count in class_counts.items():
@@ -176,7 +176,7 @@ def build_disease_dataset(
         shuffle=True,
     )
 
-    # 🔥 LOG: split statistics
+
     logger.info(f"Training samples: {len(train_paths)}")
     logger.info(f"Validation samples: {len(val_paths)}")
 

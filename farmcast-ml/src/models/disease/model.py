@@ -14,8 +14,8 @@ logger = get_logger(__name__)
 
 def build_disease_model(num_classes: int, class_weights: list[float], config: dict[str, Any], seed: int):
     try:
-        import tensorflow as tf  # type: ignore
-    except Exception as exc:  # pragma: no cover
+        import tensorflow as tf
+    except Exception as exc:
         raise ImportError("TensorFlow is required for disease model.") from exc
 
     disease_cfg = config["disease"]
@@ -62,7 +62,7 @@ def build_disease_model(num_classes: int, class_weights: list[float], config: di
         ],
     )
 
-    # 🔥 PROFESSIONAL LOGGING
+
     logger.info("Model compiled successfully.")
     logger.info(f"Total parameters: {model.count_params():,}")
 

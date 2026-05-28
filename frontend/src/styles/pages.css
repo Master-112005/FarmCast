@@ -9,7 +9,7 @@
   display: block;
 }
 
-/* Prevent layout collapse on async loading */
+
 .page--loading,
 .page--error {
   min-height: 60vh;
@@ -123,7 +123,7 @@
   font-size: 0.75rem;
 }
 
-/* Prevent dashboard styles leaking into auth */
+
 .auth-page .fc-card {
   box-shadow: var(--fc-shadow-md);
 }
@@ -324,7 +324,7 @@
   background: #f1f5f9;
 }
 
-/* Results section */
+
 .predictor-results {
   display: grid;
   grid-template-columns: 1fr;

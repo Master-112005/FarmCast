@@ -16,7 +16,7 @@ const ViewSwitch = ({ disabled = false }) => {
   const isAdminView = view === VIEWS.ADMIN;
   const canAccessAdmin = role === "admin";
 
-  /* ---------------- HANDLERS ---------------- */
+
 
   const goToDevice = () => {
     if (!isDeviceView && !disabled) {

@@ -34,24 +34,24 @@ class JsonMessageFormatter(logging.Formatter):
 def get_logger(name: str = "farmcast", log_file: str | Path = "logs/farmcast_ml.log") -> logging.Logger:
     logger = logging.getLogger(name)
 
-    # Prevent duplicate handlers
+
     if logger.handlers:
         return logger
 
     logger.setLevel(logging.INFO)
 
-    # -------------------------------------------------
-    # CONSOLE HANDLER (CLEAN FORMAT)
-    # -------------------------------------------------
+
+
+
     console_formatter = logging.Formatter(FORMAT, datefmt=DATE_FORMAT)
 
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(console_formatter)
     logger.addHandler(stream_handler)
 
-    # -------------------------------------------------
-    # FILE HANDLER (JSON STRUCTURED)
-    # -------------------------------------------------
+
+
+
     path = Path(log_file)
     path.parent.mkdir(parents=True, exist_ok=True)
 

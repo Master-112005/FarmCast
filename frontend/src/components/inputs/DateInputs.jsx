@@ -13,7 +13,7 @@ const DateInputs = ({
 }) => {
   const isDisabled = disabled || isLoading;
 
-  /* ---------------- VALIDATION ---------------- */
+
 
   const errors = [];
 
@@ -37,7 +37,7 @@ const DateInputs = ({
     );
   }
 
-  /* ---------------- HANDLERS ---------------- */
+
 
   const handleDateChange = (field) => (e) => {
     onChange(field, e.target.value);
@@ -55,7 +55,7 @@ const DateInputs = ({
         Crop Lifecycle Dates
       </legend>
 
-      {/* SOWING DATE */}
+      {}
       <div className="fc-input-field">
         <label
           htmlFor="sowing_date"
@@ -74,7 +74,7 @@ const DateInputs = ({
         />
       </div>
 
-      {/* HARVESTING DATE */}
+      {}
       <div className="fc-input-field">
         <label
           htmlFor="harvesting_date"
@@ -94,7 +94,7 @@ const DateInputs = ({
         />
       </div>
 
-      {/* SELLING DATE */}
+      {}
       <div className="fc-input-field">
         <label
           htmlFor="selling_date"
@@ -113,7 +113,7 @@ const DateInputs = ({
         />
       </div>
 
-      {/* VALIDATION ERRORS */}
+      {}
       {errors.length > 0 && (
         <div
           className="fc-alert fc-alert--error"
@@ -125,7 +125,7 @@ const DateInputs = ({
         </div>
       )}
 
-      {/* LOADING STATE */}
+      {}
       {isLoading && (
         <div
           className="fc-input__loading"
@@ -146,9 +146,9 @@ const DateInputs = ({
 
 
 DateInputs.propTypes = {
-  sowingDate: PropTypes.string.isRequired,     // YYYY-MM-DD
-  harvestingDate: PropTypes.string.isRequired, // YYYY-MM-DD
-  sellingDate: PropTypes.string.isRequired,    // YYYY-MM-DD
+  sowingDate: PropTypes.string.isRequired,
+  harvestingDate: PropTypes.string.isRequired,
+  sellingDate: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,

@@ -12,7 +12,7 @@
 
 namespace {
 const char* TAG = "DeviceContext";
-}  // namespace
+}
 
 DeviceContext::DeviceContext()
     : firmwareInfo_{FW_VERSION, FW_BUILD_DATE, FW_BUILD_TIME},
@@ -147,8 +147,8 @@ void DeviceContext::loop() {
   const uint32_t nowMs = millis();
   system_boot::feedWatchdog();
 
-  // Always service USB serial commands so firmware verification can run
-  // even when the device is already provisioned and online.
+
+
   handleProvisioning();
 
   if (lifecycleState_ == DeviceState::PROVISIONING) {
@@ -439,8 +439,8 @@ void DeviceContext::handleFactoryReset() {
   wifiService_.stop();
   authService_.clearCredentials();
 
-  // Secure delete flow keeps immutable device identity but removes all
-  // provisioning materials, forcing deterministic return to provisioning.
+
+
   deviceIdentityService_.clearProvisioningData();
   wifiService_.setCredentials(String(), String());
   mqttService_.setDeviceId(String());

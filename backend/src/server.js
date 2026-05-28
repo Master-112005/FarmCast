@@ -67,10 +67,10 @@ const startServer = async () => {
       pid: process.pid,
     });
 
-    // 1) Connect DB
+
     await connectDB();
 
-    // 2) Create HTTP server
+
     server = http.createServer(app);
     server.on("error", (err) => {
       logger.error("HTTP Server Error", {
@@ -80,7 +80,7 @@ const startServer = async () => {
       process.exit(1);
     });
 
-    // 3) Initialize Socket.IO
+
     initSocket(server);
 
     server.keepAliveTimeout = 65000;
@@ -94,11 +94,11 @@ const startServer = async () => {
       uptime: process.uptime(),
     });
 
-    // 4) Connect MQTT (after HTTP is reachable for broker callbacks)
+
     await connectMQTT();
     logger.info("MQTT connected successfully");
 
-    // 5) Start jobs
+
     stopPredictionHistoryRetention =
       startPredictionHistoryRetentionJob();
     stopCommunityPostRetention =
@@ -129,7 +129,7 @@ const shutdown = async (signal) => {
       process.exit(1);
     }, 15000);
 
-    // Stop background jobs first to avoid new work during shutdown.
+
     if (
       typeof stopPredictionHistoryRetention ===
       "function"
@@ -160,13 +160,13 @@ const shutdown = async (signal) => {
       });
     }
 
-    // Disconnect MQTT
+
     if (typeof disconnectMQTT === "function") {
       await disconnectMQTT();
       logger.info("MQTT disconnected");
     }
 
-    // Disconnect DB
+
     if (typeof disconnectDB === "function") {
       await disconnectDB();
       logger.info("Database disconnected");

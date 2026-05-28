@@ -9,16 +9,16 @@ const APP = Object.freeze({
 
 
 
-/**
- * Role model (LOCKED)
- *
- * USER:
- * - Full access to own dashboard, profile, devices, data
- *
- * ADMIN:
- * - Everything USER can do for their own account
- * - No implicit override of other users' resources
- */
+
+
+
+
+
+
+
+
+
+
 const ROLES = Object.freeze({
   USER: "user",
   ADMIN: "admin",
@@ -30,16 +30,16 @@ const AUTH = Object.freeze({
   TOKEN_TYPE: "Bearer",
   HEADER_NAME: "Authorization",
 
-  // Used only as semantic references (not enforcement)
+
   PASSWORD_MIN_LENGTH: 8,
 });
 
 
 
-/**
- * Standardized error codes returned by API
- * Frontend relies on these for safe handling
- */
+
+
+
+
 const ERROR_CODES = Object.freeze({
   VALIDATION_ERROR: "VALIDATION_ERROR",
   AUTH_REQUIRED: "AUTH_REQUIRED",
@@ -72,9 +72,9 @@ const HTTP_STATUS = Object.freeze({
 
 
 
-/**
- * Must match frontend validation exactly
- */
+
+
+
 const UPLOADS = Object.freeze({
   IMAGE: {
     ALLOWED_MIME: [

@@ -34,9 +34,9 @@ MODEL_DIR = (
 MODEL_PATH = MODEL_DIR / "model.pkl"
 METADATA_PATH = MODEL_DIR / "metadata.json"
 
-# IMPORTANT:
-# Dataset + model are trained using TONS per hectare.
-# API/UI expects QUINTALS per hectare.
+
+
+
 TON_TO_QUINTAL = 10.0
 
 _MODEL_CACHE = None
@@ -163,7 +163,7 @@ def predict_yield(payload: dict) -> dict:
             "Model metadata missing feature_columns."
         )
 
-    # Validate columns
+
     missing_columns = [
         column
         for column in feature_columns
@@ -195,13 +195,13 @@ def predict_yield(payload: dict) -> dict:
 
     model = _load_model()
 
-    # Model predicts TONS per hectare
+
     prediction_ton_per_ha = float(model.predict(X)[0])
 
-    # Convert to QUINTALS per hectare (FIXED UNIT CONVERSION)
+
     prediction_quintal_per_ha = prediction_ton_per_ha * TON_TO_QUINTAL
 
-    # Round for clean UI output (prevents floating precision junk)
+
     prediction_quintal_per_ha = round(prediction_quintal_per_ha, 3)
 
     return {

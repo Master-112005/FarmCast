@@ -53,7 +53,7 @@ const char* deviceStateToString(DeviceState state) {
   }
 }
 
-}  // namespace
+}
 
 namespace system_boot {
 
@@ -119,4 +119,4 @@ const char* toString(DeviceState state) {
   }
 }
 
-}  // namespace system_boot
+}

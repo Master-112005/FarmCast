@@ -8,25 +8,25 @@ const { Op } = db.Sequelize;
 
 
 const CONFIG = Object.freeze({
-  ENABLED: false, // 🔒 MUST be explicitly enabled
-  DRY_RUN: true, // 🔒 Log only, no deletes
-  MAX_ROWS_PER_RUN: 1000, // 🔒 Hard safety cap
+  ENABLED: false,
+  DRY_RUN: true,
+  MAX_ROWS_PER_RUN: 1000,
 
   REFRESH_TOKEN_TTL_DAYS: 30,
-  SOIL_DATA_RETENTION_DAYS: 365, // 1 year
+  SOIL_DATA_RETENTION_DAYS: 365,
 });
 
 
 
-/**
- * Calculate date before N days
- */
+
+
+
 const daysAgo = (days) =>
   new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
-/**
- * Guard: job must be explicitly enabled
- */
+
+
+
 const assertEnabled = () => {
   if (!CONFIG.ENABLED) {
     logger.info(
@@ -39,9 +39,9 @@ const assertEnabled = () => {
 
 
 
-/**
- * Cleanup expired refresh tokens
- */
+
+
+
 const cleanupRefreshTokens = async () => {
   const expiryDate = daysAgo(
     CONFIG.REFRESH_TOKEN_TTL_DAYS
@@ -83,13 +83,13 @@ const cleanupRefreshTokens = async () => {
   });
 };
 
-/**
- * Cleanup old soil records
- *
- * NOTE:
- * - Keeps recent data for analytics & ML
- * - Does NOT delete device or user data
- */
+
+
+
+
+
+
+
 const cleanupOldSoilRecords = async () => {
   const cutoffDate = daysAgo(
     CONFIG.SOIL_DATA_RETENTION_DAYS
@@ -133,14 +133,14 @@ const cleanupOldSoilRecords = async () => {
 
 
 
-/**
- * Execute cleanup job
- *
- * Designed to be called by:
- * - Cron
- * - Queue worker
- * - Manual admin trigger
- */
+
+
+
+
+
+
+
+
 const runCleanupJob = async () => {
   if (!assertEnabled()) return;
 
@@ -157,7 +157,7 @@ const runCleanupJob = async () => {
       stack: err.stack,
     });
 
-    // Never crash host process
+
   }
 };
 
@@ -165,5 +165,5 @@ const runCleanupJob = async () => {
 
 module.exports = {
   runCleanupJob,
-  CONFIG, // exported for visibility & testing
+  CONFIG,
 };

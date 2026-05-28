@@ -170,12 +170,12 @@ const hasMeasuredSoilData = (soilData) => {
 
 
 const DeviceView = () => {
-  /* ---------------- AUTH ---------------- */
+
 
   const { isAuthenticated, role } = useAuth();
   const { socket } = useSocket();
 
-  /* ---------------- STATE ---------------- */
+
 
   const [devices, setDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] =

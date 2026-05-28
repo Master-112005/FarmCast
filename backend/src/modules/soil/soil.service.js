@@ -15,9 +15,9 @@ const SOIL_ERRORS = Object.freeze({
     ERROR_CODES.RESOURCE_NOT_FOUND,
 });
 
-/**
- * Build domain error (handled by global error middleware)
- */
+
+
+
 const domainError = (
   code,
   message,
@@ -31,9 +31,9 @@ const domainError = (
 
 
 
-/**
- * Ensure device exists and is owned by user
- */
+
+
+
 const getOwnedDevice = async (
   deviceId,
   userId
@@ -61,13 +61,13 @@ const getOwnedDevice = async (
 
 
 
-/**
- * Create a new soil telemetry record
- *
- * Used by:
- * - Manual device sync
- * - IoT ingestion (future)
- */
+
+
+
+
+
+
+
 const createSoilRecord = async (
   userId,
   payload
@@ -85,7 +85,7 @@ const createSoilRecord = async (
     ...metrics
   } = payload;
 
-  // Ownership enforcement
+
   await getOwnedDevice(deviceId, userId);
 
   const latitude =
@@ -191,14 +191,14 @@ const createSoilRecord = async (
 
 
 
-/**
- * Fetch soil history for a device
- *
- * Used for:
- * - Charts
- * - Trends
- * - ML feature inputs
- */
+
+
+
+
+
+
+
+
 const getSoilHistory = async (
   userId,
   {
@@ -208,7 +208,7 @@ const getSoilHistory = async (
     limit = 100,
   },
 ) => {
-  // Ownership enforcement
+
   await getOwnedDevice(deviceId, userId);
 
   const where = { deviceId };
@@ -239,17 +239,17 @@ const getSoilHistory = async (
 
 
 
-/**
- * Fetch latest soil record for a device
- *
- * Used by:
- * - Dashboard summary cards
- */
+
+
+
+
+
+
 const getLatestSoilRecord = async (
   userId,
   deviceId
 ) => {
-  // Ownership enforcement
+
   await getOwnedDevice(deviceId, userId);
 
   const record =

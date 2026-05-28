@@ -4,9 +4,9 @@ const Joi = require("joi");
 
 
 
-/**
- * Device ID parameter
- */
+
+
+
 const deviceIdParamSchema = Joi.object({
   deviceId: Joi.string()
     .guid({ version: ["uuidv4", "uuidv5"] })
@@ -19,10 +19,10 @@ const deviceIdParamSchema = Joi.object({
 
 
 
-/**
- * Core soil telemetry metrics
- * (kept strict to preserve analytics quality)
- */
+
+
+
+
 const soilMetrics = {
   moisture: Joi.number()
     .min(0)
@@ -98,13 +98,13 @@ const soilMetrics = {
 
 
 
-/**
- * POST /api/v1/soil
- *
- * Ownership:
- * - deviceId resolved from route or body
- * - user ownership enforced in service
- */
+
+
+
+
+
+
+
 const createSoilRecordSchema = Joi.object({
   deviceId: Joi.string()
     .guid({ version: ["uuidv4", "uuidv5"] })
@@ -207,11 +207,11 @@ const createSoilRecordSchema = Joi.object({
 
 
 
-/**
- * GET /api/v1/soil/history
- *
- * Used for charts & analytics
- */
+
+
+
+
+
 const soilHistoryQuerySchema = Joi.object({
   deviceId: Joi.string()
     .guid({ version: ["uuidv4", "uuidv5"] })

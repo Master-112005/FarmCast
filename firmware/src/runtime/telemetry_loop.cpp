@@ -30,16 +30,16 @@ bool TelemetryLoop::loop(uint32_t nowMs) {
     return false;
   }
 
-  // ---------------------------
-  // Read Sensors
-  // ---------------------------
+
+
+
 
   const SoilReading soilReading = soilSensor_.read();
   const bool gpsValid = gpsService_.hasFix();
   const bool soilValid = soilReading.valid;
 
-  // Publish telemetry whenever soil data is valid.
-  // GPS fix may be unavailable in indoor/obstructed environments.
+
+
   if (!soilValid) {
     scheduler_.markRun(nowMs);
     logger::warn(TAG,
@@ -48,9 +48,9 @@ bool TelemetryLoop::loop(uint32_t nowMs) {
     return false;
   }
 
-  // ---------------------------
-  // Build Telemetry Packet
-  // ---------------------------
+
+
+
 
   TelemetryPacket packet;
   packet.deviceId = mqttService_.deviceId();
@@ -72,9 +72,9 @@ bool TelemetryLoop::loop(uint32_t nowMs) {
   packet.gpsValid = gpsValid;
   packet.soilValid = soilValid;
 
-  // ---------------------------
-  // Publish Valid Telemetry
-  // ---------------------------
+
+
+
 
   const bool ok = mqttService_.publishTelemetry(packet);
   scheduler_.markRun(nowMs);
@@ -88,9 +88,9 @@ bool TelemetryLoop::loop(uint32_t nowMs) {
   publishedSinceBoot_ = true;
   lastPublishMs_ = nowMs;
 
-  // ---------------------------
-  // Intelligent Logging
-  // ---------------------------
+
+
+
 
   logger::info(TAG,
                "Telemetry OK | moisture=" +

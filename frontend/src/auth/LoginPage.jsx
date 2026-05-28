@@ -17,7 +17,7 @@ import { useAuth } from "../context/AuthContext";
 const LoginPage = () => {
   const { login, loading } = useAuth();
 
-  /* ---------------- STATE ---------------- */
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] =
@@ -26,13 +26,13 @@ const LoginPage = () => {
 
   const emailRef = useRef(null);
 
-  /* ---------------- FOCUS FIRST FIELD ---------------- */
+
 
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
 
-  /* ---------------- SUBMIT ---------------- */
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +73,7 @@ const LoginPage = () => {
           onSubmit={handleSubmit}
           noValidate
         >
-          {/* EMAIL */}
+          {}
           <div className="form-group">
             <label htmlFor="email">
               Email address
@@ -93,7 +93,7 @@ const LoginPage = () => {
             />
           </div>
 
-          {/* PASSWORD */}
+          {}
           <div className="form-group">
             <label htmlFor="password">
               Password
@@ -114,7 +114,7 @@ const LoginPage = () => {
             />
           </div>
 
-          {/* ERROR */}
+          {}
           {error && (
             <div
               className="form-error"
@@ -124,7 +124,7 @@ const LoginPage = () => {
             </div>
           )}
 
-          {/* SUBMIT */}
+          {}
           <button
             type="submit"
             className="primary-btn"
@@ -137,7 +137,7 @@ const LoginPage = () => {
           </button>
         </form>
 
-        {/* FOOTER */}
+        {}
         <div className="auth-footer">
           <span>
             Don’t have an account?

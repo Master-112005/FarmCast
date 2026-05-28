@@ -32,12 +32,12 @@ const router = express.Router();
 
 
 
-/**
- * POST /api/v1/soil
- * USER + ADMIN
- *
- * Create a new soil telemetry record
- */
+
+
+
+
+
+
 router.post(
   "/",
   authenticate,
@@ -51,12 +51,12 @@ router.post(
 
 
 
-/**
- * GET /api/v1/soil/history
- * USER + ADMIN
- *
- * Fetch soil history for charts & analytics
- */
+
+
+
+
+
+
 router.get(
   "/history",
   authenticate,
@@ -68,12 +68,12 @@ router.get(
   soilController.getSoilHistory
 );
 
-/**
- * GET /api/v1/soil/latest/:deviceId
- * USER + ADMIN
- *
- * Fetch latest soil snapshot for dashboard summary
- */
+
+
+
+
+
+
 router.get(
   "/latest/:deviceId",
   authenticate,

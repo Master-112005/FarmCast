@@ -6,10 +6,10 @@ const logger = require("../utils/logger");
 
 
 
-/**
- * Normalize allowed origins.
- * Supports single or comma-separated origins.
- */
+
+
+
+
 const allowedOrigins = env.CORS.ORIGIN.split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
@@ -18,7 +18,7 @@ const allowedOrigins = env.CORS.ORIGIN.split(",")
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow non-browser requests (Postman, curl, server-to-server)
+
     if (!origin) {
       return callback(null, true);
     }
@@ -54,7 +54,7 @@ const corsOptions = {
 
   credentials: env.CORS.CREDENTIALS,
 
-  maxAge: 86400, // Cache preflight response for 24 hours
+  maxAge: 86400,
 };
 
 

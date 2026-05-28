@@ -1,6 +1,6 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     const tables = await queryInterface.showAllTables();
@@ -83,7 +83,7 @@ module.exports = {
         name: "alerts_user_id_idx",
       });
     } catch (_error) {
-      // Ignore duplicate index errors.
+
     }
 
     try {
@@ -91,7 +91,7 @@ module.exports = {
         name: "alerts_device_id_idx",
       });
     } catch (_error) {
-      // Ignore duplicate index errors.
+
     }
 
     try {
@@ -99,7 +99,7 @@ module.exports = {
         name: "alerts_resolved_idx",
       });
     } catch (_error) {
-      // Ignore duplicate index errors.
+
     }
 
     try {
@@ -111,7 +111,7 @@ module.exports = {
         }
       );
     } catch (_error) {
-      // Ignore duplicate index errors.
+
     }
   },
 

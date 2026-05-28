@@ -156,21 +156,21 @@ bool MqttService::consumeAuthRejectedSignal() {
   return signaled;
 }
 
-//
-// ✅ INDUSTRIAL TELEMETRY PUBLISH (FIXED)
-//
+
+
+
 bool MqttService::publishTelemetry(const TelemetryPacket& packet) {
   if (!client_.connected()) {
     return false;
   }
 
-  // Device identity must match
+
   if (packet.deviceId.length() == 0 || packet.deviceId != deviceId_) {
     logger::warn(TAG, "Telemetry packet deviceId mismatch");
     return false;
   }
 
-  // 🔥 Sanitize NAN values before JSON build
+
   TelemetryPacket sanitized = packet;
 
   if (isnan(sanitized.latitude)) {

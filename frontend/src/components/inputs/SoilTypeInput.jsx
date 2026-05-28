@@ -84,7 +84,7 @@ const SoilTypeSelect = ({
 
 
 SoilTypeSelect.propTypes = {
-  value: PropTypes.string.isRequired, // normalized value
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,

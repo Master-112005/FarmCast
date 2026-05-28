@@ -66,7 +66,7 @@ const EditProfileForm = ({
 
   const isBusy = isLoading || isUploading;
 
-  /* ---------------- Sync external changes ---------------- */
+
   useEffect(() => {
     setFormData(initialData);
     setImagePreview(
@@ -74,7 +74,7 @@ const EditProfileForm = ({
     );
   }, [initialData]);
 
-  /* ---------------- Cleanup preview ---------------- */
+
   useEffect(() => {
     return () => {
       if (
@@ -86,7 +86,7 @@ const EditProfileForm = ({
     };
   }, [imagePreview]);
 
-  /* ---------------- Change handler ---------------- */
+
   const update = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -113,7 +113,7 @@ const EditProfileForm = ({
     }
   };
 
-  /* ---------------- Submit ---------------- */
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isBusy) return;

@@ -47,10 +47,10 @@ void SoilSensorService::begin() {
   pinMode(moisturePin_, INPUT);
   pinMode(temperaturePin_, INPUT);
 
-  // Full-scale input range for ESP32 ADC.
+
   analogSetPinAttenuation(moisturePin_, ADC_11db);
   analogSetPinAttenuation(temperaturePin_, ADC_11db);
-  analogReadResolution(12);  // 0-4095
+  analogReadResolution(12);
   initialized_ = true;
 }
 

@@ -34,10 +34,10 @@ const router = express.Router();
 
 
 
-/**
- * GET /api/v1/users/me
- * USER + ADMIN
- */
+
+
+
+
 router.get(
   "/me",
   authenticate,
@@ -48,10 +48,10 @@ router.get(
   userController.getMyProfile
 );
 
-/**
- * PUT /api/v1/users/me
- * USER + ADMIN
- */
+
+
+
+
 router.put(
   "/me",
   authenticate,
@@ -63,10 +63,10 @@ router.put(
   userController.updateMyProfile
 );
 
-/**
- * POST /api/v1/users/me/upload
- * USER + ADMIN
- */
+
+
+
+
 router.post(
   "/me/upload",
   authenticate,
@@ -78,10 +78,10 @@ router.post(
   userController.uploadMyProfileImage
 );
 
-/**
- * DELETE /api/v1/users/me
- * USER + ADMIN
- */
+
+
+
+
 router.delete(
   "/me",
   authenticate,

@@ -36,15 +36,15 @@ def _build_tf_dataset(
     shuffle: bool,
 ):
     try:
-        import tensorflow as tf  # type: ignore
-    except Exception as exc:  # pragma: no cover
+        import tensorflow as tf
+    except Exception as exc:
         raise ImportError("TensorFlow is required for disease training.") from exc
 
     path_ds = tf.data.Dataset.from_tensor_slices(paths)
     label_ds = tf.data.Dataset.from_tensor_slices(labels)
     ds = tf.data.Dataset.zip((path_ds, label_ds))
 
-    def _load(path, label):  # type: ignore[no-untyped-def]
+    def _load(path, label):
         raw = tf.io.read_file(path)
         image = tf.image.decode_image(raw, channels=3, expand_animations=False)
         image = tf.image.resize(image, image_size)
@@ -65,8 +65,8 @@ def _build_tf_dataset(
 
 def train_disease_model(bundle: Any, config: dict[str, Any], checkpoint_path: str) -> DiseaseTrainingResult:
     try:
-        import tensorflow as tf  # type: ignore
-    except Exception as exc:  # pragma: no cover
+        import tensorflow as tf
+    except Exception as exc:
         raise ImportError("TensorFlow is required for disease training.") from exc
 
     disease_cfg = config["disease"]
@@ -124,7 +124,7 @@ def train_disease_model(bundle: Any, config: dict[str, Any], checkpoint_path: st
         validation_data=val_ds,
         epochs=epochs,
         callbacks=callbacks,
-        verbose=1,  # 🔥 REQUIRED CHANGE
+        verbose=1,
     )
 
     elapsed = time.time() - start_time

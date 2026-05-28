@@ -7,21 +7,21 @@ const char* TAG = "GpsService";
 
 constexpr uint32_t kDefaultGpsBaud = 9600;
 
-// Practical field tuning (Farm-ready)
+
 constexpr int kMinSatellitesForFix = 3;
 constexpr float kMaxHdopForFix = 4.0f;
 
-// Stability tuning
+
 constexpr uint8_t kRequiredStableCycles = 3;
 constexpr uint8_t kAllowedInvalidCyclesBeforeLoss = 5;
 
-// Warmup time (30 seconds)
+
 constexpr uint32_t kWarmupDurationMs = 30000;
 
-// UART safety
+
 constexpr size_t kMaxBytesPerLoop = 512;
 
-// Timeout detection
+
 constexpr uint32_t kDataTimeoutMs = 5000;
 }
 
@@ -71,7 +71,7 @@ void GpsService::loop() {
     lastDataTimestampMs_ = millis();
   }
 
-  // Detect GPS signal timeout
+
   if (millis() - lastDataTimestampMs_ > kDataTimeoutMs) {
     if (hasFix_) {
       logger::warn(TAG, "GPS signal timeout");

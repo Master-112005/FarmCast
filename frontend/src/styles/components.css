@@ -1,5 +1,5 @@
-﻿/* Component styles manifest (modularized) */
-/* Shared primitives */
+﻿
+
 @import "./components/shared/alerts.css";
 @import "./components/shared/buttons.css";
 @import "./components/shared/cards.css";
@@ -10,7 +10,7 @@
 @import "./components/shared/responsive-helpers.css";
 @import "./components/shared/status-badges.css";
 
-/* Feature/component groups */
+
 @import "./components/admin/admin-panel.css";
 @import "./components/buttons/action-buttons.css";
 @import "./components/chat/chat-panel.css";

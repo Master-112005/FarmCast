@@ -77,16 +77,16 @@ const normalizeUpdatePayload = (payload) => {
 
 
 
-/**
- * Fetch all devices for current user
- * Backend resolves user via JWT
- */
+
+
+
+
 export const getDevices = () =>
   execute(() => api.get(ENDPOINTS.DEVICES));
 
-/**
- * Fetch single device by ID
- */
+
+
+
 export const getDeviceById = (deviceId) => {
   if (!deviceId) {
     return fail({ message: "Device ID required" });
@@ -99,9 +99,9 @@ export const getDeviceById = (deviceId) => {
 
 
 
-/**
- * Register a new device
- */
+
+
+
 export const addDevice = (devicePayload) => {
   if (!devicePayload) {
     return fail({ message: "Device payload required" });
@@ -115,9 +115,9 @@ export const addDevice = (devicePayload) => {
   );
 };
 
-/**
- * Update device metadata
- */
+
+
+
 export const updateDevice = (
   deviceId,
   updatePayload
@@ -141,10 +141,10 @@ export const updateDevice = (
   );
 };
 
-/**
- * Delete device (ADMIN / OWNER only)
- * Legacy endpoint. Secure flows should use preDeleteDevice + finalizeDeleteDevice.
- */
+
+
+
+
 export const deleteDevice = (deviceId) => {
   if (!deviceId) {
     return fail({ message: "Device ID required" });
@@ -155,9 +155,9 @@ export const deleteDevice = (deviceId) => {
   );
 };
 
-/**
- * Stage 1: mark deletion pending after ownership verification.
- */
+
+
+
 export const preDeleteDevice = (deviceId) => {
   if (!deviceId) {
     return fail({ message: "Device ID required" });
@@ -170,9 +170,9 @@ export const preDeleteDevice = (deviceId) => {
   );
 };
 
-/**
- * Stage 2: finalize deletion after local factory reset.
- */
+
+
+
 export const finalizeDeleteDevice = (deviceId) => {
   if (!deviceId) {
     return fail({ message: "Device ID required" });
@@ -187,10 +187,10 @@ export const finalizeDeleteDevice = (deviceId) => {
 
 
 
-/**
- * Fetch live telemetry from device
- * Used by dashboard views (NOT firmware)
- */
+
+
+
+
 export const getLiveDeviceData = (deviceId) => {
   if (!deviceId) {
     return fail({ message: "Device ID required" });
@@ -204,9 +204,9 @@ export const getLiveDeviceData = (deviceId) => {
   );
 };
 
-/**
- * Fetch latest persisted soil record for a device
- */
+
+
+
 export const getLatestSoilRecord = (deviceId) => {
   if (!deviceId) {
     return fail({ message: "Device ID required" });
@@ -217,10 +217,10 @@ export const getLatestSoilRecord = (deviceId) => {
   );
 };
 
-/**
- * Sync device sensor payload
- * Manual dashboard-triggered sync
- */
+
+
+
+
 export const syncDeviceData = (
   deviceId,
   payload

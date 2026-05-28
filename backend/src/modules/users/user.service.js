@@ -6,9 +6,9 @@ const { USER_ERRORS } = require("./user.constants");
 
 
 
-/**
- * Build domain error (handled by global error middleware)
- */
+
+
+
 const domainError = (
   code,
   message,
@@ -20,9 +20,9 @@ const domainError = (
   return err;
 };
 
-/**
- * Ensure user exists and is active
- */
+
+
+
 const getActiveUserById = async (userId) => {
   const user = await db.User.findByPk(userId);
 
@@ -47,9 +47,9 @@ const getActiveUserById = async (userId) => {
 
 
 
-/**
- * Get current user's profile
- */
+
+
+
 const getMyProfile = async (userId) => {
   const user = await getActiveUserById(userId);
 
@@ -66,16 +66,16 @@ const getMyProfile = async (userId) => {
   };
 };
 
-/**
- * Update current user's profile
- */
+
+
+
 const updateMyProfile = async (
   userId,
   updates
 ) => {
   const user = await getActiveUserById(userId);
 
-  // Only allowed fields reach here (schema enforced)
+
   Object.assign(user, updates);
 
   await user.save();
@@ -95,9 +95,9 @@ const updateMyProfile = async (
   };
 };
 
-/**
- * Update current user's profile image
- */
+
+
+
 const updateMyProfileImage = async (
   userId,
   imageUrl
@@ -122,9 +122,9 @@ const updateMyProfileImage = async (
   };
 };
 
-/**
- * Delete current user's account and related data
- */
+
+
+
 const deleteMyAccount = async (userId) => {
   const tx = await db.sequelize.transaction();
 

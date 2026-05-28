@@ -43,9 +43,9 @@ const safeParse = (value) => {
 
 
 export const AuthProvider = ({ children }) => {
-  /* -------------------------------
-     STATE
-  -------------------------------- */
+
+
+
 
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
@@ -54,9 +54,9 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
 
-  /* -------------------------------
-     SESSION RESTORE (ONCE)
-  -------------------------------- */
+
+
+
 
   useEffect(() => {
     const restoreSession = () => {
@@ -78,9 +78,9 @@ export const AuthProvider = ({ children }) => {
     restoreSession();
   }, []);
 
-  /* -------------------------------
-     INTERNAL PERSIST
-  -------------------------------- */
+
+
+
 
   const persistSession = useCallback((user, token) => {
     localStorage.setItem(
@@ -124,9 +124,9 @@ export const AuthProvider = ({ children }) => {
     };
   }, [clearSession]);
 
-  /* -------------------------------
-     USER UPDATE (PROFILE SYNC)
-  -------------------------------- */
+
+
+
 
   const updateUser = useCallback((patch) => {
     if (!patch) return;
@@ -143,16 +143,16 @@ export const AuthProvider = ({ children }) => {
           JSON.stringify(next)
         );
       } catch {
-        // ignore storage write failures
+
       }
 
       return next;
     });
   }, []);
 
-  /* -------------------------------
-     REGISTER
-  -------------------------------- */
+
+
+
 
   const register = useCallback(async (payload) => {
     setLoading(true);
@@ -172,9 +172,9 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  /* -------------------------------
-     LOGIN
-  -------------------------------- */
+
+
+
 
   const login = useCallback(async (credentials) => {
     setLoading(true);
@@ -199,9 +199,9 @@ export const AuthProvider = ({ children }) => {
     }
   }, [persistSession]);
 
-  /* -------------------------------
-     LOGOUT
-  -------------------------------- */
+
+
+
 
   const logout = useCallback(() => {
     try {
@@ -216,9 +216,9 @@ export const AuthProvider = ({ children }) => {
     setShowWelcome(false);
   }, []);
 
-  /* -------------------------------
-     DERIVED
-  -------------------------------- */
+
+
+
 
   const isAuthenticated = Boolean(
     user && token
@@ -232,9 +232,9 @@ export const AuthProvider = ({ children }) => {
     [role]
   );
 
-  /* -------------------------------
-     CONTEXT VALUE
-  -------------------------------- */
+
+
+
 
   const value = useMemo(
     () => ({

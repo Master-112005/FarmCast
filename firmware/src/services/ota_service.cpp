@@ -69,7 +69,7 @@ int nextVersionPart(const String& version,
   return token.toInt();
 }
 
-}  // namespace
+}
 
 OtaService::OtaService(const JsonBuilder& jsonBuilder,
                        MqttService& mqttService,

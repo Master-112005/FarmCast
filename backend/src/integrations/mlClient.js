@@ -45,7 +45,7 @@ const buildAuthHeaders = () => {
       throw new Error("ML service API key not configured");
     }
 
-    // Send both headers for compatibility across ML service variants.
+
     return {
       "X-API-Key": env.ML.API_KEY,
       Authorization: `Bearer ${env.ML.API_KEY}`,

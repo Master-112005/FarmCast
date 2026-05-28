@@ -40,7 +40,7 @@ def test_api_endpoints(monkeypatch) -> None:
     dummy = _DummyPipeline()
     original_dependency = ml_service.get_inference_pipeline
     ml_service.app.dependency_overrides[original_dependency] = lambda: dummy
-    ml_service.get_inference_pipeline = lambda: dummy  # startup hook call
+    ml_service.get_inference_pipeline = lambda: dummy
 
     client = TestClient(ml_service.app)
     headers = {"X-API-Key": "secret"}

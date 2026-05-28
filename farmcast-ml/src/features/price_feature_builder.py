@@ -36,7 +36,7 @@ def _build_week_start(df: pd.DataFrame, section: dict[str, Any], time_column: st
     if years.isna().any() or weeks.isna().any():
         raise DatasetValidationError("Price year/week columns contain non-numeric values.")
 
-    # Week index is used for deterministic ordering; clamp invalid weeks to safe bounds.
+
     years = years.astype(int)
     weeks = weeks.astype(int).clip(lower=1, upper=53)
     return pd.to_datetime(years.astype(str) + "-01-01", errors="raise") + pd.to_timedelta((weeks - 1) * 7, unit="D")

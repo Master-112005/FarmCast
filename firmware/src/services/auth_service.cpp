@@ -77,7 +77,7 @@ String decodeBase64(const String& encoded) {
   return decoded;
 }
 
-}  // namespace
+}
 
 AuthService::AuthService(HttpClient& httpClient,
                          const JsonBuilder& jsonBuilder,
@@ -270,10 +270,10 @@ bool AuthService::authenticate(uint32_t nowMs) {
                    "Auth 401 detected. code=AUTH_REQUIRED count=" +
                        String(consecutiveAuthFailures_));
 
-      // Verification guide:
-      // 1) Provision + authenticate device.
-      // 2) Delete device in backend.
-      // 3) Observe count=1..3, then factory reset trigger.
+
+
+
+
       if (consecutiveAuthFailures_ >= maxConsecutiveAuthFailures_) {
         logger::error(TAG,
                       "Permanent auth failure detected. Initiating factory reset.");
@@ -290,7 +290,7 @@ bool AuthService::authenticate(uint32_t nowMs) {
     return false;
   }
 
-  // Reset only after successful auth response path.
+
   consecutiveAuthFailures_ = 0;
 
   String parsedToken;

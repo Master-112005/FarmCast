@@ -220,7 +220,7 @@ def _train_disease(config: dict[str, Any], registry: ModelRegistry, logger) -> d
     )
 
     try:
-        import tensorflow as tf  # type: ignore
+        import tensorflow as tf
 
         sample = tf.zeros(shape=(1, disease_cfg["image_size"][0], disease_cfg["image_size"][1], 3), dtype=tf.float32)
         latency_ms = benchmark_latency(

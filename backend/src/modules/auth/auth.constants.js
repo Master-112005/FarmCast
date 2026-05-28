@@ -2,10 +2,10 @@
 
 
 
-/**
- * Supported authentication actions
- * Used for auditing, logging, and future analytics
- */
+
+
+
+
 const AUTH_ACTIONS = Object.freeze({
   REGISTER: "register",
   LOGIN: "login",
@@ -15,10 +15,10 @@ const AUTH_ACTIONS = Object.freeze({
 
 
 
-/**
- * Password policy (enforced at schema/service layer)
- * Kept here to avoid drift across modules
- */
+
+
+
+
 const PASSWORD_POLICY = Object.freeze({
   MIN_LENGTH: 8,
   MAX_LENGTH: 128,
@@ -26,10 +26,10 @@ const PASSWORD_POLICY = Object.freeze({
 
 
 
-/**
- * Token types handled by the auth domain
- * (semantic reference only)
- */
+
+
+
+
 const TOKEN_TYPES = Object.freeze({
   ACCESS: "access",
   REFRESH: "refresh",
@@ -37,21 +37,21 @@ const TOKEN_TYPES = Object.freeze({
 
 
 
-/**
- * Limits to protect auth endpoints from abuse
- * (rate-limit middleware uses its own config;
- * these are semantic guards inside auth logic)
- */
+
+
+
+
+
 const AUTH_LIMITS = Object.freeze({
-  MAX_ACTIVE_SESSIONS_PER_USER: 10, // multi-device support
+  MAX_ACTIVE_SESSIONS_PER_USER: 10,
 });
 
 
 
-/**
- * Auth-domain error codes.
- * These complement (not replace) global ERROR_CODES.
- */
+
+
+
+
 const AUTH_ERRORS = Object.freeze({
   INVALID_CREDENTIALS: "INVALID_CREDENTIALS",
   ACCOUNT_DISABLED: "ACCOUNT_DISABLED",

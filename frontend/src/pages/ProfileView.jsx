@@ -35,7 +35,7 @@ import { useAuth } from "../context/AuthContext";
 
 
 const ProfileView = () => {
-  /* ---------------- AUTH ---------------- */
+
   const {
     isAuthenticated,
     role,
@@ -43,7 +43,7 @@ const ProfileView = () => {
     updateUser,
   } = useAuth();
 
-  /* ---------------- STATE ---------------- */
+
   const [profile, setProfile] = useState(null);
   const [devices, setDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] =

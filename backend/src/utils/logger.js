@@ -26,24 +26,24 @@ const safeStringify = (obj) => {
 
 
 
-/**
- * Production format:
- * - JSON
- * - Timestamped
- * - Stack traces for errors
- */
+
+
+
+
+
+
 const productionFormat = combine(
   timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   errors({ stack: true }),
   json()
 );
 
-/**
- * Development format:
- * - Colorized
- * - Human readable
- * - Includes metadata
- */
+
+
+
+
+
+
 const developmentFormat = combine(
   colorize(),
   timestamp({ format: "HH:mm:ss" }),
@@ -75,14 +75,14 @@ const logger = winston.createLogger({
       ? productionFormat
       : developmentFormat,
   transports,
-  exitOnError: false, // Never crash app due to logging
+  exitOnError: false,
 });
 
 
 
 logger.stream = {
   write: (message) => {
-    // Remove trailing newline added by stream writers
+
     logger.info(message.trim());
   },
 };
@@ -95,7 +95,7 @@ const wrap =
     try {
       logger.log(level, message, meta);
     } catch (err) {
-      // Logging must NEVER crash the app
+
       console.error(
         "LOGGER FAILURE:",
         message,
@@ -112,6 +112,6 @@ module.exports = {
   error: wrap("error"),
   debug: wrap("debug"),
 
-  // Raw access (use sparingly)
+
   logger,
 };

@@ -37,9 +37,9 @@ const AppLoadingScreen = () => (
 
 
 
-/**
- * Blocks access when user is not authenticated
- */
+
+
+
 const ProtectedRoute = memo(({ children }) => {
   const { bootstrapping, isAuthenticated } = useAuth();
 
@@ -56,9 +56,9 @@ const ProtectedRoute = memo(({ children }) => {
 
 ProtectedRoute.displayName = "ProtectedRoute";
 
-/**
- * Prevents authenticated users from opening login/register
- */
+
+
+
 const PublicOnlyRoute = memo(({ children }) => {
   const { bootstrapping, isAuthenticated } = useAuth();
 

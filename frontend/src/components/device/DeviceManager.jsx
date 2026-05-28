@@ -94,7 +94,7 @@ const DeviceManager = ({
   onEdit,
   onDelete,
 }) => {
-  /* ---------------- RBAC ---------------- */
+
 
   const canAdd =
     currentUserRole === "admin" ||
@@ -172,7 +172,7 @@ const DeviceManager = ({
     );
   };
 
-  /* ---------------- RENDER ---------------- */
+
 
   return (
     <section

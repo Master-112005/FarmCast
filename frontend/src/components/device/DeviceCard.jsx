@@ -46,7 +46,7 @@ const batteryToneClass = (value) => {
 
 
 const DeviceCard = ({
-  deviceUuid, // internal only (never displayed)
+  deviceUuid,
   deviceId,
   deviceName,
   deviceType,
@@ -131,7 +131,7 @@ const DeviceCard = ({
   };
 
   return (
-    /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
+
     <section
       className={`fc-card fc-device-card-shell ${
         isSelected ? "is-selected" : ""

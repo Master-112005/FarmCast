@@ -46,7 +46,7 @@ const ActionButtons = ({
     try {
       onAction(action.id);
     } catch (err) {
-      // Defensive: prevent UI crash
+
       console.error(
         "❌ ActionButtons error:",
         err

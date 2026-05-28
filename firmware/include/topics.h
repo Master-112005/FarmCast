@@ -26,4 +26,4 @@ inline String systemReset(const String& deviceId) {
   return String(TOPIC_PREFIX) + "/" + deviceId + "/system/reset";
 }
 
-}  // namespace topic_builder
+}

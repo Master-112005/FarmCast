@@ -59,11 +59,11 @@ const validateTelemetryCoordinates = (payload = {}) => {
 
 
 
-/**
- * POST /api/v1/soil
- *
- * Create a new soil telemetry record
- */
+
+
+
+
+
 const createSoilRecord = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -82,11 +82,11 @@ const createSoilRecord = async (req, res, next) => {
 
 
 
-/**
- * GET /api/v1/soil/history
- *
- * Fetch soil history for charts & analytics
- */
+
+
+
+
+
 const getSoilHistory = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -105,11 +105,11 @@ const getSoilHistory = async (req, res, next) => {
 
 
 
-/**
- * GET /api/v1/soil/latest/:deviceId
- *
- * Fetch latest soil data for dashboard summary
- */
+
+
+
+
+
 const getLatestSoilRecord = async (
   req,
   res,

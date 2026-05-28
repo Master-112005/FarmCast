@@ -8,12 +8,12 @@ const {
 
 
 
-/**
- * Executes schema validation safely.
- * Supports Joi, Zod, Yup-like APIs.
- */
+
+
+
+
 const runValidation = (schema, data) => {
-  // Joi-style
+
   if (typeof schema.validate === "function") {
     const { error, value } = schema.validate(data, {
       abortEarly: true,
@@ -22,7 +22,7 @@ const runValidation = (schema, data) => {
     return { error, value };
   }
 
-  // Zod-style
+
   if (typeof schema.safeParse === "function") {
     const result = schema.safeParse(data);
     if (!result.success) {
@@ -33,7 +33,7 @@ const runValidation = (schema, data) => {
     return { value: result.data };
   }
 
-  // Yup-style
+
   if (typeof schema.validateSync === "function") {
     try {
       const value = schema.validateSync(data, {
@@ -51,16 +51,16 @@ const runValidation = (schema, data) => {
 
 
 
-/**
- * Validation middleware factory
- *
- * @param {Object} schemas
- * {
- *   body?: schema,
- *   query?: schema,
- *   params?: schema
- * }
- */
+
+
+
+
+
+
+
+
+
+
 module.exports = (schemas = {}) => {
   return (req, res, next) => {
     try {
@@ -97,13 +97,13 @@ module.exports = (schemas = {}) => {
             });
         }
 
-        // Replace with validated & sanitized data
+
         req[location] = value;
       }
 
       next();
     } catch (err) {
-      // Validation infrastructure failure (rare, critical)
+
       logger.error("Validation middleware error", {
         message: err.message,
         path: req.originalUrl,

@@ -54,18 +54,18 @@ const profileImage = Joi.string()
 
 
 
-/**
- * PUT /api/v1/users/me
- *
- * USER is allowed to update:
- * - name
- * - email
- *
- * Explicitly disallowed:
- * - role
- * - isActive
- * - password
- */
+
+
+
+
+
+
+
+
+
+
+
+
 const updateMyProfileSchema = Joi.object({
   name,
   email,

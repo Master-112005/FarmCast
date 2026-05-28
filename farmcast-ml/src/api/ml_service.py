@@ -22,7 +22,7 @@ app_config = get_app_config()
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    # Initialize singleton container at startup.
+
     get_inference_pipeline()
     yield
 

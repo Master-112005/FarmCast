@@ -74,12 +74,12 @@ const mqttValidateLimiter = rateLimit({
   },
 });
 
-/**
- * POST /api/v1/mqtt/validate
- * Broker callback endpoint for CONNECT/ACL/superuser checks.
- * Some broker integrations may append a trailing "." to the path,
- * so both variants are accepted for compatibility.
- */
+
+
+
+
+
+
 const mqttValidateHandlers = [
   mqttValidateLimiter,
   normalizeBrokerPayload,

@@ -1,6 +1,6 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     const table = await queryInterface.describeTable("devices");
@@ -17,7 +17,7 @@ module.exports = {
       });
     }
 
-    // Add index on type if missing
+
     try {
       const indexes = await queryInterface.showIndex("devices");
       const hasTypeIndex = indexes.some((idx) =>
@@ -34,7 +34,7 @@ module.exports = {
         await queryInterface.addIndex("devices", ["type"]);
       }
     } catch {
-      // Non-fatal: some dialects don't support showIndex
+
     }
   },
 

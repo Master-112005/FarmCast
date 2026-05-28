@@ -125,8 +125,8 @@ const DeviceProvisionWizard = ({
       const startedAt =
         verifyStartedAtRef.current;
 
-      // Verification already completed (success or error path).
-      // Avoid stale watchdog transitions after state updates race.
+
+
       if (!startedAt || startedAt <= 0) {
         return;
       }

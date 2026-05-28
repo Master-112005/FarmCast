@@ -28,38 +28,38 @@ if (!authController) {
 
 
 
-/**
- * POST /api/v1/auth/register
- */
+
+
+
 router.post(
   "/register",
   validate({ body: registerSchema }),
   authController.register
 );
 
-/**
- * POST /api/v1/auth/login
- */
+
+
+
 router.post(
   "/login",
   validate({ body: loginSchema }),
   authController.login
 );
 
-/**
- * POST /api/v1/auth/refresh
- */
+
+
+
 router.post(
   "/refresh",
   validate({ body: refreshSchema }),
   authController.refresh
 );
 
-/**
- * POST /api/v1/auth/logout
- *
- * Logout via refresh token only
- */
+
+
+
+
+
 router.post(
   "/logout",
   validate({ body: refreshSchema }),

@@ -29,9 +29,9 @@ const password = Joi.string()
 
 
 
-/**
- * POST /auth/register
- */
+
+
+
 const registerSchema = Joi.object({
   name: Joi.string()
     .min(2)
@@ -51,9 +51,9 @@ const registerSchema = Joi.object({
 
 
 
-/**
- * POST /auth/login
- */
+
+
+
 const loginSchema = Joi.object({
   email,
   password,
@@ -61,9 +61,9 @@ const loginSchema = Joi.object({
 
 
 
-/**
- * POST /auth/refresh
- */
+
+
+
 const refreshSchema = Joi.object({
   refreshToken: Joi.string()
     .min(20)

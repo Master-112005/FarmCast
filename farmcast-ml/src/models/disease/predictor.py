@@ -21,8 +21,8 @@ class DiseasePredictor:
         top_k: int = 3,
     ) -> None:
         try:
-            import tensorflow as tf  # type: ignore
-        except Exception as exc:  # pragma: no cover
+            import tensorflow as tf
+        except Exception as exc:
             raise ImportError("TensorFlow is required for disease inference.") from exc
 
         self._tf = tf

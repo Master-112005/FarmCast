@@ -61,7 +61,7 @@ const startPredictionHistoryRetentionJob = () => {
     }
   };
 
-  // Run once on startup.
+
   runSafely();
 
   const intervalId = setInterval(

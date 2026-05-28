@@ -216,7 +216,7 @@ const verifyDeviceSecret = async (
     typeof storedHash === "string" &&
     /^\$2[aby]\$\d+\$/.test(storedHash);
 
-  // Always run a hash verification path to flatten timing.
+
   const comparisonHash = hasStoredBcryptHash
     ? storedHash
     : DUMMY_BCRYPT_HASH;
@@ -328,8 +328,8 @@ const authenticateDevice = async (
     env.DEVICE_AUTH.JWT_EXPIRES_IN
   );
 
-  // Mark as recently online at auth time so onboarding status checks
-  // can confirm cloud reachability even before first MQTT telemetry.
+
+
   try {
     await db.Device.update(
       {

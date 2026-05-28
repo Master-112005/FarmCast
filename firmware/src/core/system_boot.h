@@ -19,4 +19,4 @@ const char* toString(DeviceState state);
 
 [[noreturn]] void enterDeepSleep(uint32_t sleepSeconds);
 
-}  // namespace system_boot
+}

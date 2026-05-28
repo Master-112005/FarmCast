@@ -5,8 +5,8 @@ from __future__ import annotations
 
 def build_augmentation_layer(seed: int):
     try:
-        import tensorflow as tf  # type: ignore
-    except Exception as exc:  # pragma: no cover
+        import tensorflow as tf
+    except Exception as exc:
         raise ImportError("TensorFlow is required for augmentation.") from exc
 
     return tf.keras.Sequential(

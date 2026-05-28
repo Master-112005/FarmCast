@@ -23,10 +23,10 @@ const errorMiddleware =
 
 const app = express();
 
-// Hide fingerprint
+
 app.disable("x-powered-by");
 
-// Trust proxy (load balancers)
+
 app.set("trust proxy", 1);
 
 

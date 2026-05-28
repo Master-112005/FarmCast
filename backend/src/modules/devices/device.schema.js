@@ -78,17 +78,17 @@ const soilTelemetrySchema = Joi.object({
 
 
 
-/**
- * POST /api/v1/devices
- *
- * USER can provide:
- * - name
- * - type
- *
- * Explicitly disallowed:
- * - status (system-managed)
- * - userId (derived from JWT)
- */
+
+
+
+
+
+
+
+
+
+
+
 const createDeviceSchema = Joi.object({
   name: deviceName.required(),
   type: deviceType.required(),
@@ -125,14 +125,14 @@ const provisionDeviceSchema = Joi.object({
 
 
 
-/**
- * PUT /api/v1/devices/:id
- *
- * Allowed updates:
- * - name
- * - status (ADMIN only, enforced by RBAC)
- * - wifiSsid + wifiPassword (paired, ephemeral update command)
- */
+
+
+
+
+
+
+
+
 const updateDeviceSchema = Joi.object({
   name: deviceName,
   status: deviceStatus,
@@ -186,9 +186,9 @@ const updateDeviceSchema = Joi.object({
 
 
 
-/**
- * Common device ID param validation
- */
+
+
+
 const deviceIdParamSchema = Joi.object({
   id: Joi.string()
     .guid({ version: ["uuidv4", "uuidv5"] })
@@ -219,12 +219,12 @@ const deviceStatusIdentifierParamSchema = Joi.object({
 
 
 
-/**
- * PATCH /api/v1/devices/sync/:id
- *
- * Generic sensor payload
- * (validated loosely; domain logic handles content)
- */
+
+
+
+
+
+
 const deviceSyncSchema = Joi.object({
   data: soilTelemetrySchema.messages({
     "any.required":

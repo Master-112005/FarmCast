@@ -30,30 +30,30 @@ export const API_BASE = `${ENV.API_BASE_URL}/${API_VERSION}`;
 
 
 export const ENDPOINTS = Object.freeze({
-  /* ---------- AUTH ---------- */
+
   AUTH_REGISTER: `${API_BASE}/auth/register`,
   AUTH_LOGIN: `${API_BASE}/auth/login`,
   AUTH_REFRESH: `${API_BASE}/auth/refresh`,
   AUTH_LOGOUT: `${API_BASE}/auth/logout`,
 
-  /* ---------- USERS ---------- */
+
   USERS_ME: `${API_BASE}/users/me`,
 
-  /* ---------- ADMIN (OPTIONAL) ---------- */
+
   ADMIN_USERS: `${API_BASE}/admin/users`,
   ADMIN_OVERVIEW: `${API_BASE}/admin/overview`,
 
-  /* ---------- CHAT ---------- */
+
   CHAT: `${API_BASE}/chat`,
 
-  /* ---------- COMMUNITY ---------- */
+
   COMMUNITY: `${API_BASE}/community`,
 
-  /* ---------- DEVICES ---------- */
+
   DEVICES: `${API_BASE}/devices`,
   SOIL: `${API_BASE}/soil`,
 
-  /* ---------- ML / ANALYTICS ---------- */
+
   PREDICTORS: `${API_BASE}/predictors`,
 });
 

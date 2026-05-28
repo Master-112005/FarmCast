@@ -38,19 +38,19 @@ if (
 
 
 
-// 🔐 Authentication
+
 router.use("/auth", authRoutes);
 
-// 👤 Users / Profile
+
 router.use("/users", userRoutes);
 
-// 📡 Devices & IoT
+
 router.use("/devices", deviceRoutes);
 
-// 🌱 Soil Data
+
 router.use("/soil", soilRoutes);
 
-// 🤖 Predictors
+
 router.use("/predictors", predictorRoutes);
 router.use("/admin", adminRoutes);
 router.use("/chat", chatRoutes);

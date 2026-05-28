@@ -79,11 +79,11 @@ float sanitizeFloat(float v) {
   return std::isfinite(v) ? v : 0.0f;
 }
 
-}  // namespace
+}
 
-//
-// ---------------- AUTH ----------------
-//
+
+
+
 
 String JsonBuilder::buildAuthRequest(const String& deviceId,
                                      const String& deviceSecret) const {
@@ -97,9 +97,9 @@ String JsonBuilder::buildAuthRequest(const String& deviceId,
   return output;
 }
 
-//
-// ---------------- TELEMETRY ----------------
-//
+
+
+
 
 String JsonBuilder::buildTelemetry(const TelemetryPacket& packet) const {
   if (packet.deviceId.length() == 0) {
@@ -122,9 +122,9 @@ String JsonBuilder::buildTelemetry(const TelemetryPacket& packet) const {
   return output;
 }
 
-//
-// ---------------- STATUS ----------------
-//
+
+
+
 
 String JsonBuilder::buildStatus(bool online,
                                 const String& firmware,
@@ -143,9 +143,9 @@ String JsonBuilder::buildStatus(bool online,
   return output;
 }
 
-//
-// ---------------- AUTH RESPONSE ----------------
-//
+
+
+
 
 bool JsonBuilder::parseAuthResponse(const String& body,
                                     String& token,
@@ -173,9 +173,9 @@ bool JsonBuilder::parseAuthResponse(const String& body,
   return true;
 }
 
-//
-// ---------------- OTA PARSE ----------------
-//
+
+
+
 
 bool JsonBuilder::parseOtaCommand(const String& body,
                                   OtaCommandPayload& command) const {

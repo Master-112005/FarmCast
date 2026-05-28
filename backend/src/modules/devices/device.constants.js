@@ -2,10 +2,10 @@
 
 
 
-/**
- * Supported device categories
- * (Expandable for future hardware)
- */
+
+
+
+
 const DEVICE_TYPES = Object.freeze({
   SOIL_SENSOR: "soil_sensor",
   WEATHER_SENSOR: "weather_sensor",
@@ -14,10 +14,10 @@ const DEVICE_TYPES = Object.freeze({
 
 
 
-/**
- * Device operational status
- * Used for dashboards & health checks
- */
+
+
+
+
 const DEVICE_STATUS = Object.freeze({
   ACTIVE: "active",
   INACTIVE: "inactive",
@@ -27,20 +27,20 @@ const DEVICE_STATUS = Object.freeze({
 
 
 
-/**
- * Ownership rules
- * Enforced via RBAC & service layer
- */
+
+
+
+
 const DEVICE_OWNERSHIP = Object.freeze({
   OWNER: "owner",
 });
 
 
 
-/**
- * Domain-level limits
- * DB & rate limits live elsewhere
- */
+
+
+
+
 const DEVICE_LIMITS = Object.freeze({
   MAX_NAME_LENGTH: 100,
   MIN_NAME_LENGTH: 2,
@@ -49,10 +49,10 @@ const DEVICE_LIMITS = Object.freeze({
 
 
 
-/**
- * Device-specific error codes
- * Complement global ERROR_CODES
- */
+
+
+
+
 const DEVICE_ERRORS = Object.freeze({
   DEVICE_NOT_FOUND: "DEVICE_NOT_FOUND",
   DEVICE_ACCESS_DENIED: "DEVICE_ACCESS_DENIED",

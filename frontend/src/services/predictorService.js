@@ -47,11 +47,11 @@ const execute = async (requestFn) => {
 
 
 
-/**
- * Run full ML prediction pipeline
- * Backend resolves user & permissions via JWT
- * @param {Object} payload
- */
+
+
+
+
+
 export const runPrediction = (payload) => {
   if (!payload) {
     return fail({ message: "Payload required" });
@@ -68,10 +68,10 @@ export const runPrediction = (payload) => {
 
 
 
-/**
- * Fertilizer recommendation
- * @param {Object} soilPayload
- */
+
+
+
+
 export const getFertilizerRecommendation = (
   soilPayload
 ) => {
@@ -88,10 +88,10 @@ export const getFertilizerRecommendation = (
   );
 };
 
-/**
- * Water recommendation
- * @param {Object} waterPayload
- */
+
+
+
+
 export const getWaterRecommendation = (
   waterPayload
 ) => {
@@ -110,10 +110,10 @@ export const getWaterRecommendation = (
 
 
 
-/**
- * Calculate yield & profit
- * @param {Object} yieldPayload
- */
+
+
+
+
 export const calculateYieldAndProfit = (
   yieldPayload
 ) => {
@@ -132,10 +132,10 @@ export const calculateYieldAndProfit = (
 
 
 
-/**
- * Upload crop image for disease detection
- * @param {File} file
- */
+
+
+
+
 export const uploadCropImage = (file) => {
   if (!file) {
     return fail({ message: "No file provided" });
@@ -172,10 +172,10 @@ export const uploadCropImage = (file) => {
 
 
 
-/**
- * Send prediction report to user email (from admin)
- * @param {Object} payload
- */
+
+
+
+
 export const sendPredictionEmail = (payload) => {
   if (!payload?.predictionType) {
     return fail({

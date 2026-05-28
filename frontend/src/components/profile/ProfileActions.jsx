@@ -38,7 +38,7 @@ const ProfileActions = ({
       
       <div className="fc-card__actions fc-card__actions--stacked">
 
-        {/* Edit Profile */}
+        {}
         <button
           type="button"
           className="fc-btn fc-btn--secondary"
@@ -55,7 +55,7 @@ const ProfileActions = ({
           Edit Profile
         </button>
 
-        {/* Export Profile */}
+        {}
         <button
           type="button"
           className="fc-btn fc-btn--primary"
@@ -72,7 +72,7 @@ const ProfileActions = ({
           Export Data
         </button>
 
-        {/* Logout */}
+        {}
         <button
           type="button"
           className="fc-btn fc-btn--neutral"
@@ -94,7 +94,7 @@ const ProfileActions = ({
           Logout
         </button>
 
-        {/* Delete Account (Admin only) */}
+        {}
         {canDelete && (
           <button
             type="button"

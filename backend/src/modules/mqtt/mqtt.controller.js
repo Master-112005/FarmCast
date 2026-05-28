@@ -10,7 +10,7 @@ const validateBrokerRequest = async (
   next
 ) => {
   try {
-    // Intentionally logs only shape metadata (never raw password/JWT).
+
     if (process.env.NODE_ENV !== "production") {
       const body = req.body || {};
       logger.debug("MQTT validate callback payload", {

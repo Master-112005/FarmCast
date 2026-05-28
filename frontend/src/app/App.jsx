@@ -49,14 +49,14 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
-    /**
-     * Centralized crash reporting hook
-     * Replace console.error with:
-     * - Sentry
-     * - LogRocket
-     * - Datadog
-     * when moving to production
-     */
+
+
+
+
+
+
+
+
     console.error("🚨 FarmCast Application Crash", {
       error,
       componentStack: info?.componentStack,
@@ -64,7 +64,7 @@ class ErrorBoundary extends React.Component {
   }
 
   handleReload = () => {
-    // Hard reset is safest at root-level failure
+
     window.location.reload();
   };
 
@@ -87,16 +87,16 @@ const App = () => {
   return (
     <ErrorBoundary>
       <AppProviders>
-        {/*
-          Router decides:
-          - Auth vs App shell
-          - Protected routes
-          - Auth-only pages
+        {
 
-          ViewContext decides:
-          - Default Device view
-          - Predictor/Profile switching
-        */}
+
+
+
+
+
+
+
+}
         <Router />
       </AppProviders>
     </ErrorBoundary>

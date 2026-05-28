@@ -24,7 +24,7 @@ const MIN_PASSWORD_LENGTH = 8;
 const RegisterPage = () => {
   const { register, loading } = useAuth();
 
-  /* ---------------- STATE ---------------- */
+
 
   const [name, setName] = useState("");
   const [email, setEmail] =
@@ -38,13 +38,13 @@ const RegisterPage = () => {
 
   const nameRef = useRef(null);
 
-  /* ---------------- FOCUS FIRST FIELD ---------------- */
+
 
   useEffect(() => {
     nameRef.current?.focus();
   }, []);
 
-  /* ---------------- SUBMIT ---------------- */
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,7 +101,7 @@ const RegisterPage = () => {
           onSubmit={handleSubmit}
           noValidate
         >
-          {/* NAME */}
+          {}
           <div className="form-group">
             <label htmlFor="name">
               Full name
@@ -121,7 +121,7 @@ const RegisterPage = () => {
             />
           </div>
 
-          {/* EMAIL */}
+          {}
           <div className="form-group">
             <label htmlFor="email">
               Email address
@@ -140,7 +140,7 @@ const RegisterPage = () => {
             />
           </div>
 
-          {/* PASSWORD */}
+          {}
           <div className="form-group">
             <label htmlFor="password">
               Password
@@ -186,7 +186,7 @@ const RegisterPage = () => {
             </small>
           </div>
 
-          {/* ERROR */}
+          {}
           {error && (
             <div
               className="form-error"
@@ -196,7 +196,7 @@ const RegisterPage = () => {
             </div>
           )}
 
-          {/* SUBMIT */}
+          {}
           <button
             type="submit"
             className="primary-btn"
@@ -209,7 +209,7 @@ const RegisterPage = () => {
           </button>
         </form>
 
-        {/* FOOTER */}
+        {}
         <div className="auth-footer">
           <span>
             Already have an account?

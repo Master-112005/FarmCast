@@ -24,7 +24,7 @@ def set_global_determinism(seed: int, python_hash_seed: str) -> DeterminismConfi
     np.random.seed(seed)
 
     try:
-        import tensorflow as tf  # type: ignore
+        import tensorflow as tf
 
         tf.random.set_seed(seed)
         try:

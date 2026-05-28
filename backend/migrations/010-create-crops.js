@@ -1,6 +1,6 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     const tables = await queryInterface.showAllTables();
@@ -50,7 +50,7 @@ module.exports = {
         name: "crops_name_idx",
       });
     } catch (_error) {
-      // Ignore duplicate index errors for idempotent runs.
+
     }
   },
 

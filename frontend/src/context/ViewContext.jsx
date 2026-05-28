@@ -57,7 +57,7 @@ export const ViewProvider = ({ children }) => {
       : VIEWS.DEVICE;
   });
 
-  /* ---------- Safe Setter ---------- */
+
   const setView = useCallback((nextView) => {
     if (!isValidView(nextView)) return;
 
@@ -70,11 +70,11 @@ export const ViewProvider = ({ children }) => {
         localStorage.removeItem(STORAGE_KEY);
       }
     } catch {
-      /* ignore persistence failure */
+
     }
   }, []);
 
-  /* ---------- Navigation Helpers ---------- */
+
   const goDevice = useCallback(
     () => setView(VIEWS.DEVICE),
     [setView]
@@ -100,7 +100,7 @@ export const ViewProvider = ({ children }) => {
     [setView]
   );
 
-  /* ---------- Derived Flags ---------- */
+
   const isDevice = view === VIEWS.DEVICE;
   const isPredictor = view === VIEWS.PREDICTOR;
   const isCommunity =
@@ -108,7 +108,7 @@ export const ViewProvider = ({ children }) => {
   const isProfile = view === VIEWS.PROFILE;
   const isAdmin = view === VIEWS.ADMIN;
 
-  /* ---------- Memoized Context ---------- */
+
   const value = useMemo(
     () => ({
       view,

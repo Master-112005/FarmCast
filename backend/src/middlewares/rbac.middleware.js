@@ -8,9 +8,9 @@ const {
 
 
 
-/**
- * Build standardized authorization error
- */
+
+
+
 const accessError = (code, message) => {
   const err = new Error(message);
   err.code = code;
@@ -20,13 +20,13 @@ const accessError = (code, message) => {
 
 
 
-/**
- * Require specific roles
- *
- * Usage:
- *   requireRole(ROLES.ADMIN)
- *   requireRole(ROLES.USER, ROLES.ADMIN)
- */
+
+
+
+
+
+
+
 const requireRole =
   (...allowedRoles) =>
   (req, _res, next) => {
@@ -65,18 +65,18 @@ const requireRole =
 
 
 
-/**
- * Enforce ownership-based access
- *
- * Expects:
- * - req.user (from auth middleware)
- * - resource owner ID provided by controller/service
- *
- * Usage:
- *   requireOwnership({
- *     getOwnerId: async (req) => device.userId
- *   })
- */
+
+
+
+
+
+
+
+
+
+
+
+
 const requireOwnership =
   ({ getOwnerId }) =>
   async (req, _res, next) => {
@@ -88,7 +88,7 @@ const requireOwnership =
         );
       }
 
-      // Ownership checks are enforced for all roles
+
 
       if (typeof getOwnerId !== "function") {
         throw accessError(

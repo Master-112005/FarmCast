@@ -2,10 +2,10 @@
 
 
 
-/**
- * Supported user roles
- * Used by auth, RBAC, services
- */
+
+
+
+
 const USER_ROLES = Object.freeze({
   USER: "user",
   ADMIN: "admin",
@@ -13,10 +13,10 @@ const USER_ROLES = Object.freeze({
 
 
 
-/**
- * Account status flags
- * Used for access control & moderation
- */
+
+
+
+
 const USER_STATUS = Object.freeze({
   ACTIVE: "active",
   DISABLED: "disabled",
@@ -24,10 +24,10 @@ const USER_STATUS = Object.freeze({
 
 
 
-/**
- * Domain-level limits (semantic guards)
- * DB- and rate-limits live elsewhere
- */
+
+
+
+
 const USER_LIMITS = Object.freeze({
   MAX_NAME_LENGTH: 100,
   MIN_NAME_LENGTH: 2,
@@ -35,10 +35,10 @@ const USER_LIMITS = Object.freeze({
 
 
 
-/**
- * User-specific error codes
- * Complement global ERROR_CODES
- */
+
+
+
+
 const USER_ERRORS = Object.freeze({
   USER_NOT_FOUND: "USER_NOT_FOUND",
   USER_DISABLED: "USER_DISABLED",

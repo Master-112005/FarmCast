@@ -10,7 +10,7 @@ namespace {
 const char* TAG = "DeviceIdentity";
 const char* kAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const uint8_t kAlphabetLength = 36;
-}  // namespace
+}
 
 DeviceIdentityService::DeviceIdentityService()
     : preferences_(),
@@ -29,8 +29,8 @@ bool DeviceIdentityService::begin() {
 
   ready_ = true;
 
-  // Device identity is generated exactly once and then reused forever,
-  // unless full NVS is explicitly wiped outside firmware policy.
+
+
   if (!ensureDeviceId()) {
     return false;
   }
@@ -75,8 +75,8 @@ bool DeviceIdentityService::isProvisioned() {
       readBool(device_identity::KEY_PROVISIONED, false);
   const bool materialsPresent = provisioningMaterialsPresent();
 
-  // Keep NVS state internally consistent: flag cannot remain true without
-  // required provisioning materials.
+
+
   if (persistedFlag && !materialsPresent) {
     writeBool(device_identity::KEY_PROVISIONED, false);
     return false;

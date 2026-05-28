@@ -8,10 +8,10 @@ const { ERROR_CODES } = require("../utils/constants");
 
 
 
-/**
- * Allows turning off rate limiting safely
- * (useful for local dev / controlled demos)
- */
+
+
+
+
 if (!env.SECURITY.RATE_LIMIT_ENABLED) {
   logger.warn("⚠️ Rate limiting is DISABLED");
 
@@ -71,7 +71,7 @@ const getRateLimitKey = (req) => {
 };
 
 const rateLimitHandler =
-  (bucket) => (req, res /*, next */) => {
+  (bucket) => (req, res) => {
     logger.warn("Rate limit exceeded", {
       ip: req.ip,
       path: req.originalUrl,

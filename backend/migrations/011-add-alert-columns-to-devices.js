@@ -1,6 +1,6 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     const table = await queryInterface.describeTable("devices");
@@ -55,7 +55,7 @@ module.exports = {
         onUpdate: "CASCADE",
       });
     } catch (_error) {
-      // Ignore duplicate constraint errors for idempotent runs.
+
     }
 
     try {
@@ -63,7 +63,7 @@ module.exports = {
         name: "devices_crop_id_idx",
       });
     } catch (_error) {
-      // Ignore duplicate index errors.
+
     }
 
     try {
@@ -73,7 +73,7 @@ module.exports = {
         { name: "devices_online_last_seen_idx" }
       );
     } catch (_error) {
-      // Ignore duplicate index errors.
+
     }
   },
 
@@ -86,7 +86,7 @@ module.exports = {
         "devices_crop_id_fk"
       );
     } catch (_error) {
-      // Ignore if constraint does not exist.
+
     }
 
     try {
@@ -95,7 +95,7 @@ module.exports = {
         "devices_crop_id_idx"
       );
     } catch (_error) {
-      // Ignore if index does not exist.
+
     }
 
     try {
@@ -104,7 +104,7 @@ module.exports = {
         "devices_online_last_seen_idx"
       );
     } catch (_error) {
-      // Ignore if index does not exist.
+
     }
 
     if (table.is_online) {

@@ -7,9 +7,9 @@ const asyncHandler = require("../../middlewares/asyncHandler.middleware");
 
 
 
-/**
- * GET /api/v1/devices
- */
+
+
+
 const getMyDevices = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -23,9 +23,9 @@ const getMyDevices = async (req, res, next) => {
   }
 };
 
-/**
- * GET /api/v1/devices/:id
- */
+
+
+
 const getMyDeviceById = async (
   req,
   res,
@@ -46,9 +46,9 @@ const getMyDeviceById = async (
   }
 };
 
-/**
- * GET /api/v1/devices/:id/status
- */
+
+
+
 const getDeviceStatus = async (
   req,
   res,
@@ -69,9 +69,9 @@ const getDeviceStatus = async (
   }
 };
 
-/**
- * POST /api/v1/devices
- */
+
+
+
 const createDevice = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -89,9 +89,9 @@ const createDevice = async (req, res, next) => {
   }
 };
 
-/**
- * POST /api/v1/devices/provision
- */
+
+
+
 const provisionDevice = asyncHandler(
   async (req, res) => {
     const userId = req.user.id;
@@ -110,9 +110,9 @@ const provisionDevice = asyncHandler(
   }
 );
 
-/**
- * PUT /api/v1/devices/:id
- */
+
+
+
 const updateMyDevice = async (
   req,
   res,
@@ -136,9 +136,9 @@ const updateMyDevice = async (
   }
 };
 
-/**
- * DELETE /api/v1/devices/:id
- */
+
+
+
 const deleteDevice = async (
   req,
   res,
@@ -158,9 +158,9 @@ const deleteDevice = async (
   }
 };
 
-/**
- * DELETE /api/v1/devices/:id/pre-delete
- */
+
+
+
 const preDeleteDevice = async (
   req,
   res,
@@ -184,9 +184,9 @@ const preDeleteDevice = async (
   }
 };
 
-/**
- * POST /api/v1/devices/:id/finalize-delete
- */
+
+
+
 const finalizeDeleteDevice = async (
   req,
   res,
@@ -212,9 +212,9 @@ const finalizeDeleteDevice = async (
 
 
 
-/**
- * GET /api/v1/devices/:id/live
- */
+
+
+
 const getLiveDeviceData = async (
   req,
   res,
@@ -235,9 +235,9 @@ const getLiveDeviceData = async (
   }
 };
 
-/**
- * PATCH /api/v1/devices/sync/:id
- */
+
+
+
 const syncDeviceData = async (
   req,
   res,
@@ -262,7 +262,7 @@ const syncDeviceData = async (
 
 
 module.exports = {
-  // User
+
   getMyDevices,
   getMyDeviceById,
   getDeviceStatus,
@@ -273,7 +273,7 @@ module.exports = {
   preDeleteDevice,
   finalizeDeleteDevice,
 
-  // IoT
+
   getLiveDeviceData,
   syncDeviceData,
 

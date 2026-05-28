@@ -28,7 +28,7 @@ const PredictButton = ({
     try {
       onPredict();
     } catch (err) {
-      // Defensive: prevent UI crash
+
       console.error("PredictButton error:", err);
     }
   };
@@ -54,12 +54,12 @@ const PredictButton = ({
         </span>
       )}
 
-      {/* LABEL */}
+      {}
       <span>
         {isLoading ? loadingLabel : label}
       </span>
 
-      {/* LOADER */}
+      {}
       {isLoading && (
         <span
           className="fc-loader"

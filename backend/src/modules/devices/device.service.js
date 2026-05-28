@@ -31,9 +31,9 @@ const {
 
 
 
-/**
- * Build domain error (handled by global error middleware)
- */
+
+
+
 const domainError = (
   code,
   message,
@@ -169,7 +169,7 @@ const selectDeviceReachableHost = () => {
       return appHost;
     }
   } catch {
-    // ignore malformed APP_BASE_URL, fallback to network interfaces
+
   }
 
   try {
@@ -180,7 +180,7 @@ const selectDeviceReachableHost = () => {
       return mqttHost;
     }
   } catch {
-    // ignore malformed broker URL, fallback to network interfaces
+
   }
 
   const candidates = listReachableIpv4Addresses();
@@ -210,7 +210,7 @@ const resolveDeviceMqttHost = () => {
       return brokerHost;
     }
   } catch {
-    // ignore malformed broker URL and fallback
+
   }
 
   return selectDeviceReachableHost();
@@ -432,17 +432,17 @@ const sendWifiCredentialsUpdate = async (
 
   let mqttPublished = false;
   try {
-    // Retain the latest WiFi command so a temporarily offline device can
-    // apply it on next MQTT reconnect.
+
+
     await publishMqttMessage(topic, payload, {
       qos: 1,
       retain: true,
     });
     mqttPublished = true;
   } catch (error) {
-    // Do not fail the user request when broker/device is offline.
-    // If pending queue storage succeeded, auth-response fallback can still
-    // deliver this update when device reconnects to HTTP.
+
+
+
     logger.warn("Device WiFi update publish deferred", {
       deviceId: device.id,
       deviceCode: device.deviceCode,
@@ -466,9 +466,9 @@ const sendWifiCredentialsUpdate = async (
   };
 };
 
-/**
- * Ensure device exists
- */
+
+
+
 const getDeviceById = async (deviceId) => {
   const device = await db.Device.findByPk(
     deviceId
@@ -485,9 +485,9 @@ const getDeviceById = async (deviceId) => {
   return device;
 };
 
-/**
- * Ensure user owns device
- */
+
+
+
 const assertOwnership = (device, userId) => {
   if (device.userId !== userId) {
     throw domainError(
@@ -500,9 +500,9 @@ const assertOwnership = (device, userId) => {
 
 
 
-/**
- * Get all devices for current user
- */
+
+
+
 const getMyDevices = async (userId) => {
   return db.Device.findAll({
     where: { userId },
@@ -510,9 +510,9 @@ const getMyDevices = async (userId) => {
   });
 };
 
-/**
- * Get single device (owner only)
- */
+
+
+
 const getMyDeviceById = async (deviceId, userId) => {
   const device = await getDeviceById(
     deviceId
@@ -595,9 +595,9 @@ const getDeviceStatus = async (
   };
 };
 
-/**
- * Register new device
- */
+
+
+
 const createDevice = async (
   userId,
   payload
@@ -652,16 +652,16 @@ const createDevice = async (
   const safeDevice = device.toJSON();
   delete safeDevice.deviceSecretHash;
 
-  // Returned once for firmware provisioning.
+
   safeDevice.deviceSecret = rawDeviceSecret;
 
   return safeDevice;
 };
 
-/**
- * Claim and provision a hardware device to a user.
- * Returns the plaintext device secret exactly once.
- */
+
+
+
+
 const provisionDevice = async (
   userId,
   payload,
@@ -741,9 +741,9 @@ const provisionDevice = async (
   };
 };
 
-/**
- * Update device (owner only; status updates require privileged role)
- */
+
+
+
 const updateMyDevice = async (
   deviceId,
   userId,
@@ -774,7 +774,7 @@ const updateMyDevice = async (
   delete sanitized.wifiSsid;
   delete sanitized.wifiPassword;
 
-  // Connectivity state is system-managed by telemetry/offline monitor.
+
   delete sanitized.isOnline;
 
   const hasMetadataUpdates =
@@ -813,10 +813,10 @@ const updateMyDevice = async (
   return device;
 };
 
-/**
- * Legacy hard delete endpoint is intentionally disabled.
- * Secure deletion requires staged USB-confirmed flow.
- */
+
+
+
+
 const deleteDevice = async () => {
   throw domainError(
     ERROR_CODES.NOT_IMPLEMENTED,
@@ -825,9 +825,9 @@ const deleteDevice = async () => {
   );
 };
 
-/**
- * Stage 1: mark device for secure deletion (owner only).
- */
+
+
+
 const preDeleteDevice = async (
   deviceId,
   userId,
@@ -877,11 +877,11 @@ const preDeleteDevice = async (
   };
 };
 
-/**
- * Stage 2: finalize deletion after pre-delete.
- * Ownership binding and secret material are removed.
- * USB reset is optional and can be performed before this call.
- */
+
+
+
+
+
 const finalizeDeleteDevice = async (
   deviceId,
   userId,
@@ -966,10 +966,10 @@ const finalizeDeleteDevice = async (
 
 
 
-/**
- * Fetch live telemetry
- * (stub – real implementation integrates IoT gateway)
- */
+
+
+
+
 const getLiveDeviceData = async (
   deviceId,
   userId
@@ -1058,9 +1058,9 @@ const getLiveDeviceData = async (
   };
 };
 
-/**
- * Sync device data (manual trigger)
- */
+
+
+
 const syncDeviceData = async (
   deviceId,
   userId,
@@ -1153,14 +1153,14 @@ const syncDeviceData = async (
     userId,
   });
 
-  // Payload persistence handled in soil/telemetry modules
+
   return record;
 };
 
 
 
 module.exports = {
-  // User-scoped
+
   getMyDevices,
   getMyDeviceById,
   getDeviceStatus,
@@ -1171,7 +1171,7 @@ module.exports = {
   preDeleteDevice,
   finalizeDeleteDevice,
 
-  // IoT
+
   getLiveDeviceData,
   syncDeviceData,
 

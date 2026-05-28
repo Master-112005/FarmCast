@@ -7,12 +7,12 @@ const {
 } = require("../utils/constants");
 
 module.exports = (req, res) => {
-  // Keep static asset misses quiet (e.g., stale profile image URLs)
+
   if (req.originalUrl?.startsWith("/uploads/")) {
     return res.status(HTTP_STATUS.NOT_FOUND).end();
   }
 
-  // Log once for observability (no stack traces)
+
   logger.warn("Route not found", {
     method: req.method,
     path: req.originalUrl,
@@ -20,7 +20,7 @@ module.exports = (req, res) => {
     correlationId: req.headers["x-correlation-id"],
   });
 
-  // Send predictable, frontend-safe response
+
   res.status(HTTP_STATUS.NOT_FOUND).json({
     success: false,
     status: HTTP_STATUS.NOT_FOUND,

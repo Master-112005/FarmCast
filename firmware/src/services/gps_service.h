@@ -22,7 +22,7 @@ class GpsService {
   float getHdop() const;
 
  private:
-  void resetFix();  // Added for industrial stability control
+  void resetFix();
 
   HardwareSerial& serial_;
   TinyGPSPlus gps_;
@@ -38,7 +38,7 @@ class GpsService {
   uint32_t satelliteCount_;
   float hdop_;
 
-  // -------- Industrial Stability Fields --------
+
   uint32_t bootTimeMs_;
   uint8_t stableCounter_;
   uint8_t invalidCounter_;

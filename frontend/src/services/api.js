@@ -57,7 +57,7 @@ const storeRefreshToken = (token) => {
     }
     localStorage.removeItem(REFRESH_TOKEN_KEY);
   } catch {
-    // ignore storage write failures
+
   }
 };
 
@@ -67,7 +67,7 @@ const clearSessionStorage = () => {
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(USER_STORAGE_KEY);
   } catch {
-    // ignore storage write failures
+
   }
 };
 
@@ -250,10 +250,10 @@ api.interceptors.request.use(
           `Bearer ${token}`;
       }
     } catch {
-      // ignore storage access failures
+
     }
 
-    // Correlation ID
+
     if (!config.headers["X-Correlation-ID"]) {
       config.headers["X-Correlation-ID"] =
         buildCorrelationId();
@@ -380,7 +380,7 @@ export const setAuthToken = (token) => {
       );
     }
   } catch {
-    // ignore storage write failures
+
   }
 };
 
@@ -403,7 +403,7 @@ export const clearAuthToken = () => {
       REFRESH_TOKEN_KEY
     );
   } catch {
-    // ignore storage write failures
+
   }
 };
 

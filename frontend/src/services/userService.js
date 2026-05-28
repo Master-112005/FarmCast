@@ -87,7 +87,7 @@ const persistSession = (
       );
     }
   } catch {
-    // ignore storage write failures
+
   }
 };
 
@@ -100,7 +100,7 @@ const clearSession = () => {
     localStorage.removeItem(USER_KEY);
     clearAuthToken();
   } catch {
-    // ignore storage write failures
+
   }
 };
 
@@ -199,10 +199,10 @@ export const updateMyProfile = (
   );
 };
 
-/**
- * Delete current user account
- * (Server removes related data)
- */
+
+
+
+
 export const deleteMyAccount = () =>
   execute(() => api.delete(ENDPOINTS.USERS_ME));
 

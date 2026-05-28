@@ -13,9 +13,9 @@ const isValidHttpStatus = (status) =>
   status >= 400 &&
   status <= 599;
 
-/**
- * Normalize any error into safe API shape
- */
+
+
+
 const normalizeError = (err = {}) => {
   let status =
     HTTP_STATUS.INTERNAL_SERVER_ERROR;
@@ -23,17 +23,17 @@ const normalizeError = (err = {}) => {
     ERROR_CODES.INTERNAL_ERROR;
   let message = "Unexpected server error";
 
-  /* -------------------------------
-     STATUS
-  ------------------------------- */
+
+
+
 
   if (isValidHttpStatus(err.status)) {
     status = err.status;
   }
 
-  /* -------------------------------
-     SEQUELIZE ERRORS
-  ------------------------------- */
+
+
+
 
   if (err.name === "SequelizeValidationError") {
     status = HTTP_STATUS.BAD_REQUEST;
@@ -55,9 +55,9 @@ const normalizeError = (err = {}) => {
       "Duplicate resource";
   }
 
-  /* -------------------------------
-     AUTH ERRORS
-  ------------------------------- */
+
+
+
 
   if (err.code === ERROR_CODES.AUTH_REQUIRED) {
     status = HTTP_STATUS.UNAUTHORIZED;
@@ -74,9 +74,9 @@ const normalizeError = (err = {}) => {
       err.message || "Access denied";
   }
 
-  /* -------------------------------
-     DOMAIN ERROR CODES
-  ------------------------------- */
+
+
+
 
   if (
     err.code &&
@@ -87,9 +87,9 @@ const normalizeError = (err = {}) => {
     code = err.code;
   }
 
-  /* -------------------------------
-     MESSAGE (SAFE OVERRIDE)
-  ------------------------------- */
+
+
+
 
   if (
     typeof err.message === "string" &&
@@ -117,9 +117,9 @@ const errorMiddleware = (
       req.correlationId ||
       req.headers["x-correlation-id"];
 
-    /* ----------------------------------------------
-       LOG ERROR (SERVER ONLY)
-    ---------------------------------------------- */
+
+
+
 
     const logPayload = {
       code,
@@ -149,9 +149,9 @@ const errorMiddleware = (
       logger.warn("API Error", logPayload);
     }
 
-    /* ----------------------------------------------
-       SEND SAFE RESPONSE
-    ---------------------------------------------- */
+
+
+
 
     res.status(status).json({
       success: false,
@@ -161,7 +161,7 @@ const errorMiddleware = (
       correlationId,
     });
   } catch (fatalError) {
-    // Absolute last-resort fallback
+
     logger.fatal("Error middleware crashed", {
       message: fatalError.message,
     });

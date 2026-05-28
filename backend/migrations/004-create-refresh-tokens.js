@@ -1,6 +1,6 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("refresh_tokens", {
@@ -29,7 +29,7 @@ module.exports = {
       
 
       token: {
-        type: Sequelize.STRING(255), // HMAC-safe
+        type: Sequelize.STRING(255),
         allowNull: false,
         comment:
           "Hashed refresh token (HMAC; never store raw token)",
