@@ -9,8 +9,15 @@ experiments/mlruns/
 experiments/optuna/
 data/processed/
 data/validated/
+
 models/*/staging/*
+models/*/production/*
 
 !models/*/staging/.gitkeep
 !models/*/production/.gitkeep
+
+# ALLOW REAL PRODUCTION MODELS
+!models/disease/production/model.keras
+!models/yield/**
+
 logs/farmcast_ml.log
