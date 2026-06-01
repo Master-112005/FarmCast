@@ -1,4 +1,36 @@
 
+export const API_VERSION = "v1";
+
+const normalizeUrl = (value) =>
+  String(value || "").trim().replace(/\/+$/, "");
+
+const appendApiVersion = (value) => {
+  const normalized = normalizeUrl(value);
+  if (!normalized) return "";
+  if (new RegExp(`/api/${API_VERSION}$`).test(normalized)) {
+    return normalized;
+  }
+  if (/\/api$/.test(normalized)) {
+    return `${normalized}/${API_VERSION}`;
+  }
+  return normalized;
+};
+
+const resolveApiRootUrl = (apiBaseUrl) =>
+  normalizeUrl(apiBaseUrl)
+    .replace(new RegExp(`/api/${API_VERSION}$`), "")
+    .replace(/\/api$/, "");
+
+const isProduction =
+  import.meta.env.MODE === "production";
+
+const apiBaseUrl = appendApiVersion(
+  import.meta.env.VITE_API_URL ||
+    import.meta.env.VITE_API_BASE_URL ||
+    (!isProduction
+      ? "http://localhost:5000/api/v1"
+      : "")
+);
 
 export const ENV = Object.freeze({
   NODE_ENV: ["development", "production", "test"].includes(
@@ -7,25 +39,16 @@ export const ENV = Object.freeze({
     ? import.meta.env.MODE
     : "development",
 
-  API_BASE_URL:
-    import.meta.env.VITE_API_BASE_URL ||
-    "http://localhost:5000/api",
+  API_BASE_URL: apiBaseUrl,
 
   API_ROOT_URL:
-    import.meta.env.VITE_API_ROOT_URL ||
-    (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api").replace(
-      /\/api\/?$/,
-      ""
-    ),
+    normalizeUrl(import.meta.env.VITE_API_ROOT_URL) ||
+    resolveApiRootUrl(apiBaseUrl),
 });
 
 
 
-export const API_VERSION = "v1";
-
-
-
-export const API_BASE = `${ENV.API_BASE_URL}/${API_VERSION}`;
+export const API_BASE = ENV.API_BASE_URL;
 
 
 

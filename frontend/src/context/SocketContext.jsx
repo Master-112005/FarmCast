@@ -12,12 +12,13 @@ import PropTypes from "prop-types";
 import { io } from "socket.io-client";
 
 import { useAuth } from "./AuthContext";
+import { ENV } from "../utils/constants";
 
 const SocketContext = createContext(null);
 
 const SOCKET_SERVER_URL =
   import.meta.env.VITE_SOCKET_URL ||
-  "http://localhost:5000";
+  ENV.API_ROOT_URL;
 
 export const SocketProvider = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
@@ -115,4 +116,3 @@ export const useSocket = () => {
 
   return ctx;
 };
-

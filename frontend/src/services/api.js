@@ -11,7 +11,7 @@ import {
 
 
 
-const API_BASE_URL = API_BASE || "http://localhost:5000/api/v1";
+const API_BASE_URL = API_BASE;
 
 const REQUEST_TIMEOUT =
   LIMITS?.REQUEST_TIMEOUT_MS || 15000;
@@ -411,7 +411,8 @@ export const clearAuthToken = () => {
 
 export const pingApi = async () => {
   try {
-    const root = ENV?.API_ROOT_URL || "http://localhost:5000";
+    const root = ENV?.API_ROOT_URL;
+    if (!root) return null;
     const res = await axios.get(`${root}/health`);
     return res?.data;
   } catch {

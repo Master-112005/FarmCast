@@ -27,8 +27,7 @@ const resolveProfileImage = (value) => {
     return value;
   }
 
-  const apiBase = ENV.API_BASE_URL || "";
-  const base = apiBase.replace(/\/api\/?$/, "");
+  const base = ENV.API_ROOT_URL || "";
   if (!base) return value;
 
   const normalized = value.startsWith("/")

@@ -6,8 +6,15 @@ Enterprise dashboard UI for FarmCast. DeviceView is the default workspace. Predi
 Create `dashboard/frontend/.env`:
 
 ```
-VITE_API_BASE_URL=http://localhost:5000/api
+VITE_API_URL=http://localhost:5000/api/v1
 VITE_API_ROOT_URL=http://localhost:5000
+VITE_SOCKET_URL=http://localhost:5000
+```
+
+For Vercel production, set `VITE_API_URL` to the deployed backend API, for example:
+
+```
+VITE_API_URL=https://farmcast-nfd6.onrender.com/api/v1
 ```
 
 ## Install & Run
