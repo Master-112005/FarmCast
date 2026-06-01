@@ -1,36 +1,40 @@
-# MQTT Broker Hardening (Phase 1)
+# FarmCast Docker
+
+Use the root-level `docker-compose.yml` for local development. The old
+single-service Compose files were removed to avoid multiple competing startup
+paths.
+
+## Start Full Stack
+
+From the repository root:
+
+```powershell
+docker compose up --build
+```
+
+This starts:
+- frontend: `http://localhost:3000`
+- backend API: `http://localhost:5000`
+- ML service: `http://localhost:8000`
+- MQTT broker: `localhost:2883`
+- MySQL: internal Docker service `mysql:3306`
+
+The broker uses `docker/mosquitto.compose.conf` so it can call the backend
+container at `backend:5000` for MQTT auth and ACL validation.
+
+Useful overrides:
+
+```powershell
+$env:FRONTEND_HOST_PORT=8080
+$env:BACKEND_HOST_PORT=5000
+$env:ML_SERVICE_HOST_PORT=8000
+$env:MQTT_HOST_PORT=2883
+$env:ML_SERVICE_API_KEY="your-dev-key"
+docker compose up --build
+```
 
 ## Files
-- `mosquitto.conf`: Mosquitto + go-auth plugin config with anonymous access disabled.
-- `aclfile`: Baseline ACLs (device-by-username + backend collector account).
-- `docker-compose.mqtt.yml`: Hardened broker container using `mosquitto-go-auth`.
 
-## Start Broker
-From this directory:
-
-```powershell
-docker compose -f docker-compose.mqtt.yml up -d
-```
-
-Host port `2883` is used by default because `1883` is reserved on some
-Windows machines. Override it when needed:
-
-```powershell
-$env:MQTT_HOST_PORT=31883
-docker compose -f docker-compose.mqtt.yml up -d
-```
-
-If you change the host port, keep `MQTT_BROKER_URL` in the backend aligned
-with it.
-
-## Restart After Config Changes
-
-```powershell
-docker compose -f docker-compose.mqtt.yml restart mqtt-broker
-```
-
-## Validate Endpoint Dependency
-Broker auth callbacks require backend API:
-- `POST /api/v1/mqtt/validate`
-
-If backend runs outside Docker, `host.docker.internal:5000` must be reachable from container.
+- `../docker-compose.yml`: full-stack Compose file.
+- `mosquitto.compose.conf`: Mosquitto config used by the full stack.
+- `aclfile`: baseline MQTT ACL file.

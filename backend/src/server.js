@@ -95,8 +95,23 @@ const startServer = async () => {
     });
 
 
-    await connectMQTT();
-    logger.info("MQTT connected successfully");
+    try {
+      await connectMQTT();
+      logger.info("MQTT connected successfully");
+    } catch (error) {
+      logger.error("MQTT startup failed", {
+        message: error.message,
+        required: env.MQTT.REQUIRED,
+      });
+
+      if (env.MQTT.REQUIRED) {
+        throw error;
+      }
+
+      logger.warn(
+        "Continuing without initial MQTT connection"
+      );
+    }
 
 
     stopPredictionHistoryRetention =

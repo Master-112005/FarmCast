@@ -175,6 +175,13 @@ const env = {
       "MQTT_BROKER_URL",
       "mqtt://localhost:2883"
     ),
+    REQUIRED: toBoolean(
+      optional(
+        "MQTT_REQUIRED",
+        NODE_ENV === "production" ? "true" : "false"
+      ),
+      NODE_ENV === "production"
+    ),
     CLIENT_USERNAME: optional(
       "MQTT_CLIENT_USERNAME",
       "backend-collector"

@@ -16,6 +16,28 @@ modular ML platform for disease detection, yield prediction, and price forecasti
 - Retrain: `python -m src.pipelines.retraining_pipeline --task all --training-config configs/training_config.yaml --retraining-config configs/retraining_config.yaml`
 - API: `uvicorn src.api.ml_service:app --host 0.0.0.0 --port 8000`
 
+## Docker
+
+Build the ML service image:
+
+```sh
+docker build -t farmcast-ml:local .
+```
+
+Run it directly:
+
+```sh
+docker run --rm -p 8000:8000 -e FARMCAST_API_KEY=dev-farmcast-ml-key farmcast-ml:local
+```
+
+Or run it from the repository root with Compose:
+
+```sh
+docker compose up --build ml-service
+```
+
+The service listens on port `8000` by default and exposes `GET /health`.
+
 ## Tasks
 
 - `yield`: LightGBM regression with time-aware split

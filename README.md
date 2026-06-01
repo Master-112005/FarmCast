@@ -134,15 +134,13 @@ npm install
 npm run migrate
 npm run dev
 ```
-4. Start MQTT broker stack.
+4. Or start the full Docker stack from the repository root.
 ```bash
-cd docker
-docker compose -f docker-compose.mqtt.yml up -d
+docker compose up --build
 ```
-The local Docker host mapping defaults to `2883`, so set
-`MQTT_BROKER_URL=mqtt://localhost:2883` unless you explicitly override
-`MQTT_HOST_PORT`.
-5. Start ML inference service.
+This starts the frontend, backend, ML service, MQTT broker, and MySQL.
+
+5. Start ML inference service manually only when you are not using Docker Compose.
 ```bash
 cd farmcast-ml
 pip install -r requirements-ml.txt
@@ -403,8 +401,7 @@ FC/
 │   └── README.md
 ├── docker/
 │   ├── aclfile
-│   ├── docker-compose.mqtt.yml
-│   ├── mosquitto.conf
+│   ├── mosquitto.compose.conf
 │   ├── passwordfile
 │   └── README.md
 │
@@ -805,7 +802,6 @@ FC/
 ├── mqtt/
 │   ├── config/
 │   │   ├── aclfile
-│   │   ├── mosquitto.conf
 │   │   └── passwordfile
 │   ├── data/
 │   │   └── mosquitto.db

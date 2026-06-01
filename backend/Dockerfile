@@ -8,9 +8,8 @@ ENV MQTT_BROKER_URL=mqtt://host.docker.internal:2883
 ENV ML_SERVICE_URL=http://host.docker.internal:8000
 
 COPY package*.json ./
-RUN npm ci --omit=dev && npm cache clean --force
+RUN npm ci && npm cache clean --force
 
-COPY .env ./
 COPY src ./src
 COPY migrations ./migrations
 COPY seeders ./seeders
@@ -22,4 +21,4 @@ USER node
 
 EXPOSE 5000
 
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npm run migrate && npm start"]

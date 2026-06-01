@@ -38,6 +38,17 @@ frontend/dist/
 frontend/build/
 
 # ==================================================
+#  DOCKER / COMPOSE LOCAL OVERRIDES
+# ==================================================
+# Keep the root docker-compose.yml and service Dockerfiles tracked.
+docker-compose.override.yml
+docker-compose.*.override.yml
+compose.override.yml
+compose.*.override.yml
+docker/passwordfile
+mqtt/config/
+
+# ==================================================
 #  MACHINE LEARNING DATA & RUNTIME ARTIFACTS
 # ==================================================
 farmcast-ml/data/raw/
