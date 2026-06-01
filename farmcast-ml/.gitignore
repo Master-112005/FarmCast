@@ -4,20 +4,19 @@ __pycache__/
 *.pyo
 *.pyd
 *.log
+
 .pytest_cache/
+
 experiments/mlruns/
 experiments/optuna/
+
 data/processed/
 data/validated/
 
 models/*/staging/*
-models/*/production/*
-
 !models/*/staging/.gitkeep
-!models/*/production/.gitkeep
 
-# ALLOW REAL PRODUCTION MODELS
-!models/disease/production/model.keras
-!models/yield/**
+# KEEP ALL PRODUCTION MODELS
+!models/*/production/**
 
 logs/farmcast_ml.log

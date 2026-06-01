@@ -1,0 +1,23 @@
+{
+  "chillies__healthy": 0,
+  "chillies__whitefly": 1,
+  "chillies__yellowish": 2,
+  "cotton__curl_virus": 3,
+  "cotton__fussarium_wilt": 4,
+  "cotton__healthy": 5,
+  "groundnuts__early_leaf_spot": 6,
+  "groundnuts__healthy": 7,
+  "groundnuts__late_leaf_spot": 8,
+  "maize__common_rust": 9,
+  "maize__gray_leaf_spot": 10,
+  "maize__healthy": 11,
+  "rice__brownspot": 12,
+  "rice__healthy": 13,
+  "rice__tungro": 14,
+  "watermelon__downy_mildew": 15,
+  "watermelon__healthy": 16,
+  "watermelon__mosaic_virus": 17,
+  "wheat__healthy": 18,
+  "wheat__tan_spot": 19,
+  "wheat__yellow_rust": 20
+}
