@@ -10,7 +10,7 @@ experiments/optuna/
 data/processed/
 data/validated/
 models/*/staging/*
-models/*/production/*
+
 !models/*/staging/.gitkeep
 !models/*/production/.gitkeep
 logs/farmcast_ml.log
