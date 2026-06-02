@@ -89,7 +89,7 @@ services:
       ML_SERVICE_URL: http://ml-service:8000
       ML_SERVICE_AUTH_MODE: api_key
       ML_SERVICE_API_KEY: ${ML_SERVICE_API_KEY:-dev-farmcast-ml-key}
-      ML_SERVICE_TIMEOUT_MS: 150000
+      ML_SERVICE_TIMEOUT_MS: 180000
       MAIL_ENABLED: "false"
       COMMUNITY_CLEANUP_ENABLED: "true"
       COMMUNITY_RETENTION_DAYS: 7

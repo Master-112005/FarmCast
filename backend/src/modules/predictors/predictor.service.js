@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const { Op } = require("sequelize");
+const FormData = require("form-data");
 
 const env = require("../../config/env");
 const db = require("../../models");
@@ -525,10 +526,12 @@ const diseasePrediction = async (file) => {
       sizeBytes: file.size || null,
     });
 
-    const buffer = await fs.promises.readFile(file.path);
     const form = new FormData();
-    const blob = new Blob([buffer], { type: file.mimetype || "image/jpeg" });
-    form.append("file", blob, file.originalname || path.basename(file.path));
+    form.append("file", fs.createReadStream(file.path), {
+      filename: file.originalname || path.basename(file.path),
+      contentType: file.mimetype || "image/jpeg",
+      knownLength: file.size,
+    });
 
     const result = await mlClient.predictDisease(form);
 

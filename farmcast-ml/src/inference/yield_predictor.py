@@ -59,6 +59,12 @@ def _load_metadata() -> dict[str, Any]:
     return _METADATA_CACHE
 
 
+def warm_up_model() -> None:
+    """Load the legacy yield model and metadata once during startup."""
+    _load_model()
+    _load_metadata()
+
+
 
 def _validate_payload(payload: dict) -> dict[str, str]:
     if not isinstance(payload, dict):

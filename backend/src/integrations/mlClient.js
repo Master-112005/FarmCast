@@ -1,30 +1,56 @@
 "use strict";
 
 const crypto = require("crypto");
+const axios = require("axios");
+const axiosRetryModule = require("axios-retry");
 const jwt = require("jsonwebtoken");
+
 const env = require("../config/env");
 const logger = require("../utils/logger");
 
+const axiosRetry = axiosRetryModule.default || axiosRetryModule;
 const BASE_URL = String(env.ML.BASE_URL || "").replace(/\/$/, "");
-const MAX_ATTEMPTS = 4;
-const BASE_RETRY_DELAY_MS = 1000;
-const MAX_RETRY_DELAY_MS = 10000;
-const RETRYABLE_STATUS_CODES = new Set([408, 429, 500, 502, 503, 504]);
-const RETRYABLE_ERROR_CODES = new Set([
-  "ECONNRESET",
-  "ETIMEDOUT",
-  "ECONNREFUSED",
-  "EPIPE",
-  "UND_ERR_CONNECT_TIMEOUT",
-  "UND_ERR_HEADERS_TIMEOUT",
-  "UND_ERR_BODY_TIMEOUT",
-  "UND_ERR_SOCKET",
-]);
+const ML_TIMEOUT_MS = Number(process.env.ML_SERVICE_TIMEOUT_MS || 180000);
+const MAX_RETRIES = 3;
 
 let cachedToken = null;
 let cachedTokenExp = 0;
 
+const mlAxios = axios.create({
+  timeout: ML_TIMEOUT_MS,
+  maxContentLength: Infinity,
+  maxBodyLength: Infinity,
+});
 
+const getResponseStatus = (error) => error?.response?.status;
+
+const isRetryableMlError = (error) =>
+  error?.code === "ECONNABORTED" ||
+  error?.code === "ECONNRESET" ||
+  error?.code === "ETIMEDOUT" ||
+  error?.code === "EPIPE" ||
+  /socket hang up/i.test(error?.message || "") ||
+  (Number(getResponseStatus(error)) >= 500);
+
+axiosRetry(mlAxios, {
+  retries: MAX_RETRIES,
+  retryDelay: axiosRetry.exponentialDelay,
+  retryCondition: isRetryableMlError,
+  onRetry: (retryCount, error, requestConfig) => {
+    const metadata = requestConfig?.metadata || {};
+    logger.warn("ML request retry", {
+      requestId: metadata.requestId,
+      method: requestConfig?.method?.toUpperCase(),
+      url: requestConfig?.url,
+      retryCount,
+      maxRetries: MAX_RETRIES,
+      code: error?.code || null,
+      status: getResponseStatus(error) || null,
+      message: error?.message,
+      responseBody: error?.response?.data || null,
+    });
+  },
+});
 
 const buildJwtToken = () => {
   const now = Math.floor(Date.now() / 1000);
@@ -52,14 +78,11 @@ const buildJwtToken = () => {
   return token;
 };
 
-
-
 const buildAuthHeaders = () => {
   if (env.ML.AUTH_MODE === "api_key") {
     if (!env.ML.API_KEY) {
       throw new Error("ML service API key not configured");
     }
-
 
     return {
       "X-API-Key": env.ML.API_KEY,
@@ -76,8 +99,6 @@ const buildAuthHeaders = () => {
   throw new Error("Unsupported ML auth mode");
 };
 
-
-
 const createError = (message, status, details) => {
   const err = new Error(message);
   err.status = status;
@@ -85,44 +106,6 @@ const createError = (message, status, details) => {
   err.code = details?.code;
   err.cause = details?.cause;
   return err;
-};
-
-const sleep = (ms) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-
-const getErrorCode = (error) =>
-  error?.code ||
-  error?.cause?.code ||
-  error?.cause?.name ||
-  error?.name ||
-  null;
-
-const isSocketHangUp = (error) =>
-  /socket hang up/i.test(
-    `${error?.message || ""} ${error?.cause?.message || ""}`
-  );
-
-const isTimeoutError = (error) =>
-  error?.name === "AbortError" ||
-  getErrorCode(error) === "ETIMEDOUT" ||
-  getErrorCode(error) === "UND_ERR_CONNECT_TIMEOUT" ||
-  getErrorCode(error) === "UND_ERR_HEADERS_TIMEOUT" ||
-  getErrorCode(error) === "UND_ERR_BODY_TIMEOUT";
-
-const isRetryableNetworkError = (error) =>
-  isTimeoutError(error) ||
-  isSocketHangUp(error) ||
-  RETRYABLE_ERROR_CODES.has(getErrorCode(error));
-
-const shouldRetryResponse = (response) =>
-  RETRYABLE_STATUS_CODES.has(response.status);
-
-const getRetryDelayMs = (attempt) => {
-  const exponential = BASE_RETRY_DELAY_MS * 2 ** (attempt - 1);
-  const jitter = Math.floor(Math.random() * 250);
-  return Math.min(exponential + jitter, MAX_RETRY_DELAY_MS);
 };
 
 const summarizePayload = (payload) => {
@@ -143,212 +126,136 @@ const summarizePayload = (payload) => {
   }
 };
 
-const parseJson = async (response) => {
-  const text = await response.text();
-  if (!text) return null;
-  try {
-    return JSON.parse(text);
-  } catch {
-    return text;
-  }
-};
-
-const fetchWithTimeout = async (url, options = {}) => {
-  const controller = new AbortController();
-
-  const timeout = setTimeout(() => {
-    controller.abort();
-  }, env.ML.TIMEOUT_MS);
-
-  try {
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal,
-    });
-    return response;
-  } finally {
-    clearTimeout(timeout);
-  }
-};
-
-
-
-const request = async (path, options = {}) => {
+const buildUrl = (path) => {
   if (!BASE_URL) {
     const err = new Error("ML service base URL not configured");
     err.status = 500;
     throw err;
   }
 
-  const url = `${BASE_URL}${path}`;
+  return `${BASE_URL}${path}`;
+};
+
+const resolveErrorStatus = (error) => {
+  const status = Number(error?.response?.status);
+  return status >= 400 ? status : 502;
+};
+
+const resolveErrorMessage = (error) =>
+  error?.response?.data?.detail ||
+  error?.response?.data?.message ||
+  error?.message ||
+  "ML service unavailable";
+
+const request = async ({
+  method,
+  path,
+  data,
+  headers = {},
+}) => {
+  const url = buildUrl(path);
   const requestId = crypto.randomUUID();
   const startedAt = Date.now();
-
-  const headers = {
+  const requestHeaders = {
     ...buildAuthHeaders(),
-    ...(options.headers || {}),
+    ...headers,
   };
 
+  console.log("Sending request to ML service...");
   logger.info("ML request start", {
     requestId,
-    method: options.method || "GET",
+    method,
     path,
     url,
-    timeoutMs: env.ML.TIMEOUT_MS,
-    maxAttempts: MAX_ATTEMPTS,
+    timeoutMs: ML_TIMEOUT_MS,
+    maxRetries: MAX_RETRIES,
   });
 
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
-    const attemptStartedAt = Date.now();
-    let response;
-
-    try {
-      response = await fetchWithTimeout(url, {
-        ...options,
-        headers,
-      });
-    } catch (error) {
-      const durationMs = Date.now() - attemptStartedAt;
-      const timeout = isTimeoutError(error);
-      const retryable = isRetryableNetworkError(error);
-      const finalAttempt = attempt === MAX_ATTEMPTS;
-      const delayMs =
-        retryable && !finalAttempt ? getRetryDelayMs(attempt) : 0;
-
-      logger.warn("ML request transport failure", {
+  try {
+    const requestConfig = {
+      headers: requestHeaders,
+      timeout: ML_TIMEOUT_MS,
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity,
+      metadata: {
         requestId,
+        startedAt,
         path,
-        url,
-        attempt,
-        maxAttempts: MAX_ATTEMPTS,
-        durationMs,
-        timeoutMs: env.ML.TIMEOUT_MS,
-        timeout,
-        retryable,
-        finalAttempt,
-        retryDelayMs: delayMs,
-        code: getErrorCode(error),
-        cause: error?.cause?.message || error?.message,
-      });
+      },
+    };
 
-      if (retryable && !finalAttempt) {
-        logger.info("ML request retry scheduled", {
-          requestId,
-          path,
-          attempt,
-          nextAttempt: attempt + 1,
-          retryDelayMs: delayMs,
-        });
-        await sleep(delayMs);
-        continue;
-      }
+    const response =
+      method === "POST"
+        ? await mlAxios.post(url, data, requestConfig)
+        : await mlAxios.get(url, requestConfig);
 
-      const message = timeout
-        ? "ML service request timed out"
-        : "ML service unavailable";
+    const durationMs = Date.now() - startedAt;
 
-      logger.error("ML request failed", {
-        requestId,
-        path,
-        url,
-        attempt,
-        durationMs: Date.now() - startedAt,
-        message,
-      });
-
-      throw createError(message, 502, {
-        cause: error?.cause?.message || error?.message,
-        code: getErrorCode(error),
-        timeout,
-        url,
-      });
-    }
-
-    const payload = await parseJson(response);
-    const attemptDurationMs = Date.now() - attemptStartedAt;
-
+    console.log("ML response:", response.data);
     logger.info("ML response received", {
       requestId,
       path,
-      attempt,
+      url,
       status: response.status,
-      durationMs: attemptDurationMs,
-      responseBody: summarizePayload(payload),
+      durationMs,
+      responseBody: summarizePayload(response.data),
     });
 
-    if (response.ok) {
-      logger.info("ML request completed", {
-        requestId,
-        path,
-        status: response.status,
-        attempts: attempt,
-        durationMs: Date.now() - startedAt,
-      });
-      return payload;
-    }
+    return response.data;
+  } catch (error) {
+    const durationMs = Date.now() - startedAt;
+    const timeout =
+      error?.code === "ECONNABORTED" ||
+      error?.code === "ETIMEDOUT" ||
+      /timeout/i.test(error?.message || "");
+    const status = resolveErrorStatus(error);
+    const message = resolveErrorMessage(error);
 
-    const message =
-      payload?.detail ||
-      payload?.message ||
-      `ML service error (${response.status})`;
-
-    const retryable = shouldRetryResponse(response);
-    const finalAttempt = attempt === MAX_ATTEMPTS;
-    const delayMs =
-      retryable && !finalAttempt ? getRetryDelayMs(attempt) : 0;
-
-    logger.warn("ML request returned error response", {
+    console.error("ML ERROR:", error.message);
+    console.error(error.response?.data);
+    logger.error("ML request failed", {
       requestId,
       path,
       url,
-      attempt,
-      maxAttempts: MAX_ATTEMPTS,
+      status,
+      code: error?.code || null,
       message,
-      status: response.status,
-      retryable,
-      finalAttempt,
-      retryDelayMs: delayMs,
-      responseBody: summarizePayload(payload),
+      timeout,
+      timeoutMs: ML_TIMEOUT_MS,
+      durationMs,
+      responseBody: summarizePayload(error?.response?.data),
     });
 
-    if (retryable && !finalAttempt) {
-      logger.info("ML request retry scheduled", {
-        requestId,
-        path,
-        attempt,
-        nextAttempt: attempt + 1,
-        retryDelayMs: delayMs,
-        status: response.status,
-      });
-      await sleep(delayMs);
-      continue;
-    }
-
-    throw createError(message, response.status, {
-      ...((payload && typeof payload === "object") ? payload : { payload }),
-      status: response.status,
+    throw createError(message, status, {
+      code: error?.code,
+      cause: error?.message,
+      timeout,
+      status,
       url,
+      responseBody: error?.response?.data,
     });
   }
-
-  throw createError("ML service unavailable", 502, { url });
 };
 
-
-
 const postJson = (path, body) =>
-  request(path, {
+  request({
     method: "POST",
+    path,
+    data: body || {},
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body || {}),
   });
 
-const postForm = (path, form) =>
-  request(path, {
+const postForm = (path, formData) =>
+  request({
     method: "POST",
-    body: form,
+    path,
+    data: formData,
+    headers:
+      typeof formData?.getHeaders === "function"
+        ? formData.getHeaders()
+        : {},
   });
 
 const predictYield = (payload) =>
@@ -358,7 +265,10 @@ const predictDisease = (formData) =>
   postForm("/predict/disease", formData);
 
 const healthCheck = () =>
-  request("/health", { method: "GET" });
+  request({
+    method: "GET",
+    path: "/health",
+  });
 
 module.exports = {
   predictYield,

@@ -75,6 +75,21 @@ class InferencePipeline:
         )
         return self._disease_predictor
 
+    def load_startup_models(self) -> None:
+        """Load production models once during service startup."""
+        self._load_disease_predictor()
+        self._load_yield_predictor()
+
+        price_model_path = Path(self.model_paths["price_model"])
+        price_preprocessor_path = Path(self.model_paths["price_preprocessor"])
+        price_metadata_path = price_model_path.parent / "metadata.json"
+        if (
+            price_model_path.exists()
+            and price_preprocessor_path.exists()
+            and price_metadata_path.exists()
+        ):
+            self._load_price_predictor()
+
     def predict(self, task: str, payload: Any) -> dict[str, Any]:
         if task == "yield":
             if not isinstance(payload, dict):

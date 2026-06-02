@@ -50,6 +50,10 @@ def test_api_endpoints(monkeypatch) -> None:
     assert response.status_code == 200
     assert response.json() == {"service": "farmcast-ml", "status": "ok"}
 
+    response = client.head("/")
+    assert response.status_code == 200
+    assert response.content == b""
+
     yield_payload = {
         "crop_type": "rice",
         "soil_type": "alluvial",

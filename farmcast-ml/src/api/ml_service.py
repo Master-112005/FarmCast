@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-from contextlib import asynccontextmanager
-
-from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, status
+from fastapi import Depends, FastAPI, File, HTTPException, Response, UploadFile, status
 
 from src.api.dependencies import api_key_guard, get_app_config, get_inference_pipeline
 from src.api.schemas import (
@@ -14,25 +12,32 @@ from src.api.schemas import (
     YieldPredictionRequest,
     YieldResponse,
 )
-from src.inference.yield_predictor import predict_yield
+from src.inference.yield_predictor import predict_yield, warm_up_model
 from src.pipelines.inference_pipeline import InferencePipeline
 
 
 app_config = get_app_config()
 
-@asynccontextmanager
-async def lifespan(_: FastAPI):
 
-    get_inference_pipeline()
-    yield
+app = FastAPI(title=app_config["api"]["title"], version=app_config["api"]["version"])
 
 
-app = FastAPI(title=app_config["api"]["title"], version=app_config["api"]["version"], lifespan=lifespan)
+@app.on_event("startup")
+async def startup_event() -> None:
+    pipeline = get_inference_pipeline()
+    pipeline.load_startup_models()
+    warm_up_model()
+    print("ML models loaded successfully")
 
 
 @app.get("/")
-def root() -> dict[str, str]:
+async def root() -> dict[str, str]:
     return {"service": "farmcast-ml", "status": "ok"}
+
+
+@app.head("/")
+async def root_head() -> Response:
+    return Response(status_code=200)
 
 
 @app.get("/health")

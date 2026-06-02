@@ -293,8 +293,8 @@ const env = {
       optional("JWT_ALGORITHM", "HS256")
     ),
     TIMEOUT_MS: toNumber(
-      optional("ML_SERVICE_TIMEOUT_MS", 150000),
-      150000
+      optional("ML_SERVICE_TIMEOUT_MS", 180000),
+      180000
     ),
   },
 
