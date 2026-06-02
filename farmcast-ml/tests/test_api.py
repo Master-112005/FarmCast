@@ -46,6 +46,10 @@ def test_api_endpoints(monkeypatch) -> None:
     headers = {"X-API-Key": "secret"}
     bearer_headers = {"Authorization": "Bearer secret"}
 
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"service": "farmcast-ml", "status": "ok"}
+
     yield_payload = {
         "crop_type": "rice",
         "soil_type": "alluvial",

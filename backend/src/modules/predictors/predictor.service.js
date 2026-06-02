@@ -519,12 +519,41 @@ const diseasePrediction = async (file) => {
   }
 
   try {
+    logger.info("Disease prediction upload preparation started", {
+      originalName: file.originalname || null,
+      mimeType: file.mimetype || null,
+      sizeBytes: file.size || null,
+    });
+
     const buffer = await fs.promises.readFile(file.path);
     const form = new FormData();
     const blob = new Blob([buffer], { type: file.mimetype || "image/jpeg" });
     form.append("file", blob, file.originalname || path.basename(file.path));
 
     const result = await mlClient.predictDisease(form);
+
+    if (!result || typeof result !== "object") {
+      throw domainError(
+        ERROR_CODES.ML_SERVICE_ERROR,
+        "Invalid ML response: response body is not an object",
+        502
+      );
+    }
+
+    if (!result.disease) {
+      throw domainError(
+        ERROR_CODES.ML_SERVICE_ERROR,
+        "Invalid ML response: disease missing",
+        502
+      );
+    }
+
+    logger.info("Disease prediction ML response parsed", {
+      disease: result.disease,
+      confidence: result.confidence ?? null,
+      modelVersion: result.model_version || null,
+      requestId: result.request_id || null,
+    });
 
     return {
       cropType: result?.crop_type || null,
@@ -535,6 +564,12 @@ const diseasePrediction = async (file) => {
       requestId: result?.request_id || null,
     };
   } catch (err) {
+    logger.warn("Disease prediction failed", {
+      message: err?.message,
+      status: err?.status || null,
+      code: err?.code || null,
+      details: err?.details || null,
+    });
     throw translateMlError(err);
   }
 };

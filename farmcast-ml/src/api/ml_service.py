@@ -30,6 +30,11 @@ async def lifespan(_: FastAPI):
 app = FastAPI(title=app_config["api"]["title"], version=app_config["api"]["version"], lifespan=lifespan)
 
 
+@app.get("/")
+def root() -> dict[str, str]:
+    return {"service": "farmcast-ml", "status": "ok"}
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
