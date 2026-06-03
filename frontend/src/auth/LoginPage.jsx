@@ -6,7 +6,10 @@ import React, {
   useEffect,
 } from "react";
 
-import { Link } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+} from "react-router-dom";
 
 
 
@@ -16,6 +19,7 @@ import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
   const { login, loading } = useAuth();
+  const location = useLocation();
 
 
 
@@ -23,20 +27,28 @@ const LoginPage = () => {
   const [password, setPassword] =
     useState("");
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState(
+    location.state?.message || ""
+  );
 
   const emailRef = useRef(null);
 
 
 
   useEffect(() => {
+    if (location.state?.email) {
+      setEmail(location.state.email);
+    }
+
     emailRef.current?.focus();
-  }, []);
+  }, [location.state?.email]);
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setNotice("");
 
     if (!email || !password) {
       return setError(
@@ -121,6 +133,15 @@ const LoginPage = () => {
               role="alert"
             >
               {error}
+            </div>
+          )}
+
+          {notice && (
+            <div
+              className="form-success"
+              role="status"
+            >
+              {notice}
             </div>
           )}
 

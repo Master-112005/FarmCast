@@ -6,7 +6,10 @@ import React, {
   useRef,
 } from "react";
 
-import { Link } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
 
 
@@ -23,6 +26,7 @@ const MIN_PASSWORD_LENGTH = 8;
 
 const RegisterPage = () => {
   const { register, loading } = useAuth();
+  const navigate = useNavigate();
 
 
 
@@ -77,9 +81,18 @@ const RegisterPage = () => {
         email: email.trim(),
         password,
       });
-    } catch {
+      navigate("/login", {
+        replace: true,
+        state: {
+          email: email.trim(),
+          message:
+            "Account created. Sign in to continue.",
+        },
+      });
+    } catch (err) {
       setError(
-        "Registration failed. Please try again."
+        err?.message ||
+          "Registration failed. Please try again."
       );
     }
   };
