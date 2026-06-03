@@ -44,6 +44,10 @@ const toImageUrl = (imagePath) => {
     imagePath
   ).replace(/\\/g, "/");
 
+  if (/^https?:\/\//i.test(normalizedPath)) {
+    return normalizedPath;
+  }
+
   return `${baseUrl}/uploads/${normalizedPath}`;
 };
 
@@ -76,6 +80,10 @@ const resolveUploadPath = (imagePath) =>
 
 const deleteImageIfExists = async (imagePath) => {
   if (!imagePath) return;
+
+  if (/^https?:\/\//i.test(String(imagePath))) {
+    return;
+  }
 
   try {
     await fs.promises.unlink(
@@ -132,9 +140,11 @@ const createPost = async (
     payload?.caption || ""
   ).trim();
   const caption = normalizedCaption || null;
-  const imagePath = file?.filename
-    ? `community/${file.filename}`
-    : null;
+  const imagePath = file?.path
+    ? file.path
+    : file?.filename
+      ? `community/${file.filename}`
+      : null;
 
   if (!caption && !imagePath) {
     throw domainError(
