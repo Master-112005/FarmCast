@@ -41,6 +41,8 @@ def test_api_endpoints(monkeypatch) -> None:
     original_dependency = ml_service.get_inference_pipeline
     ml_service.app.dependency_overrides[original_dependency] = lambda: dummy
     ml_service.get_inference_pipeline = lambda: dummy
+    ml_service.runtime_state.ready = True
+    ml_service.runtime_state.startup_status = "ready"
 
     client = TestClient(ml_service.app)
     headers = {"X-API-Key": "secret"}
@@ -99,3 +101,5 @@ def test_api_endpoints(monkeypatch) -> None:
     assert response.json()["disease"] == "blast"
 
     ml_service.app.dependency_overrides.clear()
+    ml_service.runtime_state.ready = False
+    ml_service.runtime_state.startup_status = "starting"

@@ -6,15 +6,18 @@ from pathlib import Path
 from typing import Any
 import argparse
 import json
+import logging
 from importlib import import_module
 
 from src.core.config import ConfigLoader
+from src.core.observability import log_event, monotonic
 from src.models.disease.predictor import DiseasePredictor
 from src.models.price.predictor import PricePredictor
 from src.pipelines.utils import read_json
 
 
 YieldPredictor = import_module("src.models.yield.predictor").YieldPredictor
+logger = logging.getLogger("farmcast.ml.pipeline")
 
 
 class InferencePipeline:
@@ -36,7 +39,10 @@ class InferencePipeline:
 
     def _load_yield_predictor(self) -> YieldPredictor:
         if self._yield_predictor is not None:
+            log_event(logger, "model_cache_hit", task="yield", stage="model_load")
             return self._yield_predictor
+        load_start = monotonic()
+        log_event(logger, "model_load_begin", start=load_start, task="yield", stage="model_load")
         model_path = self._resolve_path("yield_model", "Yield model")
         preprocessor_path = self._resolve_path("yield_preprocessor", "Yield preprocessor")
         metadata = read_json(model_path.parent / "metadata.json")
@@ -45,11 +51,23 @@ class InferencePipeline:
             preprocessor_path=preprocessor_path,
             residual_std=float(metadata["residual_std"]),
         )
+        log_event(
+            logger,
+            "model_load_end",
+            start=load_start,
+            task="yield",
+            stage="model_load",
+            model_path=str(model_path),
+            preprocessor_path=str(preprocessor_path),
+        )
         return self._yield_predictor
 
     def _load_price_predictor(self) -> PricePredictor:
         if self._price_predictor is not None:
+            log_event(logger, "model_cache_hit", task="price", stage="model_load")
             return self._price_predictor
+        load_start = monotonic()
+        log_event(logger, "model_load_begin", start=load_start, task="price", stage="model_load")
         model_path = self._resolve_path("price_model", "Price model")
         preprocessor_path = self._resolve_path("price_preprocessor", "Price preprocessor")
         metadata = read_json(model_path.parent / "metadata.json")
@@ -58,13 +76,33 @@ class InferencePipeline:
             preprocessor_path=preprocessor_path,
             residual_std=float(metadata["residual_std"]),
         )
+        log_event(
+            logger,
+            "model_load_end",
+            start=load_start,
+            task="price",
+            stage="model_load",
+            model_path=str(model_path),
+            preprocessor_path=str(preprocessor_path),
+        )
         return self._price_predictor
 
     def _load_disease_predictor(self) -> DiseasePredictor:
         if self._disease_predictor is not None:
+            log_event(logger, "model_cache_hit", task="disease", stage="model_load")
             return self._disease_predictor
+        load_start = monotonic()
+        log_event(logger, "model_load_begin", start=load_start, task="disease", stage="model_load")
         model_path = self._resolve_path("disease_model", "Disease model")
         class_map_path = self._resolve_path("disease_classes", "Disease class map")
+        log_event(
+            logger,
+            "class_map_load_begin",
+            start=load_start,
+            task="disease",
+            stage="model_load",
+            class_map_path=str(class_map_path),
+        )
         metadata = read_json(model_path.parent / "metadata.json")
         self._disease_version = metadata.get("version", "unknown")
         self._disease_predictor = DiseasePredictor(
@@ -73,10 +111,22 @@ class InferencePipeline:
             image_size=tuple(self.inference_cfg["disease_image_size"]),
             top_k=int(self.inference_cfg["disease_top_k"]),
         )
+        log_event(
+            logger,
+            "model_load_end",
+            start=load_start,
+            task="disease",
+            stage="model_load",
+            model_path=str(model_path),
+            class_map_path=str(class_map_path),
+            model_version=self._disease_version,
+        )
         return self._disease_predictor
 
     def load_startup_models(self) -> None:
         """Load production models once during service startup."""
+        startup_start = monotonic()
+        log_event(logger, "warmup_begin", start=startup_start, stage="startup")
         self._load_disease_predictor()
         self._load_yield_predictor()
 
@@ -89,6 +139,7 @@ class InferencePipeline:
             and price_metadata_path.exists()
         ):
             self._load_price_predictor()
+        log_event(logger, "warmup_end", start=startup_start, stage="startup")
 
     def predict(self, task: str, payload: Any) -> dict[str, Any]:
         if task == "yield":

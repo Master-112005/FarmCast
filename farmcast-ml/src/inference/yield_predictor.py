@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import json
+import logging
 from pathlib import Path
 from typing import Any
 
 import joblib
 import pandas as pd
 
+from src.core.observability import log_event, monotonic
 from src.features.build_geo_feature_vector import (
     build_feature_vector,
 )
@@ -41,28 +43,52 @@ TON_TO_QUINTAL = 10.0
 
 _MODEL_CACHE = None
 _METADATA_CACHE: dict[str, Any] | None = None
+logger = logging.getLogger("farmcast.ml.yield_legacy")
 
 
 
 def _load_model():
     global _MODEL_CACHE
     if _MODEL_CACHE is None:
+        load_start = monotonic()
+        log_event(logger, "legacy_yield_model_load_begin", start=load_start, task="yield", stage="model_load")
         _MODEL_CACHE = joblib.load(MODEL_PATH)
+        log_event(
+            logger,
+            "legacy_yield_model_load_end",
+            start=load_start,
+            task="yield",
+            stage="model_load",
+            model_path=str(MODEL_PATH),
+        )
     return _MODEL_CACHE
 
 
 def _load_metadata() -> dict[str, Any]:
     global _METADATA_CACHE
     if _METADATA_CACHE is None:
+        load_start = monotonic()
+        log_event(logger, "legacy_yield_metadata_load_begin", start=load_start, task="yield", stage="model_load")
         with METADATA_PATH.open("r", encoding="utf-8") as file_obj:
             _METADATA_CACHE = json.load(file_obj)
+        log_event(
+            logger,
+            "legacy_yield_metadata_load_end",
+            start=load_start,
+            task="yield",
+            stage="model_load",
+            metadata_path=str(METADATA_PATH),
+        )
     return _METADATA_CACHE
 
 
 def warm_up_model() -> None:
     """Load the legacy yield model and metadata once during startup."""
+    warmup_start = monotonic()
+    log_event(logger, "legacy_yield_warmup_begin", start=warmup_start, task="yield", stage="startup")
     _load_model()
     _load_metadata()
+    log_event(logger, "legacy_yield_warmup_end", start=warmup_start, task="yield", stage="startup")
 
 
 
@@ -146,6 +172,8 @@ def predict_yield(payload: dict) -> dict:
     API RESPONSE UNIT  : quintals/hectare
     """
 
+    prediction_start = monotonic()
+    log_event(logger, "legacy_yield_prediction_begin", start=prediction_start, task="yield", stage="inference")
     validated_payload = _validate_payload(payload)
 
     feature_vector = build_feature_vector(
@@ -210,10 +238,19 @@ def predict_yield(payload: dict) -> dict:
 
     prediction_quintal_per_ha = round(prediction_quintal_per_ha, 3)
 
-    return {
+    result = {
         "yield_per_hectare": prediction_quintal_per_ha,
         "unit": "quintal_per_hectare",
         "model_version": str(
             metadata.get("model_version", MODEL_VERSION)
         ),
     }
+    log_event(
+        logger,
+        "legacy_yield_prediction_end",
+        start=prediction_start,
+        task="yield",
+        stage="inference",
+        model_version=result["model_version"],
+    )
+    return result

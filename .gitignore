@@ -125,3 +125,6 @@ tmp/
 .tmp/
 *.tmp
 .cache/
+
+.vercel
+.env*
