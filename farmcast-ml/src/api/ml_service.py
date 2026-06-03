@@ -17,9 +17,9 @@ from src.api.schemas import (
     YieldPredictionRequest,
     YieldResponse,
 )
-from src.inference.yield_predictor import predict_yield, warm_up_model
+from src.inference.yield_predictor import predict_yield
 from src.pipelines.inference_pipeline import InferencePipeline
-from src.core.observability import configure_json_logging, log_event, monotonic
+from src.core.observability import configure_json_logging, log_event, memory_delta, memory_usage, monotonic
 
 
 configure_json_logging()
@@ -37,6 +37,10 @@ class RuntimeState:
     startup_status: str = "starting"
     startup_error: str | None = None
     active_requests: int = 0
+    startup_baseline_memory: dict[str, int | None] | None = None
+    last_inference_memory: dict[str, int | None] | None = None
+    inference_count: int = 0
+    idle_profile_generation: int = 0
 
 
 runtime_state = RuntimeState(process_started_at=monotonic())
@@ -54,14 +58,24 @@ log_event(
 async def _load_models_for_readiness() -> None:
     startup_start = monotonic()
     runtime_state.startup_status = "loading_models"
-    log_event(logger, "fastapi_startup_begin", start=startup_start, endpoint="startup", stage="startup")
+    startup_memory = memory_usage()
+    log_event(
+        logger,
+        "fastapi_startup_begin",
+        start=startup_start,
+        endpoint="startup",
+        stage="startup",
+        preload_tasks=["disease"],
+        memory_baseline=startup_memory,
+    )
     try:
         pipeline = get_inference_pipeline()
-        await asyncio.to_thread(pipeline.load_startup_models)
-        await asyncio.to_thread(warm_up_model)
+        await asyncio.to_thread(pipeline.load_startup_models, ("disease",))
         runtime_state.ready = True
         runtime_state.startup_status = "ready"
         runtime_state.startup_error = None
+        runtime_state.startup_baseline_memory = memory_usage()
+        runtime_state.last_inference_memory = runtime_state.startup_baseline_memory
         log_event(
             logger,
             "readiness_achieved",
@@ -69,6 +83,8 @@ async def _load_models_for_readiness() -> None:
             endpoint="startup",
             stage="startup",
             ready=True,
+            preload_tasks=["disease"],
+            memory_delta=memory_delta(startup_memory),
         )
     except Exception as exc:
         runtime_state.ready = False
@@ -155,6 +171,57 @@ def _ensure_ready(request_id: str, endpoint: str) -> None:
         status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
         detail=f"ML service is not ready: {runtime_state.startup_status}",
     )
+
+
+async def _log_idle_stabilization(generation: int, baseline: dict[str, int | None] | None) -> None:
+    await asyncio.sleep(30)
+    if generation != runtime_state.idle_profile_generation:
+        return
+    if runtime_state.active_requests != 0:
+        return
+    log_event(
+        logger,
+        "memory_profile_idle_stabilization",
+        endpoint="runtime",
+        stage="memory_profile",
+        inference_count=runtime_state.inference_count,
+        active_requests=runtime_state.active_requests,
+        memory_delta=memory_delta(baseline),
+    )
+
+
+def _record_inference_profile(endpoint: str, request_id: str, request_start: float) -> None:
+    previous = runtime_state.last_inference_memory or runtime_state.startup_baseline_memory
+    runtime_state.inference_count += 1
+    runtime_state.idle_profile_generation += 1
+    current = memory_usage()
+    runtime_state.last_inference_memory = current
+
+    milestone_counts = {1, 5, 20}
+    if runtime_state.inference_count in milestone_counts:
+        log_event(
+            logger,
+            "memory_profile_milestone",
+            start=request_start,
+            request_id=request_id,
+            endpoint=endpoint,
+            stage="memory_profile",
+            inference_count=runtime_state.inference_count,
+            active_requests=runtime_state.active_requests,
+            memory_delta=memory_delta(previous),
+            startup_memory_delta=memory_delta(runtime_state.startup_baseline_memory),
+        )
+
+    try:
+        loop = asyncio.get_running_loop()
+        loop.create_task(
+            _log_idle_stabilization(
+                runtime_state.idle_profile_generation,
+                current,
+            )
+        )
+    except RuntimeError:
+        pass
 
 
 @app.post("/predict/yield", response_model=YieldResponse, dependencies=[Depends(api_key_guard)])
@@ -289,7 +356,9 @@ def predict_yield_endpoint(
         endpoint="/predict/yield",
         stage="response",
         active_requests=runtime_state.active_requests,
+        memory_delta=memory_delta(runtime_state.startup_baseline_memory),
     )
+    _record_inference_profile("/predict/yield", request_id, request_start)
     return YieldResponse(**result)
 
 
@@ -378,7 +447,9 @@ def predict_price(
         endpoint="/predict/price",
         stage="response",
         active_requests=runtime_state.active_requests,
+        memory_delta=memory_delta(runtime_state.startup_baseline_memory),
     )
+    _record_inference_profile("/predict/price", request_id, request_start)
     return PriceResponse(**result)
 
 
@@ -505,5 +576,7 @@ async def predict_disease(
         predicted_class=result.get("disease"),
         confidence=result.get("confidence"),
         active_requests=runtime_state.active_requests,
+        memory_delta=memory_delta(runtime_state.startup_baseline_memory),
     )
+    _record_inference_profile("/predict/disease", request_id, request_start)
     return DiseaseResponse(**result)

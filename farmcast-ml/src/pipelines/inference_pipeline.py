@@ -123,23 +123,40 @@ class InferencePipeline:
         )
         return self._disease_predictor
 
-    def load_startup_models(self) -> None:
-        """Load production models once during service startup."""
+    def load_startup_models(self, tasks: tuple[str, ...] | None = None) -> None:
+        """Load selected production models once during service startup."""
         startup_start = monotonic()
-        log_event(logger, "warmup_begin", start=startup_start, stage="startup")
-        self._load_disease_predictor()
-        self._load_yield_predictor()
+        requested_tasks = tasks or ("disease", "yield", "price")
+        log_event(
+            logger,
+            "warmup_begin",
+            start=startup_start,
+            stage="startup",
+            tasks=list(requested_tasks),
+        )
+
+        if "disease" in requested_tasks:
+            self._load_disease_predictor()
+
+        if "yield" in requested_tasks:
+            self._load_yield_predictor()
 
         price_model_path = Path(self.model_paths["price_model"])
         price_preprocessor_path = Path(self.model_paths["price_preprocessor"])
         price_metadata_path = price_model_path.parent / "metadata.json"
-        if (
+        if "price" in requested_tasks and (
             price_model_path.exists()
             and price_preprocessor_path.exists()
             and price_metadata_path.exists()
         ):
             self._load_price_predictor()
-        log_event(logger, "warmup_end", start=startup_start, stage="startup")
+        log_event(
+            logger,
+            "warmup_end",
+            start=startup_start,
+            stage="startup",
+            tasks=list(requested_tasks),
+        )
 
     def predict(self, task: str, payload: Any) -> dict[str, Any]:
         if task == "yield":

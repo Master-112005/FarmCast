@@ -59,6 +59,19 @@ def memory_usage() -> dict[str, int | None]:
     }
 
 
+def memory_delta(previous: dict[str, int | None] | None) -> dict[str, int | None]:
+    current = memory_usage()
+    previous_rss = previous.get("rss_kb") if previous else None
+    current_rss = current.get("rss_kb")
+    delta = current_rss - previous_rss if current_rss is not None and previous_rss is not None else None
+    return {
+        "rss_kb": current_rss,
+        "max_rss_kb": current.get("max_rss_kb"),
+        "previous_rss_kb": previous_rss,
+        "rss_delta_kb": delta,
+    }
+
+
 class JsonFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         payload: dict[str, Any] = {

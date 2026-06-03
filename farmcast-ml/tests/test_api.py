@@ -27,6 +27,14 @@ class _DummyPipeline:
         }
 
 
+def _dummy_legacy_yield(_payload):
+    return {
+        "yield_per_hectare": 31.2,
+        "unit": "quintal_per_hectare",
+        "model_version": "v2",
+    }
+
+
 def _image_bytes() -> bytes:
     image = Image.new("RGB", (10, 10), color=(10, 120, 40))
     buffer = io.BytesIO()
@@ -41,6 +49,7 @@ def test_api_endpoints(monkeypatch) -> None:
     original_dependency = ml_service.get_inference_pipeline
     ml_service.app.dependency_overrides[original_dependency] = lambda: dummy
     ml_service.get_inference_pipeline = lambda: dummy
+    monkeypatch.setattr(ml_service, "predict_yield", _dummy_legacy_yield)
     ml_service.runtime_state.ready = True
     ml_service.runtime_state.startup_status = "ready"
 
@@ -74,6 +83,18 @@ def test_api_endpoints(monkeypatch) -> None:
     response = client.post("/predict/yield", json=yield_payload, headers=bearer_headers)
     assert response.status_code == 200
     assert "yield_per_hectare" in response.json()
+
+    legacy_yield_payload = {
+        "state": "Andhra Pradesh",
+        "district": "Guntur",
+        "crop": "Rice",
+        "soil": "Alluvial Soil",
+        "sowing_date": "2026-06-01",
+        "field_size": 2.5,
+    }
+    response = client.post("/predict/yield", json=legacy_yield_payload, headers=headers)
+    assert response.status_code == 200
+    assert response.json()["model_version"] == "v2"
 
     price_payload = {
         "crop_type": "rice",

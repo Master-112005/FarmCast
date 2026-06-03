@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image
 
 from src.core.exceptions import InferenceError
-from src.core.observability import log_event, monotonic
+from src.core.observability import log_event, memory_delta, memory_usage, monotonic
 from src.models.disease.utils import load_class_map, parse_class_label
 
 
@@ -28,7 +28,15 @@ class DiseasePredictor:
         init_start = monotonic()
         try:
             tf_import_start = monotonic()
-            log_event(logger, "tensorflow_import_begin", start=tf_import_start, task="disease", stage="tensorflow")
+            tf_import_memory = memory_usage()
+            log_event(
+                logger,
+                "tensorflow_import_begin",
+                start=tf_import_start,
+                task="disease",
+                stage="tensorflow",
+                memory_baseline=tf_import_memory,
+            )
             import tensorflow as tf
             log_event(
                 logger,
@@ -37,6 +45,7 @@ class DiseasePredictor:
                 task="disease",
                 stage="tensorflow",
                 tensorflow_version=getattr(tf, "__version__", "unknown"),
+                memory_delta=memory_delta(tf_import_memory),
             )
         except Exception as exc:
             log_event(
@@ -52,6 +61,7 @@ class DiseasePredictor:
 
         self._tf = tf
         model_load_start = monotonic()
+        model_load_memory = memory_usage()
         log_event(
             logger,
             "keras_model_load_begin",
@@ -59,6 +69,7 @@ class DiseasePredictor:
             task="disease",
             stage="model_load",
             model_path=str(model_path),
+            memory_baseline=model_load_memory,
         )
         self.model = tf.keras.models.load_model(Path(model_path), compile=False)
         log_event(
@@ -68,6 +79,7 @@ class DiseasePredictor:
             task="disease",
             stage="model_load",
             model_path=str(model_path),
+            memory_delta=memory_delta(model_load_memory),
         )
         class_map_start = monotonic()
         log_event(
@@ -140,9 +152,18 @@ class DiseasePredictor:
 
     def predict(self, image_bytes: bytes, model_version: str) -> dict[str, object]:
         request_start = monotonic()
+        request_memory = memory_usage()
         tensor = self._preprocess(image_bytes)
         inference_start = monotonic()
-        log_event(logger, "inference_begin", start=inference_start, task="disease", stage="inference")
+        inference_memory = memory_usage()
+        log_event(
+            logger,
+            "inference_begin",
+            start=inference_start,
+            task="disease",
+            stage="inference",
+            memory_baseline=inference_memory,
+        )
         try:
             probs = self.model.predict(tensor, verbose=0)[0]
         except Exception as exc:
@@ -172,6 +193,7 @@ class DiseasePredictor:
             predicted_class=disease,
             confidence=float(top[0]["confidence"]),
             model_version=model_version,
+            memory_delta=memory_delta(inference_memory),
         )
         log_event(
             logger,
@@ -182,6 +204,7 @@ class DiseasePredictor:
             predicted_class=disease,
             confidence=float(top[0]["confidence"]),
             model_version=model_version,
+            memory_delta=memory_delta(request_memory),
         )
         return {
             "crop_type": crop_type,

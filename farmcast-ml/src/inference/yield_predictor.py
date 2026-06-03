@@ -10,7 +10,7 @@ from typing import Any
 import joblib
 import pandas as pd
 
-from src.core.observability import log_event, monotonic
+from src.core.observability import log_event, memory_delta, memory_usage, monotonic
 from src.features.build_geo_feature_vector import (
     build_feature_vector,
 )
@@ -51,7 +51,15 @@ def _load_model():
     global _MODEL_CACHE
     if _MODEL_CACHE is None:
         load_start = monotonic()
-        log_event(logger, "legacy_yield_model_load_begin", start=load_start, task="yield", stage="model_load")
+        load_memory = memory_usage()
+        log_event(
+            logger,
+            "legacy_yield_model_load_begin",
+            start=load_start,
+            task="yield",
+            stage="model_load",
+            memory_baseline=load_memory,
+        )
         _MODEL_CACHE = joblib.load(MODEL_PATH)
         log_event(
             logger,
@@ -60,6 +68,7 @@ def _load_model():
             task="yield",
             stage="model_load",
             model_path=str(MODEL_PATH),
+            memory_delta=memory_delta(load_memory),
         )
     return _MODEL_CACHE
 
@@ -68,7 +77,15 @@ def _load_metadata() -> dict[str, Any]:
     global _METADATA_CACHE
     if _METADATA_CACHE is None:
         load_start = monotonic()
-        log_event(logger, "legacy_yield_metadata_load_begin", start=load_start, task="yield", stage="model_load")
+        load_memory = memory_usage()
+        log_event(
+            logger,
+            "legacy_yield_metadata_load_begin",
+            start=load_start,
+            task="yield",
+            stage="model_load",
+            memory_baseline=load_memory,
+        )
         with METADATA_PATH.open("r", encoding="utf-8") as file_obj:
             _METADATA_CACHE = json.load(file_obj)
         log_event(
@@ -78,6 +95,7 @@ def _load_metadata() -> dict[str, Any]:
             task="yield",
             stage="model_load",
             metadata_path=str(METADATA_PATH),
+            memory_delta=memory_delta(load_memory),
         )
     return _METADATA_CACHE
 
@@ -173,7 +191,15 @@ def predict_yield(payload: dict) -> dict:
     """
 
     prediction_start = monotonic()
-    log_event(logger, "legacy_yield_prediction_begin", start=prediction_start, task="yield", stage="inference")
+    prediction_memory = memory_usage()
+    log_event(
+        logger,
+        "legacy_yield_prediction_begin",
+        start=prediction_start,
+        task="yield",
+        stage="inference",
+        memory_baseline=prediction_memory,
+    )
     validated_payload = _validate_payload(payload)
 
     feature_vector = build_feature_vector(
@@ -252,5 +278,6 @@ def predict_yield(payload: dict) -> dict:
         task="yield",
         stage="inference",
         model_version=result["model_version"],
+        memory_delta=memory_delta(prediction_memory),
     )
     return result
