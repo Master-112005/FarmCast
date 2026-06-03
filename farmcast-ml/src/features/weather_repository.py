@@ -1,11 +1,15 @@
 """Weather feature repository with in-memory caching."""
 
+import logging
 from pathlib import Path
 
 import pandas as pd
 
+from src.core.observability import log_event, monotonic
+
 
 _WEATHER_CACHE = None
+logger = logging.getLogger("farmcast.ml.weather")
 _WEATHER_DATA_PATH = (
     Path(__file__).resolve().parents[2]
     / "data"
@@ -67,9 +71,33 @@ def _canonical_district(value: str) -> str:
 def _load_weather_data():
     global _WEATHER_CACHE
     if _WEATHER_CACHE is None:
-        weather_df = pd.read_parquet(
-            _WEATHER_DATA_PATH
+        load_start = monotonic()
+        log_event(
+            logger,
+            "artifact_lazy_load_begin",
+            start=load_start,
+            stage="artifact_load",
+            artifact_key="weather_aggregated",
+            artifact_path=str(_WEATHER_DATA_PATH),
+            exists=_WEATHER_DATA_PATH.exists(),
         )
+        try:
+            weather_df = pd.read_parquet(
+                _WEATHER_DATA_PATH
+            )
+        except Exception as exc:
+            log_event(
+                logger,
+                "artifact_lazy_load_failed",
+                severity="error",
+                start=load_start,
+                stage="artifact_load",
+                artifact_key="weather_aggregated",
+                artifact_path=str(_WEATHER_DATA_PATH),
+                exists=_WEATHER_DATA_PATH.exists(),
+                exc=exc,
+            )
+            raise
         weather_df["state"] = weather_df[
             "state"
         ].map(_canonical_state)
@@ -77,6 +105,24 @@ def _load_weather_data():
             "district"
         ].map(_canonical_district)
         _WEATHER_CACHE = weather_df
+        log_event(
+            logger,
+            "artifact_lazy_load_end",
+            start=load_start,
+            stage="artifact_load",
+            artifact_key="weather_aggregated",
+            artifact_path=str(_WEATHER_DATA_PATH),
+            rows=int(len(weather_df)),
+            columns=list(weather_df.columns),
+        )
+    else:
+        log_event(
+            logger,
+            "artifact_cache_hit",
+            stage="artifact_load",
+            artifact_key="weather_aggregated",
+            artifact_path=str(_WEATHER_DATA_PATH),
+        )
     return _WEATHER_CACHE
 
 

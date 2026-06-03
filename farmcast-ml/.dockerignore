@@ -13,9 +13,9 @@ dist
 build
 *.egg-info
 logs
-data
 data/raw
-data/processed
+data/processed/*
+!data/processed/weather_aggregated.parquet
 data/validated
 data/artifacts
 data/snapshots

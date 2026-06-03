@@ -53,6 +53,8 @@ mqtt/config/
 # ==================================================
 farmcast-ml/data/raw/
 farmcast-ml/data/processed/
+!farmcast-ml/data/processed/
+!farmcast-ml/data/processed/weather_aggregated.parquet
 farmcast-ml/data/validated/
 farmcast-ml/data/artifacts/
 farmcast-ml/data/snapshots/

@@ -17,6 +17,7 @@ from src.api.schemas import (
     YieldPredictionRequest,
     YieldResponse,
 )
+from src.core.artifacts import validate_artifacts
 from src.inference.yield_predictor import predict_yield
 from src.pipelines.inference_pipeline import InferencePipeline
 from src.core.observability import configure_json_logging, log_event, memory_delta, memory_usage, monotonic
@@ -69,6 +70,7 @@ async def _load_models_for_readiness() -> None:
         memory_baseline=startup_memory,
     )
     try:
+        validate_artifacts()
         pipeline = get_inference_pipeline()
         await asyncio.to_thread(pipeline.load_startup_models, ("disease",))
         runtime_state.ready = True
@@ -247,6 +249,7 @@ def predict_yield_endpoint(
         payload = request.model_dump()
         is_legacy_payload = "crop" in payload and "soil" in payload and "sowing_date" in payload
         if is_legacy_payload:
+            validate_artifacts(endpoint="/predict/yield")
             result = predict_yield(payload)
         else:
             result = pipeline.predict("yield", payload)

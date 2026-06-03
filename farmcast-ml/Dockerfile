@@ -27,6 +27,7 @@ RUN pip install --no-cache-dir --upgrade pip \
 
 COPY configs ./configs
 COPY models ./models
+COPY data/processed/weather_aggregated.parquet ./data/processed/weather_aggregated.parquet
 COPY src ./src
 
 EXPOSE 8000

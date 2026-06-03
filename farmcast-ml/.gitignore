@@ -11,6 +11,8 @@ experiments/mlruns/
 experiments/optuna/
 
 data/processed/
+!data/processed/
+!data/processed/weather_aggregated.parquet
 data/validated/
 
 models/*/staging/*
